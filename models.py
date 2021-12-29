@@ -45,15 +45,13 @@ class User(db.Model):
     invitations_recived = db.relationship('Invitation',
             backref='invited',
             primaryjoin=id==Invitation.invited_id)
-    
-
-    participated = db.relationship('Participate',
-            backref='participated_with',
+    host_for = db.relationship('Participate',
+            backref='host',
             primaryjoin=id==Participate.host_id)
-    participated_with = db.relationship('Participate',
-            backref='participated',
+    participated_with_users = db.relationship('Participate',
+            backref='participant',
             primaryjoin=id==Participate.participant_id)
-    
+
     @property
     def password(self):
         raise ValueError('not readable.')
@@ -74,10 +72,8 @@ class Discussion(db.Model):
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     posts = db.relationship('Post', backref='parent_discussion', lazy=True)
     
-    followed_by = db.relationship('Follow', backref='followed_discussions', lazy=True)
-    participants = db.relationship('Participate',
-            backref='discussion',
-            primaryjoin=id==Participate.discussion_id)
+    followed_by = db.relationship('Follow', backref='discussion', lazy=True)
+    participants = db.relationship('Participate', backref='discussion')
     
 
     invitations = db.relationship('Invitation', backref='discussion', lazy=True)

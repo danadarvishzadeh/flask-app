@@ -27,8 +27,8 @@ def create_users():
         return user_schema.dumps(user)
     except Exception as e:
         # TODO error handling
+        print(e)
         pass
-
 
 @api_bp.route('/users/<int:id>/', methods=get)
 def get_user_detail(id):
@@ -224,8 +224,6 @@ def edit_invitation_details(id):
             if invitation.status == 'Sent':
                 status = request.get_json().get('status')
                 if status in ('Accepted', 'Denied'):
-                    #TODO complete this method
-                    # invitation.process_response(db.session, status)
                     invitation.status = status
                     participate = Participate()
                     participate.host_id = invitation.inviter_id
@@ -244,13 +242,27 @@ def edit_invitation_details(id):
 @api_bp.route('/discussions/<int:id>/follow/', methods=_post)
 @auth.login_required
 def create_followes(id):
-    discussion = Discussion.query.get(id)
-    if discussion is not None:
+    follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
+    if follow is None:
         try:
             follow = Follow()
             follow.follower_id = g.user.id
             follow.discussion_id = id
             db.session.add(follow)
+            db.session.commit()
+            return jsonify({'response': 'Ok!'}), 200
+        except Exception as e:
+            print(e)
+            #TODO error handling
+            pass
+
+@api_bp.route('/discussions/<int:id>/unfollow/', methods=_post)
+@auth.login_required
+def delete_followes(id):
+    follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
+    if follow is not None:
+        try:
+            follow.delete()
             db.session.commit()
             return jsonify({'response': 'Ok!'}), 200
         except Exception as e:
