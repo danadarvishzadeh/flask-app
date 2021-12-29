@@ -1,5 +1,5 @@
 from flask import current_app, request, g, abort
-from discussion.auth.views import auth
+# from discussion.auth.views import auth
 from flask import Blueprint, jsonify, url_for
 from discussion.app import db
 from discussion.models import Discussion, Post, User, Invitation, Participate, Follow
@@ -9,8 +9,9 @@ from .schemas import (
                     create_post_schema, create_invitation_schema,
                     invitation_schema,)
 
-
+# from flask_jwt import jwt_required, current_identity
 from .utils import paginate_discussions, paginate_posts, paginate_invitatinos
+from discussion.auth.views import token_required
 
 api_bp = Blueprint('api', __name__)
 
@@ -41,7 +42,7 @@ def get_user_detail(id):
 
 
 @api_bp.route('/users/<int:id>/', methods=put_delete)
-@auth.login_required
+@token_required
 def edit_user_detail(id):
     user = User.query.filter_by(id=id)
     if user.first() == g.user:
@@ -78,7 +79,7 @@ def get_discussion_detail(id):
 
 
 @api_bp.route('/discussions/<int:id>/', methods=put_delete)
-@auth.login_required
+@token_required
 def edit_discussion_detail(id):
     discussion = Discussion.query.filter_by(id=id)
     if g.user.id == discussion.first().creator_id:
@@ -98,7 +99,7 @@ def edit_discussion_detail(id):
 
 
 @api_bp.route('/discussions/', methods=_post)
-@auth.login_required
+@token_required
 def create_discussions():
     req_json = request.get_json()
     try:
@@ -145,7 +146,7 @@ def get_discussion_posts(id):
 
 
 @api_bp.route('/posts/<int:id>/', methods=put_delete)
-@auth.login_required
+@token_required
 def edit_post_details(id):
     post = Post.query.filter_by(id=id)
     if g.user.id == post.first().author_id:
@@ -165,7 +166,7 @@ def edit_post_details(id):
 
 
 @api_bp.route('/discussions/<int:id>/', methods=_post)
-@auth.login_required
+@token_required
 def create_posts(id):
     req_json = request.get_json()
     discussion = Discussion.query.get(id)
@@ -186,7 +187,7 @@ def create_posts(id):
         pass
 
 @api_bp.route('/discussions/<int:discussion_id>/invite/<int:user_id>/', methods=_post)
-@auth.login_required
+@token_required
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)
@@ -216,7 +217,7 @@ def get_invitations():
 
 
 @api_bp.route('/invitations/<int:id>/', methods=put_delete)
-@auth.login_required
+@token_required
 def edit_invitation_details(id):
     if request.method == 'PUT':
         invitation = Invitation.query.get(id)
@@ -240,7 +241,7 @@ def edit_invitation_details(id):
                         pass
 
 @api_bp.route('/discussions/<int:id>/follow/', methods=_post)
-@auth.login_required
+@token_required
 def create_followes(id):
     follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
     if follow is None:
@@ -257,7 +258,7 @@ def create_followes(id):
             pass
 
 @api_bp.route('/discussions/<int:id>/unfollow/', methods=_post)
-@auth.login_required
+@token_required
 def delete_followes(id):
     follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
     if follow is not None:
