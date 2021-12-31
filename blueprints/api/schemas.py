@@ -2,7 +2,7 @@
 from discussion.app import ma
 from flask_marshmallow import Schema, fields
 from marshmallow.fields import Nested
-# from marshmallow import post_load, ValidationError, validates, validate, fields
+from marshmallow import validate
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 from flask_marshmallow.sqla import HyperlinkRelated
 from discussion.models import (User, Discussion,
@@ -17,11 +17,20 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
         model = User
         load_instance = True
 
-    password = ma.String(required=True)
+    password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
 
     def __init__(self):
         super().__init__()
         self.fields.pop('password_hash')
+
+
+class EditUserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        fields = (
+            'name',
+            'lastname',
+        )
 
 
 class SummerisedUserSchema(ma.SQLAlchemyAutoSchema):
@@ -128,7 +137,8 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
 
     @post_dump()
     def load_participants(self, data, **kwargs):
-        participants = [summerised_user_schema.dump(User.query.get(p.participant_id)) for p in data['participants']]
+        discussion = Discussion.query.get(data['id'])
+        participants = summerised_user_schema.dump(discussion.get_participants(), many=True)
         data['participants'] = participants
         return data
     
@@ -234,3 +244,4 @@ create_invitation_schema = CreateInvitationSchema()
 invitation_schema = InvitationSchema()
 summerised_user_schema = SummerisedUserSchema()
 summerised_discussion_schema = SummerisedDiscussionSchema()
+edit_user_schema = EditUserSchema()

@@ -11,6 +11,10 @@ class Config:
     DISCUSSION_POSTS_PER_PAGE = 5
     DISCUSSION_INVITATIONS_PER_PAGE = 10
 
+    @staticmethod
+    def init_app(app):
+        pass
+
 
 class DevelopementConfig(Config):
     DEBUG = True
@@ -33,7 +37,10 @@ class TestingConfig(Config):
 #     SQLALCHEMY_DATABASE_URI = os.environ.get(
 #         f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{HOST}:{PORT}/{DBNAME}"
 #         )
-    
+#     @classmethod
+#     def init_app(cls, app):
+#         Config.init_app(app)
+
 
 config = {
     'development': DevelopementConfig,
@@ -41,4 +48,54 @@ config = {
     # 'production': ProcudtionConfig,
 
     'default': DevelopementConfig
+}
+
+LOG_CONFIG = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'formatter': 'standard',
+            'class': 'logging.StreamHandler',
+        },
+        'debug': {
+            'level': 'DEBUG',
+            'formatter': 'standard',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/debug.log',
+            'maxBytes': 1000000,
+            'backupCount': 3,
+        },
+        'error': {
+            'level': 'ERROR',
+            'formatter': 'standard',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/error.log',
+            'maxBytes': 1000000,
+            'backupCount': 3,
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'api': {
+            'handlers': ['debug', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'auth': {
+            'handlers': ['debug', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    },
 }
