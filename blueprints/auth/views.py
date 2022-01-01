@@ -6,7 +6,8 @@ from discussion.models import TokenBlackList, User
 from flask import abort, g, jsonify, request, current_app
 from discussion.blueprints.auth import bp, logger
 from discussion.blueprints.auth.errors import *
-
+from discussion.blueprints.api.errors import InvalidAttemp
+import traceback
 
 def decode_auth_token(auth_token):
     payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
@@ -70,13 +71,16 @@ def token_required(f):
             if user is None:
                 raise InvalidCredentials(message='You provided an invalid token.')
             g.user = user
-            return f(*args, **kwargs)
         except IndexError:
+            raise InvalidCredentials(message='You did not provided a token.')
+        except AttributeError as e:
             raise InvalidCredentials(message='You did not provided a token.')
         except jwt.InvalidTokenError:
             raise InvalidToken('You have submitted an invalid token.')
         except jwt.ExpiredSignatureError:
             raise InvalidToken('You have submitted an expired token.')
+        else:
+          return f(*args, **kwargs)
     return decorator
 
 @bp.route('/users/logout/', methods=['POST'])
@@ -94,3 +98,9 @@ def logout_user():
         raise InvalidCredentials(message='You did not provided a token.')
     except jwt.DecodeError:
         raise InvalidToken('You have submitted an invalid token.')
+    except AttributeError:
+            raise InvalidCredentials(message='You did not provided a token.')
+    except:
+        trace_info = traceback.format_exc()
+        logger.error(f"uncaught exception: {trace_info}")
+        raise InvalidAttemp()

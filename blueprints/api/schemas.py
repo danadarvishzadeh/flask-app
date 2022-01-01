@@ -24,7 +24,7 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
         super().__init__()
         self.fields.pop('password_hash')
     
-    @post_load()
+    @post_load
     def lower_case(self, data, **kwargs):
         data['username'] = data['username'].lower()
         data['name'] = data['name'].lower()

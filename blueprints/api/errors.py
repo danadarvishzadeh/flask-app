@@ -1,6 +1,6 @@
 from flask import json, make_response, request
 from marshmallow.exceptions import ValidationError
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError as v
 from werkzeug.exceptions import HTTPException, Forbidden
 
 from discussion.blueprints.api import bp
@@ -60,11 +60,11 @@ class InvalidAttemp(HTTPException):
         self.message = 'Server responded with an error.'
 
 
-@bp.errorhandler(InvalidAttemp)
 @bp.errorhandler(ActionIsNotPossible)
 @bp.errorhandler(ResourceDoesNotExists)
 @bp.errorhandler(JsonIntegrityError)
 @bp.errorhandler(JsonPermissionDenied)
+@bp.errorhandler(InvalidAttemp)
 def not_allowed(e):
     response = make_response()
     response.data = json.dumps({

@@ -33,6 +33,8 @@ def create_users():
     db.session.add(user)
     try:
         db.session.commit()
+        logger.info(f"Adding user {user.username}")
+        return jsonify(user_schema.dump(user))
     except IntegrityError as e:
         logger.warning(f"Attempt to register user. params: {e.params[:-1]} origin: {e.orig}")
         db.session.rollback()
@@ -41,16 +43,13 @@ def create_users():
         trace_info = traceback.format_exc()
         logger.error(f"uncaught exception: {trace_info}")
         raise InvalidAttemp()
-    else:
-        logger.info(f"Adding user {user.username}")
-        return user_schema.dumps(user)
 
 
 @bp.route('/users/<int:id>/', methods=get)
 def get_user_detail(id):
     user = User.query.get(id)
     if user is not None:
-        return user_schema.dumps(user)
+        return jsonify(user_schema.dumps(user))
     else:
         logger.warning(f"Trying to access non-existing user with id {id}")
         raise ResourceDoesNotExists()
@@ -65,17 +64,20 @@ def edit_user_detail(id):
             req_json = request.get_json()
             try:
                 data = edit_user_schema.load(req_json, partial=True)
+                user.query.update(dict(data))
+                db.session.commit()
+                return jsonify(user_schema.dump(user).first())
             except ValidationError as e:
                 raise JsonValidationError(e)
+            except IntegrityError as e:
+                db.session.rollback()
+                raise JsonIntegrityError()
             except:
                 trace_info = traceback.format_exc()
                 logger.error(f"uncaught exception: {trace_info}")
                 raise InvalidAttemp()
-            user.update(dict(data))
-            db.session.commit()
-            return user_schema.dumps(user.first())
         else:
-            user.delete()
+            user.query.delete()
             db.session.commit()
             return jsonify({'response': 'ok!'}), 200
     else:
@@ -92,7 +94,7 @@ def get_discussions():
 def get_discussion_detail(id):
     discussion = Discussion.query.get(id)
     if discussion is not None:
-        return discussion_schema.dumps(discussion)
+        return jsonify(discussion_schema.dump(discussion))
     else:
         logger.warning(f"Trying to access non-existing discussion with id {id}")
         raise ResourceDoesNotExists()
@@ -107,18 +109,17 @@ def edit_discussion_detail(id):
                 req_json = request.get_json()
                 try:
                     data = discussion_schema.load(req_json, partial=True)
+                    discussion.query.update(dict(data))
+                    db.session.commit()
+                    return jsonify(discussion_schema.dump(discussion))
                 except ValidationError as e:
                     raise JsonValidationError(e)
                 except:
                     trace_info = traceback.format_exc()
                     logger.error(f"uncaught exception: {trace_info}")
                     raise InvalidAttemp()
-                else:
-                    discussion.update(dict(data))
-                    db.session.commit()
-                    return discussion_schema.dumps(discussion)
             else:
-                discussion.delete()
+                discussion.query.delete()
                 db.session.commit()
                 return jsonify({'response': 'ok!'}), 200
         else:
@@ -138,7 +139,7 @@ def create_discussions():
         discussion.creator_id = g.user.id
         db.session.add(discussion)
         db.session.commit()
-        return discussion_schema.dumps(discussion)
+        return jsonify(discussion_schema.dump(discussion))
     except ValidationError as e:
         raise JsonValidationError(e)
     except IntegrityError as e:
@@ -167,7 +168,7 @@ def get_posts():
 def get_post_detail(id):
     post = Post.query.get(id)
     if post is not None:
-        return summerised_post_schema.dumps(post)
+        return jsonify(summerised_post_schema.dump(post))
     else:
         logger.warning(f"Trying to access non-existing post with id {id}")
         raise ResourceDoesNotExists()
@@ -183,29 +184,29 @@ def get_discussion_posts(id):
 @bp.route('/posts/<int:id>/', methods=put_delete)
 @token_required
 def edit_post_details(id):
-    post = Post.query.filter_by(id=id)
+    post = Post.query.get(id)
     if post is not None:
-        if g.user.id == post.first().author_id:
+        if g.user.id == post.author_id:
             if request.method == 'PUT':
                 req_json = request.get_json()
                 try:
                     data = post_schema.load(req_json, partial=True)
+                    post.query.update(dict(data))
+                    db.session.commit()
+                    return jsonify(post_schema.dump(post))
                 except ValidationError as e:
                     raise JsonValidationError(e)
                 except:
                     trace_info = traceback.format_exc()
                     logger.error(f"uncaught exception: {trace_info}")
                     raise InvalidAttemp()
-                post.update(dict(data))
-                db.session.commit()
-                return post_schema.dumps(post.first())
             else:
-                Post.delete()
+                post.query.delete()
                 db.session.commit()
                 return jsonify({'response': 'ok!'}), 200
         else:
-                logger.warning(f"{g.user.username} attempted to edit {post.first().author.username}'s post.")
-                raise JsonPermissionDenied()
+            logger.warning(f"{g.user.username} attempted to edit {post.author.username}'s post.")
+            raise JsonPermissionDenied()
     else:
         logger.warning(f"Trying to edit non-existing post with id {id}")
         raise ResourceDoesNotExists()
@@ -224,7 +225,7 @@ def create_posts(id):
                 post.discussion_id = id
                 db.session.add(post)
                 db.session.commit()
-                return summerised_post_schema.dumps(post)
+                return jsonify(summerised_post_schema.dump(post))
             except ValidationError as e:
                 raise JsonValidationError(e)
             except IntegrityError:
@@ -256,7 +257,7 @@ def create_invitations(discussion_id, user_id):
                 invitation.status = 'Sent'
                 db.session.add(invitation)
                 db.session.commit()
-                return summerised_invitation_schema.dumps(invitation)
+                return jsonify(summerised_invitation_schema.dump(invitation))
             except ValidationError as e:
                 raise JsonValidationError(e)
             except IntegrityError:
@@ -282,20 +283,19 @@ def get_invitations():
 @bp.route('/invitations/<int:id>/', methods=put_delete)
 @token_required
 def edit_invitation_details(id):
-    if request.method == 'PUT':
-        invitation = Invitation.query.get(id)
-        if invitation is not None:
+    invitation = Invitation.query.get(id)
+    if invitation is not None:
+        if request.method == 'PUT':
             if invitation.invited_id == g.user.id:
                 if invitation.status == 'Sent':
                     status = request.get_json().get('status')
                     if status in ('Accepted', 'Denied'):
-                        invitation.status = status
                         participate = Participate()
                         participate.host_id = invitation.inviter_id
                         participate.participant_id = invitation.invited_id
                         participate.discussion_id = invitation.discussion_id
                         try:
-                            db.session.add(invitation)
+                            invitation.query.update({'status':status})
                             db.session.add(participate)
                             db.session.commit()
                             return jsonify({'response': 'Ok!'}), 200
@@ -312,20 +312,30 @@ def edit_invitation_details(id):
                 logger.warning(f"{g.user.username} attempted to edit user {invitation.invited.username}'s invitation.")
                 raise JsonPermissionDenied()
         else:
-            logger.warning(f"Trying to edit to non-existing invitation with id {id}")
-            raise ResourceDoesNotExists()
+            if g.user == invitation.invited or g.user == invitation.inviter:
+                invitation.query.delete()
+                db.session.commit()
+                return jsonify({'response': 'Ok!'}), 200
+            else:
+                logger.warning(f"{g.user.username} attempted to edit user {invitation.invited.username}'s invitation.")
+                raise JsonPermissionDenied()
+    else:
+        logger.warning(f"Trying to edit to non-existing invitation with id {id}")
+        raise ResourceDoesNotExists()
 
 @bp.route('/discussions/<int:id>/follow/', methods=_post)
 @token_required
 def create_followes(id):
-    follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
-    if follow is None:
+    follow = Follow.query.filter_by(follower_id=g.user.id, discussion_id=id).first()
+    discussion = Discussion.query.get(id)
+    if follow is None and discussion is not None and g.user != discussion.creator:
         try:
             follow = Follow()
             follow.follower_id = g.user.id
             follow.discussion_id = id
             db.session.add(follow)
             db.session.commit()
+            return jsonify({'response': 'Ok!'}), 200
         except IntegrityError:
             db.session.rollback()
             raise JsonIntegrityError()
@@ -333,8 +343,6 @@ def create_followes(id):
             trace_info = traceback.format_exc()
             logger.error(f"uncaught exception: {trace_info}")
             raise InvalidAttemp()
-        else:
-            return jsonify({'response': 'Ok!'}), 200
     else:
         raise ActionIsNotPossible('You already followed this user.')
 
@@ -344,7 +352,7 @@ def create_followes(id):
 def delete_followes(id):
     follow = Follow.query.filter_by(follower_id=id, discussion_id=id).first()
     if follow is not None:
-        follow.delete()
+        follow.query.delete()
         db.session.commit()
         return jsonify({'response': 'Ok!'}), 200
     else:

@@ -79,3 +79,2550 @@ KeyError: 'followed_by'
 ValueError: Invalid fields for <DiscussionSchema(many=False)>: {'author'}.
 
 2022-01-01 09:24:06,403 [INFO] auth: User dana logged in.
+2022-01-01 11:09:39,498 [INFO] api: Adding user dana
+2022-01-01 11:20:26,624 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 26, in create_users
+    user = create_user_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 844, in _do_load
+    processed_data = self._invoke_load_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1090, in _invoke_load_processors
+    data = self._invoke_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1220, in _invoke_processors
+    data = processor(data, many=many, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/schemas.py", line 29, in lower_case
+    data['username'] = data['username'].lower()
+TypeError: 'NoneType' object is not subscriptable
+
+2022-01-01 11:23:23,939 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 26, in create_users
+    user = create_user_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 844, in _do_load
+    processed_data = self._invoke_load_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1090, in _invoke_load_processors
+    data = self._invoke_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1220, in _invoke_processors
+    data = processor(data, many=many, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/schemas.py", line 29, in lower_case
+    data['username'] = data['username'].lower()
+TypeError: 'NoneType' object is not subscriptable
+
+2022-01-01 11:26:12,692 [INFO] api: Adding user dana
+2022-01-01 11:26:50,193 [INFO] api: Adding user dana
+2022-01-01 11:27:08,204 [INFO] api: Adding user dana
+2022-01-01 11:27:20,661 [INFO] api: Adding user dana
+2022-01-01 11:34:17,389 [INFO] api: Adding user dana
+2022-01-01 11:36:32,691 [INFO] api: Adding user dana
+2022-01-01 11:38:45,526 [INFO] api: Adding user dana
+2022-01-01 11:39:13,693 [INFO] api: Adding user dana
+2022-01-01 11:40:17,173 [INFO] api: Adding user dana
+2022-01-01 11:40:37,483 [INFO] api: Adding user dana
+2022-01-01 11:41:25,678 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:41:35,077 [INFO] api: Adding user ali
+2022-01-01 11:48:15,373 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:48:15,373 [INFO] api: Adding user ali
+2022-01-01 11:49:30,307 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:49:30,307 [INFO] api: Adding user ali
+2022-01-01 11:50:50,230 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:50:50,231 [INFO] api: Adding user ali
+2022-01-01 11:52:35,727 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:52:35,727 [INFO] api: Adding user ali
+2022-01-01 11:53:52,373 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:53:52,373 [INFO] api: Adding user ali
+2022-01-01 11:54:07,908 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:54:07,908 [INFO] api: Adding user ali
+2022-01-01 11:54:50,085 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:54:50,085 [INFO] api: Adding user ali
+2022-01-01 11:55:30,997 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:55:30,997 [INFO] api: Adding user ali
+2022-01-01 11:59:01,645 [WARNING] api: Attempt to register user. params: ('ali', 'ali@dana.ir', 'dana', 'danad') origin: UNIQUE constraint failed: user.username
+2022-01-01 11:59:01,646 [INFO] api: Adding user ali
+2022-01-01 11:59:51,279 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 11:59:51,280 [INFO] api: Adding user dana
+2022-01-01 12:21:45,146 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:21:45,146 [INFO] api: Adding user dana
+2022-01-01 12:22:07,137 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:22:07,138 [INFO] api: Adding user dana
+2022-01-01 12:22:13,219 [INFO] auth: User dana logged in.
+2022-01-01 12:23:14,771 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:23:14,771 [INFO] api: Adding user dana
+2022-01-01 12:23:23,378 [INFO] auth: User dana logged in.
+2022-01-01 12:30:48,723 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:30:48,724 [INFO] api: Adding user dana
+2022-01-01 12:30:56,952 [INFO] auth: User dana logged in.
+2022-01-01 12:30:59,339 [INFO] auth: User dana logged in.
+2022-01-01 12:31:01,953 [INFO] auth: User dana logged in.
+2022-01-01 12:33:30,287 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:33:30,288 [INFO] api: Adding user dana
+2022-01-01 12:33:38,601 [INFO] auth: User dana logged in.
+2022-01-01 12:33:40,882 [INFO] auth: User dana logged in.
+2022-01-01 12:33:42,991 [INFO] auth: User dana logged in.
+2022-01-01 12:35:58,572 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:35:58,572 [INFO] api: Adding user dana
+2022-01-01 12:36:07,458 [INFO] auth: User dana logged in.
+2022-01-01 12:36:09,605 [INFO] auth: User dana logged in.
+2022-01-01 12:36:11,755 [INFO] auth: User dana logged in.
+2022-01-01 12:38:52,040 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:38:52,041 [INFO] api: Adding user dana
+2022-01-01 12:39:00,314 [INFO] auth: User dana logged in.
+2022-01-01 12:39:02,630 [INFO] auth: User dana logged in.
+2022-01-01 12:39:04,991 [INFO] auth: User dana logged in.
+2022-01-01 12:39:50,468 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:39:50,468 [INFO] api: Adding user dana
+2022-01-01 12:39:59,045 [INFO] auth: User dana logged in.
+2022-01-01 12:40:01,415 [INFO] auth: User dana logged in.
+2022-01-01 12:40:03,915 [INFO] auth: User dana logged in.
+2022-01-01 12:40:51,291 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:40:51,292 [INFO] api: Adding user dana
+2022-01-01 12:40:59,471 [INFO] auth: User dana logged in.
+2022-01-01 12:41:01,774 [INFO] auth: User dana logged in.
+2022-01-01 12:41:04,430 [INFO] auth: User dana logged in.
+2022-01-01 12:41:37,414 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 836, in commit
+    trans.commit()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2361, in commit
+    self._do_commit()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2551, in _do_commit
+    self._connection_commit_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2522, in _connection_commit_impl
+    self.connection._commit_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1000, in _commit_impl
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2030, in _handle_dbapi_exception
+    util.raise_(exc_info[1], with_traceback=exc_info[2])
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 998, in _commit_impl
+    self.engine.dialect.do_commit(self.connection)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 685, in do_commit
+    dbapi_connection.commit()
+KeyboardInterrupt
+
+2022-01-01 12:41:37,596 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 836, in commit
+    trans.commit()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2361, in commit
+    self._do_commit()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2567, in _do_commit
+    self.connection._invalid_transaction()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 537, in _invalid_transaction
+    raise exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: Can't reconnect until invalid transaction is rolled back. (Background on this error at: https://sqlalche.me/e/14/8s2b)
+
+2022-01-01 12:42:05,305 [WARNING] api: Attempt to register user. params: ('dana', 'dana@dana.com', 'dana', 'danaplastiki') origin: UNIQUE constraint failed: user.email
+2022-01-01 12:42:05,305 [INFO] api: Adding user dana
+2022-01-01 12:42:14,602 [INFO] auth: User dana logged in.
+2022-01-01 12:42:16,866 [INFO] auth: User dana logged in.
+2022-01-01 12:42:19,240 [INFO] auth: User dana logged in.
+2022-01-01 12:44:52,829 [INFO] auth: User dana logged in.
+2022-01-01 12:46:18,217 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 26, in create_users
+    user = create_user_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 892, in _do_load
+    result = self._invoke_load_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1090, in _invoke_load_processors
+    data = self._invoke_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1220, in _invoke_processors
+    data = processor(data, many=many, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 78, in make_instance
+    instance = self.opts.model(**kwargs)
+  File "<string>", line 4, in __init__
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/state.py", line 480, in _initialize_instance
+    manager.dispatch.init_failure(self, args, kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/state.py", line 477, in _initialize_instance
+    return manager.original_init(*mixed[1:], **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/decl_base.py", line 1157, in _declarative_constructor
+    setattr(self, k, kwargs[k])
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/models.py", line 73, in password
+    self.password_hash = generate_password_hash(password)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/werkzeug/security.py", line 200, in generate_password_hash
+    h, actual_method = _hash_internal(method, salt, password)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/werkzeug/security.py", line 162, in _hash_internal
+    hashlib.pbkdf2_hmac(method, password, salt, iterations).hex(),
+KeyboardInterrupt
+
+2022-01-01 12:47:40,124 [INFO] auth: User dana logged in.
+2022-01-01 12:49:52,910 [INFO] auth: User dana logged in.
+2022-01-01 12:49:52,912 [INFO] auth: User dana tried log in, having valid token.
+2022-01-01 13:07:56,564 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$kTc0H1kaCzgaHhA6$a04dcb4e8ecd2e5104bdbd6377204fa59b99c8fe6deb69eff2120a98e8b9d418')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+2022-01-01 13:07:56,716 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$kTc0H1kaCzgaHhA6$a04dcb4e8ecd2e5104bdbd6377204fa59b99c8fe6deb69eff2120a98e8b9d418')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8) (Background on this error at: https://sqlalche.me/e/14/7s2a)
+
+2022-01-01 13:08:39,493 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$mbsfflbd4jDw6S9P$4b07a0f02ac577ad3fd83fecaf3d536cbf89f0af659e45aaebbdca7092fdd44f')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+2022-01-01 13:08:39,657 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$mbsfflbd4jDw6S9P$4b07a0f02ac577ad3fd83fecaf3d536cbf89f0af659e45aaebbdca7092fdd44f')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8) (Background on this error at: https://sqlalche.me/e/14/7s2a)
+
+2022-01-01 13:09:19,649 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$z2FygMlu5yCHyynW$fc22f05f494a2d5df6023272d8d26e16a72eb6b08858b5353a226c6bbf63b35a')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+2022-01-01 13:09:19,804 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$z2FygMlu5yCHyynW$fc22f05f494a2d5df6023272d8d26e16a72eb6b08858b5353a226c6bbf63b35a')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8) (Background on this error at: https://sqlalche.me/e/14/7s2a)
+
+2022-01-01 13:09:34,309 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$IoR3B1N7wrxxUxD7$f65bfb44785464770236d8f063904152ba10ab0dd5bb141de7227e5d7759f54d')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+
+2022-01-01 13:09:34,461 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 35, in create_users
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.OperationalError) no such table: user
+[SQL: INSERT INTO user (username, email, name, lastname, password_hash) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('dana', 'dana@dana.com', 'dana', 'danaplastiki', 'pbkdf2:sha256:260000$IoR3B1N7wrxxUxD7$f65bfb44785464770236d8f063904152ba10ab0dd5bb141de7227e5d7759f54d')]
+(Background on this error at: https://sqlalche.me/e/14/e3q8) (Background on this error at: https://sqlalche.me/e/14/7s2a)
+
+2022-01-01 13:10:00,802 [INFO] auth: User dana logged in.
+2022-01-01 13:10:59,533 [INFO] auth: User dana logged in.
+2022-01-01 13:10:59,684 [INFO] auth: User mamad logged in.
+2022-01-01 13:12:19,001 [INFO] auth: User dana logged in.
+2022-01-01 13:12:19,148 [INFO] auth: User mamad logged in.
+2022-01-01 13:13:18,796 [INFO] auth: User dana logged in.
+2022-01-01 13:13:18,941 [INFO] auth: User mamad logged in.
+2022-01-01 13:13:55,537 [INFO] auth: User dana logged in.
+2022-01-01 13:13:55,695 [INFO] auth: User mamad logged in.
+2022-01-01 13:16:40,046 [INFO] auth: User dana logged in.
+2022-01-01 13:16:40,203 [INFO] auth: User mamad logged in.
+2022-01-01 13:16:43,027 [INFO] auth: User dana logged in.
+2022-01-01 13:16:43,200 [INFO] auth: User mamad logged in.
+2022-01-01 13:17:01,356 [INFO] auth: User dana logged in.
+2022-01-01 13:17:01,515 [INFO] auth: User mamad logged in.
+2022-01-01 13:17:04,477 [INFO] auth: User dana logged in.
+2022-01-01 13:17:04,625 [INFO] auth: User mamad logged in.
+2022-01-01 13:20:45,705 [INFO] auth: User dana logged in.
+2022-01-01 13:20:45,857 [INFO] auth: User mamad logged in.
+2022-01-01 13:20:48,494 [INFO] auth: User dana logged in.
+2022-01-01 13:20:48,655 [INFO] auth: User mamad logged in.
+2022-01-01 13:20:51,550 [INFO] auth: User dana logged in.
+2022-01-01 13:20:51,695 [INFO] auth: User mamad logged in.
+2022-01-01 13:20:54,375 [INFO] auth: User dana logged in.
+2022-01-01 13:20:54,535 [INFO] auth: User mamad logged in.
+2022-01-01 13:26:39,648 [INFO] api: Adding user dana
+2022-01-01 13:26:39,963 [INFO] api: Adding user mamad
+2022-01-01 13:26:40,129 [INFO] auth: User dana logged in.
+2022-01-01 13:26:40,297 [INFO] auth: User mamad logged in.
+2022-01-01 13:26:42,254 [INFO] api: Adding user dana
+2022-01-01 13:26:42,541 [INFO] api: Adding user mamad
+2022-01-01 13:26:42,717 [INFO] auth: User dana logged in.
+2022-01-01 13:26:42,869 [INFO] auth: User mamad logged in.
+2022-01-01 13:26:45,098 [INFO] api: Adding user dana
+2022-01-01 13:26:45,396 [INFO] api: Adding user mamad
+2022-01-01 13:26:45,583 [INFO] auth: User dana logged in.
+2022-01-01 13:26:45,736 [INFO] auth: User mamad logged in.
+2022-01-01 13:26:47,810 [INFO] api: Adding user dana
+2022-01-01 13:26:48,119 [INFO] api: Adding user mamad
+2022-01-01 13:26:48,312 [INFO] auth: User dana logged in.
+2022-01-01 13:26:48,483 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:07,814 [INFO] api: Adding user dana
+2022-01-01 13:27:08,108 [INFO] api: Adding user mamad
+2022-01-01 13:27:08,289 [INFO] auth: User dana logged in.
+2022-01-01 13:27:08,449 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:10,646 [INFO] api: Adding user dana
+2022-01-01 13:27:10,930 [INFO] api: Adding user mamad
+2022-01-01 13:27:11,107 [INFO] auth: User dana logged in.
+2022-01-01 13:27:11,267 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:13,587 [INFO] api: Adding user dana
+2022-01-01 13:27:13,885 [INFO] api: Adding user mamad
+2022-01-01 13:27:14,062 [INFO] auth: User dana logged in.
+2022-01-01 13:27:14,231 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:16,443 [INFO] api: Adding user dana
+2022-01-01 13:27:16,741 [INFO] api: Adding user mamad
+2022-01-01 13:27:16,932 [INFO] auth: User dana logged in.
+2022-01-01 13:27:17,101 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:46,947 [INFO] api: Adding user dana
+2022-01-01 13:27:47,319 [INFO] api: Adding user mamad
+2022-01-01 13:27:47,513 [INFO] auth: User dana logged in.
+2022-01-01 13:27:47,690 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:50,098 [INFO] api: Adding user dana
+2022-01-01 13:27:50,419 [INFO] api: Adding user mamad
+2022-01-01 13:27:50,611 [INFO] auth: User dana logged in.
+2022-01-01 13:27:50,773 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:53,454 [INFO] api: Adding user dana
+2022-01-01 13:27:53,741 [INFO] api: Adding user mamad
+2022-01-01 13:27:53,929 [INFO] auth: User dana logged in.
+2022-01-01 13:27:54,088 [INFO] auth: User mamad logged in.
+2022-01-01 13:27:56,398 [INFO] api: Adding user dana
+2022-01-01 13:27:56,727 [INFO] api: Adding user mamad
+2022-01-01 13:27:56,895 [INFO] auth: User dana logged in.
+2022-01-01 13:27:57,077 [INFO] auth: User mamad logged in.
+2022-01-01 13:28:49,847 [INFO] api: Adding user dana
+2022-01-01 13:28:50,152 [INFO] api: Adding user mamad
+2022-01-01 13:28:50,342 [INFO] auth: User dana logged in.
+2022-01-01 13:28:50,502 [INFO] auth: User mamad logged in.
+2022-01-01 13:28:52,768 [INFO] api: Adding user dana
+2022-01-01 13:28:53,072 [INFO] api: Adding user mamad
+2022-01-01 13:28:53,287 [INFO] auth: User dana logged in.
+2022-01-01 13:28:53,476 [INFO] auth: User mamad logged in.
+2022-01-01 13:28:55,843 [INFO] api: Adding user dana
+2022-01-01 13:28:56,152 [INFO] api: Adding user mamad
+2022-01-01 13:28:56,349 [INFO] auth: User dana logged in.
+2022-01-01 13:28:56,528 [INFO] auth: User mamad logged in.
+2022-01-01 13:28:58,831 [INFO] api: Adding user dana
+2022-01-01 13:28:59,219 [INFO] api: Adding user mamad
+2022-01-01 13:28:59,408 [INFO] auth: User dana logged in.
+2022-01-01 13:28:59,569 [INFO] auth: User mamad logged in.
+2022-01-01 13:38:18,359 [INFO] api: Adding user dana
+2022-01-01 13:38:18,647 [INFO] api: Adding user mamad
+2022-01-01 13:38:18,835 [INFO] auth: User dana logged in.
+2022-01-01 13:38:19,011 [INFO] auth: User mamad logged in.
+2022-01-01 13:38:21,337 [INFO] api: Adding user dana
+2022-01-01 13:38:21,636 [INFO] api: Adding user mamad
+2022-01-01 13:38:21,841 [INFO] auth: User dana logged in.
+2022-01-01 13:38:22,019 [INFO] auth: User mamad logged in.
+2022-01-01 13:38:22,022 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 139, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 145, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:38:24,326 [INFO] api: Adding user dana
+2022-01-01 13:38:24,667 [INFO] api: Adding user mamad
+2022-01-01 13:38:24,868 [INFO] auth: User dana logged in.
+2022-01-01 13:38:25,037 [INFO] auth: User mamad logged in.
+2022-01-01 13:38:25,198 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:38:16.721849', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:38:27,668 [INFO] api: Adding user dana
+2022-01-01 13:38:27,958 [INFO] api: Adding user mamad
+2022-01-01 13:38:28,143 [INFO] auth: User dana logged in.
+2022-01-01 13:38:28,295 [INFO] auth: User mamad logged in.
+2022-01-01 13:38:28,460 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 224, in create_posts
+    post = create_post_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'body': ['Missing data for required field.'], 'title': ['Unknown field.'], 'description': ['Unknown field.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 231, in create_posts
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:39:21,453 [INFO] api: Adding user dana
+2022-01-01 13:39:21,736 [INFO] api: Adding user mamad
+2022-01-01 13:39:21,928 [INFO] auth: User dana logged in.
+2022-01-01 13:39:22,098 [INFO] auth: User mamad logged in.
+2022-01-01 13:39:24,416 [INFO] api: Adding user dana
+2022-01-01 13:39:24,802 [INFO] api: Adding user mamad
+2022-01-01 13:39:24,981 [INFO] auth: User dana logged in.
+2022-01-01 13:39:25,143 [INFO] auth: User mamad logged in.
+2022-01-01 13:39:25,146 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 139, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 145, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:39:27,246 [INFO] api: Adding user dana
+2022-01-01 13:39:27,535 [INFO] api: Adding user mamad
+2022-01-01 13:39:27,715 [INFO] auth: User dana logged in.
+2022-01-01 13:39:27,874 [INFO] auth: User mamad logged in.
+2022-01-01 13:39:28,053 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:39:19.951074', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:39:30,302 [INFO] api: Adding user dana
+2022-01-01 13:39:30,602 [INFO] api: Adding user mamad
+2022-01-01 13:39:30,800 [INFO] auth: User dana logged in.
+2022-01-01 13:39:30,984 [INFO] auth: User mamad logged in.
+2022-01-01 13:39:31,130 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 224, in create_posts
+    post = create_post_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'body': ['Missing data for required field.'], 'title': ['Unknown field.'], 'description': ['Unknown field.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 73, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 231, in create_posts
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:40:17,363 [INFO] api: Adding user dana
+2022-01-01 13:40:17,666 [INFO] api: Adding user mamad
+2022-01-01 13:40:17,838 [INFO] auth: User dana logged in.
+2022-01-01 13:40:17,997 [INFO] auth: User mamad logged in.
+2022-01-01 13:40:20,125 [INFO] api: Adding user dana
+2022-01-01 13:40:20,410 [INFO] api: Adding user mamad
+2022-01-01 13:40:20,566 [INFO] auth: User dana logged in.
+2022-01-01 13:40:20,718 [INFO] auth: User mamad logged in.
+2022-01-01 13:40:20,721 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 139, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'description': ['Not a valid string.'], 'title': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 145, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:40:22,869 [INFO] api: Adding user dana
+2022-01-01 13:40:23,124 [INFO] api: Adding user mamad
+2022-01-01 13:40:23,319 [INFO] auth: User dana logged in.
+2022-01-01 13:40:23,464 [INFO] auth: User mamad logged in.
+2022-01-01 13:40:23,642 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:40:15.988957', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:40:25,847 [INFO] api: Adding user dana
+2022-01-01 13:40:26,144 [INFO] api: Adding user mamad
+2022-01-01 13:40:26,314 [INFO] auth: User dana logged in.
+2022-01-01 13:40:26,465 [INFO] auth: User mamad logged in.
+2022-01-01 13:40:26,625 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 224, in create_posts
+    post = create_post_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'body': ['Missing data for required field.'], 'description': ['Unknown field.'], 'title': ['Unknown field.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 231, in create_posts
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:41:17,029 [INFO] api: Adding user dana
+2022-01-01 13:41:17,345 [INFO] api: Adding user mamad
+2022-01-01 13:41:17,540 [INFO] auth: User dana logged in.
+2022-01-01 13:41:17,704 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:20,080 [INFO] api: Adding user dana
+2022-01-01 13:41:20,387 [INFO] api: Adding user mamad
+2022-01-01 13:41:20,553 [INFO] auth: User dana logged in.
+2022-01-01 13:41:20,720 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:20,723 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 139, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 145, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:41:22,965 [INFO] api: Adding user dana
+2022-01-01 13:41:23,268 [INFO] api: Adding user mamad
+2022-01-01 13:41:23,459 [INFO] auth: User dana logged in.
+2022-01-01 13:41:23,636 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:23,820 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:41:15.451084', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:41:26,057 [INFO] api: Adding user dana
+2022-01-01 13:41:26,365 [INFO] api: Adding user mamad
+2022-01-01 13:41:26,547 [INFO] auth: User dana logged in.
+2022-01-01 13:41:26,726 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:26,731 [WARNING] api: Trying to add posts to non-existing discussion with id 1
+2022-01-01 13:41:26,731 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 244, in create_posts
+    raise ResourceDoesNotExists()
+discussion.blueprints.api.errors.ResourceDoesNotExists: 400 Bad Request: None
+
+2022-01-01 13:41:41,368 [INFO] api: Adding user dana
+2022-01-01 13:41:41,690 [INFO] api: Adding user mamad
+2022-01-01 13:41:41,889 [INFO] auth: User dana logged in.
+2022-01-01 13:41:42,075 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:44,512 [INFO] api: Adding user dana
+2022-01-01 13:41:44,820 [INFO] api: Adding user mamad
+2022-01-01 13:41:44,995 [INFO] auth: User dana logged in.
+2022-01-01 13:41:45,149 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:45,152 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 139, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 145, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:41:47,569 [INFO] api: Adding user dana
+2022-01-01 13:41:47,966 [INFO] api: Adding user mamad
+2022-01-01 13:41:48,154 [INFO] auth: User dana logged in.
+2022-01-01 13:41:48,329 [INFO] auth: User mamad logged in.
+2022-01-01 13:41:48,506 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:41:39.763062', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:41:50,768 [INFO] api: Adding user dana
+2022-01-01 13:41:51,111 [INFO] api: Adding user mamad
+2022-01-01 13:41:51,291 [INFO] auth: User dana logged in.
+2022-01-01 13:41:51,443 [INFO] auth: User mamad logged in.
+2022-01-01 13:45:10,431 [INFO] api: Adding user dana
+2022-01-01 13:45:10,776 [INFO] api: Adding user mamad
+2022-01-01 13:45:10,949 [INFO] auth: User dana logged in.
+2022-01-01 13:45:11,099 [INFO] auth: User mamad logged in.
+2022-01-01 13:45:13,343 [INFO] api: Adding user dana
+2022-01-01 13:45:13,632 [INFO] api: Adding user mamad
+2022-01-01 13:45:13,820 [INFO] auth: User dana logged in.
+2022-01-01 13:45:13,983 [INFO] auth: User mamad logged in.
+2022-01-01 13:45:13,986 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 138, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 144, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:45:16,221 [INFO] api: Adding user dana
+2022-01-01 13:45:16,508 [INFO] api: Adding user mamad
+2022-01-01 13:45:16,670 [INFO] auth: User dana logged in.
+2022-01-01 13:45:16,821 [INFO] auth: User mamad logged in.
+2022-01-01 13:45:17,016 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:45:08.789048', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 147, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:45:19,129 [INFO] api: Adding user dana
+2022-01-01 13:45:19,421 [INFO] api: Adding user mamad
+2022-01-01 13:45:19,613 [INFO] auth: User dana logged in.
+2022-01-01 13:45:19,771 [INFO] auth: User mamad logged in.
+2022-01-01 13:45:19,942 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 112, in edit_discussion_detail
+    discussion.update(dict(data))
+AttributeError: 'Discussion' object has no attribute 'update'
+
+2022-01-01 13:45:19,943 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 112, in edit_discussion_detail
+    discussion.update(dict(data))
+AttributeError: 'Discussion' object has no attribute 'update'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 120, in edit_discussion_detail
+    raise InvalidAttemp()
+discussion.blueprints.api.errors.InvalidAttemp: 500 Internal Server Error: None
+
+2022-01-01 13:46:53,347 [INFO] api: Adding user dana
+2022-01-01 13:46:53,740 [INFO] api: Adding user mamad
+2022-01-01 13:46:53,932 [INFO] auth: User dana logged in.
+2022-01-01 13:46:54,107 [INFO] auth: User mamad logged in.
+2022-01-01 13:46:56,408 [INFO] api: Adding user dana
+2022-01-01 13:46:56,738 [INFO] api: Adding user mamad
+2022-01-01 13:46:56,895 [INFO] auth: User dana logged in.
+2022-01-01 13:46:57,040 [INFO] auth: User mamad logged in.
+2022-01-01 13:46:57,043 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 138, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 144, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:46:59,275 [INFO] api: Adding user dana
+2022-01-01 13:46:59,550 [INFO] api: Adding user mamad
+2022-01-01 13:46:59,717 [INFO] auth: User dana logged in.
+2022-01-01 13:46:59,867 [INFO] auth: User mamad logged in.
+2022-01-01 13:47:00,025 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:46:51.805667', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 147, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:47:02,175 [INFO] api: Adding user dana
+2022-01-01 13:47:02,516 [INFO] api: Adding user mamad
+2022-01-01 13:47:02,678 [INFO] auth: User dana logged in.
+2022-01-01 13:47:02,836 [INFO] auth: User mamad logged in.
+2022-01-01 13:54:36,793 [INFO] api: Adding user dana
+2022-01-01 13:54:37,093 [INFO] api: Adding user mamad
+2022-01-01 13:54:37,292 [INFO] auth: User dana logged in.
+2022-01-01 13:54:37,456 [INFO] auth: User mamad logged in.
+2022-01-01 13:54:39,917 [INFO] api: Adding user dana
+2022-01-01 13:54:40,202 [INFO] api: Adding user mamad
+2022-01-01 13:54:40,370 [INFO] auth: User dana logged in.
+2022-01-01 13:54:40,524 [INFO] auth: User mamad logged in.
+2022-01-01 13:54:40,527 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 138, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'title': ['Not a valid string.'], 'description': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 144, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:54:42,796 [INFO] api: Adding user dana
+2022-01-01 13:54:43,092 [INFO] api: Adding user mamad
+2022-01-01 13:54:43,256 [INFO] auth: User dana logged in.
+2022-01-01 13:54:43,408 [INFO] auth: User mamad logged in.
+2022-01-01 13:54:43,614 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:54:35.217731', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:54:45,806 [INFO] api: Adding user dana
+2022-01-01 13:54:46,103 [INFO] api: Adding user mamad
+2022-01-01 13:54:46,291 [INFO] auth: User dana logged in.
+2022-01-01 13:54:46,450 [INFO] auth: User mamad logged in.
+2022-01-01 13:56:42,592 [INFO] api: Adding user dana
+2022-01-01 13:56:42,971 [INFO] api: Adding user mamad
+2022-01-01 13:56:43,170 [INFO] auth: User dana logged in.
+2022-01-01 13:56:43,331 [INFO] auth: User mamad logged in.
+2022-01-01 13:56:45,551 [INFO] api: Adding user dana
+2022-01-01 13:56:45,828 [INFO] api: Adding user mamad
+2022-01-01 13:56:46,022 [INFO] auth: User dana logged in.
+2022-01-01 13:56:46,175 [INFO] auth: User mamad logged in.
+2022-01-01 13:56:46,179 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 138, in create_discussions
+    discussion = create_discussion_schema.load(req_json)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 96, in load
+    return super().load(data, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 719, in load
+    return self._do_load(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 904, in _do_load
+    raise exc
+marshmallow.exceptions.ValidationError: {'description': ['Not a valid string.'], 'title': ['Not a valid string.']}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 144, in create_discussions
+    raise JsonValidationError(e)
+discussion.blueprints.api.errors.JsonValidationError: 400 Bad Request: None
+
+2022-01-01 13:56:48,351 [INFO] api: Adding user dana
+2022-01-01 13:56:48,639 [INFO] api: Adding user mamad
+2022-01-01 13:56:48,825 [INFO] auth: User dana logged in.
+2022-01-01 13:56:48,979 [INFO] auth: User mamad logged in.
+2022-01-01 13:56:49,131 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:56:40.996191', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 13:56:51,185 [INFO] api: Adding user dana
+2022-01-01 13:56:51,473 [INFO] api: Adding user mamad
+2022-01-01 13:56:51,683 [INFO] auth: User dana logged in.
+2022-01-01 13:56:51,869 [INFO] auth: User mamad logged in.
+2022-01-01 13:59:50,192 [INFO] api: Adding user dana
+2022-01-01 13:59:50,562 [INFO] api: Adding user mamad
+2022-01-01 13:59:50,755 [INFO] auth: User dana logged in.
+2022-01-01 13:59:50,910 [INFO] auth: User mamad logged in.
+2022-01-01 13:59:51,039 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 13:59:48.565131', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:01:08,302 [INFO] api: Adding user dana
+2022-01-01 14:01:08,590 [INFO] api: Adding user mamad
+2022-01-01 14:01:08,777 [INFO] auth: User dana logged in.
+2022-01-01 14:01:08,939 [INFO] auth: User mamad logged in.
+2022-01-01 14:01:09,111 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:01:06.769249', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:01:57,174 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussin description', '2022-01-01 14:01:50.109276', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:02:27,200 [INFO] api: Adding user dana
+2022-01-01 14:02:27,504 [INFO] api: Adding user mamad
+2022-01-01 14:02:27,681 [INFO] auth: User dana logged in.
+2022-01-01 14:02:27,832 [INFO] auth: User mamad logged in.
+2022-01-01 14:02:27,990 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:02:25.697417', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:03:34,082 [INFO] api: Adding user dana
+2022-01-01 14:03:34,428 [INFO] api: Adding user mamad
+2022-01-01 14:03:34,612 [INFO] auth: User dana logged in.
+2022-01-01 14:03:34,768 [INFO] auth: User mamad logged in.
+2022-01-01 14:03:34,907 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:03:32.524481', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:06:56,156 [INFO] api: Adding user dana
+2022-01-01 14:06:56,513 [INFO] api: Adding user mamad
+2022-01-01 14:06:56,671 [INFO] auth: User dana logged in.
+2022-01-01 14:06:56,820 [INFO] auth: User mamad logged in.
+2022-01-01 14:06:56,948 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 141, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:06:54.555298', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 148, in create_discussions
+    raise JsonIntegrityError()
+discussion.blueprints.api.errors.JsonIntegrityError: 400 Bad Request: None
+
+2022-01-01 14:09:24,959 [INFO] api: Adding user dana
+2022-01-01 14:09:25,284 [INFO] api: Adding user mamad
+2022-01-01 14:09:25,450 [INFO] auth: User dana logged in.
+2022-01-01 14:09:25,595 [INFO] auth: User mamad logged in.
+2022-01-01 14:09:25,785 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 155, in create_discussions
+    raise(e)
+UnboundLocalError: local variable 'e' referenced before assignment
+
+2022-01-01 14:09:42,630 [INFO] api: Adding user dana
+2022-01-01 14:09:42,942 [INFO] api: Adding user mamad
+2022-01-01 14:09:43,140 [INFO] auth: User dana logged in.
+2022-01-01 14:09:43,320 [INFO] auth: User mamad logged in.
+2022-01-01 14:09:43,443 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 155, in create_discussions
+    raise(x)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:09:41.195386', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+2022-01-01 14:10:54,484 [INFO] api: Adding user dana
+2022-01-01 14:10:54,842 [INFO] api: Adding user mamad
+2022-01-01 14:10:55,018 [INFO] auth: User dana logged in.
+2022-01-01 14:10:55,195 [INFO] auth: User mamad logged in.
+2022-01-01 14:10:55,357 [ERROR] auth: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 156, in create_discussions
+    raise(x)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:10:52.927575', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+2022-01-01 14:12:14,764 [INFO] api: Adding user dana
+2022-01-01 14:12:15,046 [INFO] api: Adding user mamad
+2022-01-01 14:12:15,257 [INFO] auth: User dana logged in.
+2022-01-01 14:12:15,421 [INFO] auth: User mamad logged in.
+2022-01-01 14:12:15,534 [ERROR] auth: uncaught fffff exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: discussion.title, discussion.creator_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/auth/views.py", line 74, in decorator
+    return f(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 156, in create_discussions
+    raise(x)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 142, in create_discussions
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1614, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1481, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1845, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2026, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1802, in _execute_context
+    self.dialect.do_execute(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: discussion.title, discussion.creator_id
+[SQL: INSERT INTO discussion (title, description, date_created, creator_id) VALUES (?, ?, ?, ?)]
+[parameters: ('dana first discussion', 'first discussion description', '2022-01-01 14:12:12.948249', 1)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+
+2022-01-01 14:13:46,522 [INFO] api: Adding user dana
+2022-01-01 14:13:46,845 [INFO] api: Adding user mamad
+2022-01-01 14:13:47,021 [INFO] auth: User dana logged in.
+2022-01-01 14:13:47,170 [INFO] auth: User mamad logged in.
+2022-01-01 14:14:36,212 [INFO] api: Adding user dana
+2022-01-01 14:14:36,593 [INFO] api: Adding user mamad
+2022-01-01 14:14:36,766 [INFO] auth: User dana logged in.
+2022-01-01 14:14:36,911 [INFO] auth: User mamad logged in.
+2022-01-01 14:14:53,034 [INFO] api: Adding user dana
+2022-01-01 14:14:53,425 [INFO] api: Adding user mamad
+2022-01-01 14:14:53,597 [INFO] auth: User dana logged in.
+2022-01-01 14:14:53,742 [INFO] auth: User mamad logged in.
+2022-01-01 14:14:56,273 [INFO] api: Adding user dana
+2022-01-01 14:14:56,614 [INFO] api: Adding user mamad
+2022-01-01 14:14:56,795 [INFO] auth: User dana logged in.
+2022-01-01 14:14:56,954 [INFO] auth: User mamad logged in.
+2022-01-01 14:14:59,115 [INFO] api: Adding user dana
+2022-01-01 14:14:59,416 [INFO] api: Adding user mamad
+2022-01-01 14:14:59,603 [INFO] auth: User dana logged in.
+2022-01-01 14:14:59,764 [INFO] auth: User mamad logged in.
+2022-01-01 14:15:02,084 [INFO] api: Adding user dana
+2022-01-01 14:15:02,372 [INFO] api: Adding user mamad
+2022-01-01 14:15:02,573 [INFO] auth: User dana logged in.
+2022-01-01 14:15:02,729 [INFO] auth: User mamad logged in.
+2022-01-01 14:17:53,592 [INFO] api: Adding user dana
+2022-01-01 14:17:53,897 [INFO] api: Adding user mamad
+2022-01-01 14:17:54,090 [INFO] auth: User dana logged in.
+2022-01-01 14:17:54,237 [INFO] auth: User mamad logged in.
+2022-01-01 14:17:56,698 [INFO] api: Adding user dana
+2022-01-01 14:17:57,108 [INFO] api: Adding user mamad
+2022-01-01 14:17:57,295 [INFO] auth: User dana logged in.
+2022-01-01 14:17:57,458 [INFO] auth: User mamad logged in.
+2022-01-01 14:17:59,765 [INFO] api: Adding user dana
+2022-01-01 14:18:00,064 [INFO] api: Adding user mamad
+2022-01-01 14:18:00,243 [INFO] auth: User dana logged in.
+2022-01-01 14:18:00,393 [INFO] auth: User mamad logged in.
+2022-01-01 14:18:02,765 [INFO] api: Adding user dana
+2022-01-01 14:18:03,053 [INFO] api: Adding user mamad
+2022-01-01 14:18:03,247 [INFO] auth: User dana logged in.
+2022-01-01 14:18:03,422 [INFO] auth: User mamad logged in.
+2022-01-01 14:22:35,432 [INFO] api: Adding user dana
+2022-01-01 14:22:35,800 [INFO] api: Adding user mamad
+2022-01-01 14:22:35,986 [INFO] auth: User dana logged in.
+2022-01-01 14:22:36,159 [INFO] auth: User mamad logged in.
+2022-01-01 14:22:38,782 [INFO] api: Adding user dana
+2022-01-01 14:22:39,111 [INFO] api: Adding user mamad
+2022-01-01 14:22:39,302 [INFO] auth: User dana logged in.
+2022-01-01 14:22:39,479 [INFO] auth: User mamad logged in.
+2022-01-01 14:22:41,614 [INFO] api: Adding user dana
+2022-01-01 14:22:41,944 [INFO] api: Adding user mamad
+2022-01-01 14:22:42,129 [INFO] auth: User dana logged in.
+2022-01-01 14:22:42,290 [INFO] auth: User mamad logged in.
+2022-01-01 14:22:44,577 [INFO] api: Adding user dana
+2022-01-01 14:22:44,880 [INFO] api: Adding user mamad
+2022-01-01 14:22:45,084 [INFO] auth: User dana logged in.
+2022-01-01 14:22:45,257 [INFO] auth: User mamad logged in.
+2022-01-01 14:22:47,836 [INFO] api: Adding user dana
+2022-01-01 14:22:48,166 [INFO] api: Adding user mamad
+2022-01-01 14:22:48,339 [INFO] auth: User dana logged in.
+2022-01-01 14:22:48,515 [INFO] auth: User mamad logged in.
+2022-01-01 14:25:08,032 [INFO] api: Adding user dana
+2022-01-01 14:25:08,304 [INFO] api: Adding user mamad
+2022-01-01 14:25:08,511 [INFO] auth: User dana logged in.
+2022-01-01 14:25:08,669 [INFO] auth: User mamad logged in.
+2022-01-01 14:25:10,905 [INFO] api: Adding user dana
+2022-01-01 14:25:11,226 [INFO] api: Adding user mamad
+2022-01-01 14:25:11,426 [INFO] auth: User dana logged in.
+2022-01-01 14:25:11,605 [INFO] auth: User mamad logged in.
+2022-01-01 14:25:13,871 [INFO] api: Adding user dana
+2022-01-01 14:25:14,223 [INFO] api: Adding user mamad
+2022-01-01 14:25:14,395 [INFO] auth: User dana logged in.
+2022-01-01 14:25:14,553 [INFO] auth: User mamad logged in.
+2022-01-01 14:25:17,071 [INFO] api: Adding user dana
+2022-01-01 14:25:17,391 [INFO] api: Adding user mamad
+2022-01-01 14:25:17,558 [INFO] auth: User dana logged in.
+2022-01-01 14:25:17,741 [INFO] auth: User mamad logged in.
+2022-01-01 14:25:20,438 [INFO] api: Adding user dana
+2022-01-01 14:25:20,735 [INFO] api: Adding user mamad
+2022-01-01 14:25:20,899 [INFO] auth: User dana logged in.
+2022-01-01 14:25:21,062 [INFO] auth: User mamad logged in.
+2022-01-01 14:26:00,910 [INFO] api: Adding user dana
+2022-01-01 14:26:01,190 [INFO] api: Adding user mamad
+2022-01-01 14:26:01,360 [INFO] auth: User dana logged in.
+2022-01-01 14:26:01,514 [INFO] auth: User mamad logged in.
+2022-01-01 14:26:27,188 [INFO] api: Adding user dana
+2022-01-01 14:26:27,482 [INFO] api: Adding user mamad
+2022-01-01 14:26:27,671 [INFO] auth: User dana logged in.
+2022-01-01 14:26:27,853 [INFO] auth: User mamad logged in.
+2022-01-01 14:26:41,210 [INFO] api: Adding user dana
+2022-01-01 14:26:41,513 [INFO] api: Adding user mamad
+2022-01-01 14:26:41,683 [INFO] auth: User dana logged in.
+2022-01-01 14:26:41,836 [INFO] auth: User mamad logged in.
+2022-01-01 14:26:55,218 [INFO] api: Adding user dana
+2022-01-01 14:26:55,504 [INFO] api: Adding user mamad
+2022-01-01 14:26:55,691 [INFO] auth: User dana logged in.
+2022-01-01 14:26:55,874 [INFO] auth: User mamad logged in.
+2022-01-01 14:39:49,001 [INFO] api: Adding user dana
+2022-01-01 14:39:49,181 [INFO] auth: User dana logged in.
+2022-01-01 14:40:34,583 [INFO] api: Adding user dana
+2022-01-01 14:40:34,764 [INFO] auth: User dana logged in.
+2022-01-01 14:41:28,713 [INFO] api: Adding user dana
+2022-01-01 14:41:28,876 [INFO] auth: User dana logged in.
+2022-01-01 14:41:41,884 [INFO] api: Adding user dana
+2022-01-01 14:41:42,066 [INFO] auth: User dana logged in.
+2022-01-01 14:54:02,702 [INFO] api: Adding user dana
+2022-01-01 14:54:02,996 [INFO] api: Adding user mamad
+2022-01-01 14:54:03,183 [INFO] auth: User dana logged in.
+2022-01-01 14:54:03,347 [INFO] auth: User mamad logged in.
+2022-01-01 14:54:05,809 [INFO] api: Adding user dana
+2022-01-01 14:54:06,107 [INFO] api: Adding user mamad
+2022-01-01 14:54:06,311 [INFO] auth: User dana logged in.
+2022-01-01 14:54:06,491 [INFO] auth: User mamad logged in.
+2022-01-01 14:54:06,701 [WARNING] api: mamad attempted to edit dana's post.
+2022-01-01 14:54:08,842 [INFO] api: Adding user dana
+2022-01-01 14:54:09,150 [INFO] api: Adding user mamad
+2022-01-01 14:54:09,354 [INFO] auth: User dana logged in.
+2022-01-01 14:54:09,532 [INFO] auth: User mamad logged in.
+2022-01-01 14:54:12,009 [INFO] api: Adding user dana
+2022-01-01 14:54:12,373 [INFO] api: Adding user mamad
+2022-01-01 14:54:12,587 [INFO] auth: User dana logged in.
+2022-01-01 14:54:12,765 [INFO] auth: User mamad logged in.
+2022-01-01 14:54:12,984 [WARNING] api: Trying to access non-existing post with id 2
+2022-01-01 14:54:15,264 [INFO] api: Adding user dana
+2022-01-01 14:54:15,618 [INFO] api: Adding user mamad
+2022-01-01 14:54:15,826 [INFO] auth: User dana logged in.
+2022-01-01 14:54:16,027 [INFO] auth: User mamad logged in.
+2022-01-01 14:56:05,826 [INFO] api: Adding user dana
+2022-01-01 14:56:06,120 [INFO] api: Adding user mamad
+2022-01-01 14:56:06,313 [INFO] auth: User dana logged in.
+2022-01-01 14:56:06,489 [INFO] auth: User mamad logged in.
+2022-01-01 14:56:08,932 [INFO] api: Adding user dana
+2022-01-01 14:56:09,230 [INFO] api: Adding user mamad
+2022-01-01 14:56:09,420 [INFO] auth: User dana logged in.
+2022-01-01 14:56:09,577 [INFO] auth: User mamad logged in.
+2022-01-01 14:56:12,032 [INFO] api: Adding user dana
+2022-01-01 14:56:12,353 [INFO] api: Adding user mamad
+2022-01-01 14:56:12,518 [INFO] auth: User dana logged in.
+2022-01-01 14:56:12,663 [INFO] auth: User mamad logged in.
+2022-01-01 14:56:15,366 [INFO] api: Adding user dana
+2022-01-01 14:56:15,686 [INFO] api: Adding user mamad
+2022-01-01 14:56:15,883 [INFO] auth: User dana logged in.
+2022-01-01 14:56:16,066 [INFO] auth: User mamad logged in.
+2022-01-01 14:56:16,310 [WARNING] api: Trying to access non-existing post with id 2
+2022-01-01 14:56:18,265 [INFO] api: Adding user dana
+2022-01-01 14:56:18,608 [INFO] api: Adding user mamad
+2022-01-01 14:56:18,787 [INFO] auth: User dana logged in.
+2022-01-01 14:56:18,942 [INFO] auth: User mamad logged in.
+2022-01-01 15:00:26,531 [INFO] api: Adding user dana
+2022-01-01 15:00:27,290 [INFO] api: Adding user mamad
+2022-01-01 15:00:27,955 [INFO] auth: User dana logged in.
+2022-01-01 15:00:28,599 [INFO] auth: User mamad logged in.
+2022-01-01 15:00:31,617 [INFO] api: Adding user dana
+2022-01-01 15:00:32,468 [INFO] api: Adding user mamad
+2022-01-01 15:00:33,112 [INFO] auth: User dana logged in.
+2022-01-01 15:00:33,739 [INFO] auth: User mamad logged in.
+2022-01-01 15:00:36,748 [INFO] api: Adding user dana
+2022-01-01 15:00:37,490 [INFO] api: Adding user mamad
+2022-01-01 15:00:38,189 [INFO] auth: User dana logged in.
+2022-01-01 15:00:38,825 [INFO] auth: User mamad logged in.
+2022-01-01 15:00:42,126 [INFO] api: Adding user dana
+2022-01-01 15:00:42,924 [INFO] api: Adding user mamad
+2022-01-01 15:00:43,565 [INFO] auth: User dana logged in.
+2022-01-01 15:00:44,178 [INFO] auth: User mamad logged in.
+2022-01-01 15:00:44,473 [WARNING] api: Trying to access non-existing post with id 2
+2022-01-01 15:00:47,193 [INFO] api: Adding user dana
+2022-01-01 15:00:47,957 [INFO] api: Adding user mamad
+2022-01-01 15:00:48,618 [INFO] auth: User dana logged in.
+2022-01-01 15:00:49,220 [INFO] auth: User mamad logged in.
+2022-01-01 15:05:45,214 [INFO] api: Adding user dana
+2022-01-01 15:05:45,863 [INFO] auth: User dana logged in.
+2022-01-01 15:06:56,682 [INFO] api: Adding user dana
+2022-01-01 15:06:57,340 [INFO] auth: User dana logged in.
+2022-01-01 15:06:57,344 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0MTcsImlhdCI6MTY0MTAzNzAxNywic3ViIjoxfQ.mZJAKzFkYFZPPlxxnIQuwW2BV-6Ecqb6vNa2_-i7XE0
+2022-01-01 15:06:57,506 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0MTcsImlhdCI6MTY0MTAzNzAxNywic3ViIjoxfQ.mZJAKzFkYFZPPlxxnIQuwW2BV-6Ecqb6vNa2_-i7XE0
+2022-01-01 15:06:57,618 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0MTcsImlhdCI6MTY0MTAzNzAxNywic3ViIjoxfQ.mZJAKzFkYFZPPlxxnIQuwW2BV-6Ecqb6vNa2_-i7XE0
+2022-01-01 15:07:30,962 [INFO] api: Adding user dana
+2022-01-01 15:07:31,803 [INFO] auth: User dana logged in.
+2022-01-01 15:07:31,807 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0NTEsImlhdCI6MTY0MTAzNzA1MSwic3ViIjoxfQ.U2B73yslF3rpnEMvAxjyEz8MiyBqQNMB_D382tv95no
+2022-01-01 15:07:31,982 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0NTEsImlhdCI6MTY0MTAzNzA1MSwic3ViIjoxfQ.U2B73yslF3rpnEMvAxjyEz8MiyBqQNMB_D382tv95no
+2022-01-01 15:07:32,130 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0NTEsImlhdCI6MTY0MTAzNzA1MSwic3ViIjoxfQ.U2B73yslF3rpnEMvAxjyEz8MiyBqQNMB_D382tv95no
+2022-01-01 15:08:10,452 [INFO] api: Adding user dana
+2022-01-01 15:08:11,206 [INFO] auth: User dana logged in.
+2022-01-01 15:08:11,210 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0OTEsImlhdCI6MTY0MTAzNzA5MSwic3ViIjoxfQ.vYP3iw2CRiYnKvcghH4gL4yNCuVN_mZk7LM-wY8dlTc
+2022-01-01 15:08:11,392 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0OTEsImlhdCI6MTY0MTAzNzA5MSwic3ViIjoxfQ.vYP3iw2CRiYnKvcghH4gL4yNCuVN_mZk7LM-wY8dlTc
+2022-01-01 15:08:11,513 [WARNING] auth: token was eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM0OTEsImlhdCI6MTY0MTAzNzA5MSwic3ViIjoxfQ.vYP3iw2CRiYnKvcghH4gL4yNCuVN_mZk7LM-wY8dlTc
+2022-01-01 15:08:11,520 [WARNING] auth: attribiute error happend.
+2022-01-01 15:10:14,497 [INFO] api: Adding user dana
+2022-01-01 15:10:15,163 [INFO] auth: User dana logged in.
+2022-01-01 15:10:15,167 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2MTUsImlhdCI6MTY0MTAzNzIxNSwic3ViIjoxfQ.xY5rNlGdtYrBtHiGcUwZoOaDvnNnntXIV3dlkMfc8GM']
+2022-01-01 15:10:15,341 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2MTUsImlhdCI6MTY0MTAzNzIxNSwic3ViIjoxfQ.xY5rNlGdtYrBtHiGcUwZoOaDvnNnntXIV3dlkMfc8GM']
+2022-01-01 15:10:15,467 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2MTUsImlhdCI6MTY0MTAzNzIxNSwic3ViIjoxfQ.xY5rNlGdtYrBtHiGcUwZoOaDvnNnntXIV3dlkMfc8GM']
+2022-01-01 15:11:22,764 [INFO] api: Adding user dana
+2022-01-01 15:11:23,464 [INFO] auth: User dana logged in.
+2022-01-01 15:11:23,467 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2ODMsImlhdCI6MTY0MTAzNzI4Mywic3ViIjoxfQ.XzYkyCaf6KYK3eWXufzyBKIERlQhdYcA1aRbwArQZEE']
+2022-01-01 15:11:23,583 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2ODMsImlhdCI6MTY0MTAzNzI4Mywic3ViIjoxfQ.XzYkyCaf6KYK3eWXufzyBKIERlQhdYcA1aRbwArQZEE']
+2022-01-01 15:11:23,688 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM2ODMsImlhdCI6MTY0MTAzNzI4Mywic3ViIjoxfQ.XzYkyCaf6KYK3eWXufzyBKIERlQhdYcA1aRbwArQZEE']
+2022-01-01 15:11:23,693 [WARNING] auth: error 'Post' object has no attribute 'update' happend.
+2022-01-01 15:12:34,175 [INFO] api: Adding user dana
+2022-01-01 15:12:34,830 [INFO] auth: User dana logged in.
+2022-01-01 15:12:34,834 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM3NTQsImlhdCI6MTY0MTAzNzM1NCwic3ViIjoxfQ._pX16Ho3kuYXBKW4Xrzy2kRHvY0zS4gW1QMyott6_QM']
+2022-01-01 15:12:34,961 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM3NTQsImlhdCI6MTY0MTAzNzM1NCwic3ViIjoxfQ._pX16Ho3kuYXBKW4Xrzy2kRHvY0zS4gW1QMyott6_QM']
+2022-01-01 15:12:35,078 [WARNING] auth: token was ['token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDExMjM3NTQsImlhdCI6MTY0MTAzNzM1NCwic3ViIjoxfQ._pX16Ho3kuYXBKW4Xrzy2kRHvY0zS4gW1QMyott6_QM']
+2022-01-01 15:13:22,042 [INFO] api: Adding user dana
+2022-01-01 15:13:22,691 [INFO] auth: User dana logged in.
+2022-01-01 15:13:22,972 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 194, in edit_post_details
+    post.update(dict(data))
+AttributeError: 'Post' object has no attribute 'update'
+
+2022-01-01 15:13:43,165 [INFO] api: Adding user dana
+2022-01-01 15:13:43,862 [INFO] auth: User dana logged in.
+2022-01-01 15:15:51,612 [INFO] api: Adding user dana
+2022-01-01 15:15:52,404 [INFO] api: Adding user mamad
+2022-01-01 15:15:53,059 [INFO] auth: User dana logged in.
+2022-01-01 15:15:53,734 [INFO] auth: User mamad logged in.
+2022-01-01 15:15:57,062 [INFO] api: Adding user dana
+2022-01-01 15:15:57,961 [INFO] api: Adding user mamad
+2022-01-01 15:15:58,746 [INFO] auth: User dana logged in.
+2022-01-01 15:15:59,387 [INFO] auth: User mamad logged in.
+2022-01-01 15:16:02,282 [INFO] api: Adding user dana
+2022-01-01 15:16:03,026 [INFO] api: Adding user mamad
+2022-01-01 15:16:03,650 [INFO] auth: User dana logged in.
+2022-01-01 15:16:04,280 [INFO] auth: User mamad logged in.
+2022-01-01 15:16:07,428 [INFO] api: Adding user dana
+2022-01-01 15:16:08,282 [INFO] api: Adding user mamad
+2022-01-01 15:16:08,969 [INFO] auth: User dana logged in.
+2022-01-01 15:16:09,607 [INFO] auth: User mamad logged in.
+2022-01-01 15:16:09,871 [WARNING] api: Trying to access non-existing post with id 2
+2022-01-01 15:16:12,462 [INFO] api: Adding user dana
+2022-01-01 15:16:13,237 [INFO] api: Adding user mamad
+2022-01-01 15:16:13,868 [INFO] auth: User dana logged in.
+2022-01-01 15:16:14,482 [INFO] auth: User mamad logged in.
+2022-01-01 15:17:19,755 [INFO] api: Adding user dana
+2022-01-01 15:17:20,128 [INFO] api: Adding user mamad
+2022-01-01 15:17:20,334 [INFO] auth: User dana logged in.
+2022-01-01 15:17:20,528 [INFO] auth: User mamad logged in.
+2022-01-01 15:17:23,440 [INFO] api: Adding user dana
+2022-01-01 15:17:23,781 [INFO] api: Adding user mamad
+2022-01-01 15:17:23,945 [INFO] auth: User dana logged in.
+2022-01-01 15:17:24,093 [INFO] auth: User mamad logged in.
+2022-01-01 15:17:24,343 [WARNING] api: mamad attempted to edit dana's post.
+2022-01-01 15:17:26,373 [INFO] api: Adding user dana
+2022-01-01 15:17:26,661 [INFO] api: Adding user mamad
+2022-01-01 15:17:26,843 [INFO] auth: User dana logged in.
+2022-01-01 15:17:27,009 [INFO] auth: User mamad logged in.
+2022-01-01 15:17:29,428 [INFO] api: Adding user dana
+2022-01-01 15:17:29,732 [INFO] api: Adding user mamad
+2022-01-01 15:17:29,947 [INFO] auth: User dana logged in.
+2022-01-01 15:17:30,115 [INFO] auth: User mamad logged in.
+2022-01-01 15:17:30,393 [WARNING] api: Trying to access non-existing post with id 2
+2022-01-01 15:17:32,484 [INFO] api: Adding user dana
+2022-01-01 15:17:32,825 [INFO] api: Adding user mamad
+2022-01-01 15:17:32,991 [INFO] auth: User dana logged in.
+2022-01-01 15:17:33,157 [INFO] auth: User mamad logged in.
+2022-01-01 15:31:11,377 [INFO] api: Adding user dana
+2022-01-01 15:31:11,737 [INFO] api: Adding user mamad
+2022-01-01 15:31:11,933 [INFO] auth: User dana logged in.
+2022-01-01 15:31:12,109 [INFO] auth: User mamad logged in.
+2022-01-01 15:31:12,276 [WARNING] api: Trying to edit to non-existing invitation with id 1
+2022-01-01 15:31:41,056 [INFO] api: Adding user dana
+2022-01-01 15:31:41,427 [INFO] api: Adding user mamad
+2022-01-01 15:31:41,617 [INFO] auth: User dana logged in.
+2022-01-01 15:31:41,775 [INFO] auth: User mamad logged in.
+2022-01-01 15:31:41,968 [WARNING] api: Trying to edit to non-existing invitation with id 1
+2022-01-01 15:32:03,711 [INFO] api: Adding user dana
+2022-01-01 15:32:04,094 [INFO] api: Adding user mamad
+2022-01-01 15:32:04,280 [INFO] auth: User dana logged in.
+2022-01-01 15:32:04,442 [INFO] auth: User mamad logged in.
+2022-01-01 15:32:04,710 [WARNING] api: dana attempted to edit user mamad's invitation.
+2022-01-01 15:32:33,512 [INFO] api: Adding user dana
+2022-01-01 15:32:33,827 [INFO] api: Adding user mamad
+2022-01-01 15:32:33,988 [INFO] auth: User dana logged in.
+2022-01-01 15:32:34,151 [INFO] auth: User mamad logged in.
+2022-01-01 15:32:34,384 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 298, in edit_invitation_details
+    invitation.query.update(status=status)
+TypeError: update() got an unexpected keyword argument 'status'
+
+2022-01-01 15:33:05,151 [INFO] api: Adding user dana
+2022-01-01 15:33:05,456 [INFO] api: Adding user mamad
+2022-01-01 15:33:05,655 [INFO] auth: User dana logged in.
+2022-01-01 15:33:05,839 [INFO] auth: User mamad logged in.
+2022-01-01 15:33:54,822 [INFO] api: Adding user dana
+2022-01-01 15:33:55,192 [INFO] api: Adding user mamad
+2022-01-01 15:33:55,391 [INFO] auth: User dana logged in.
+2022-01-01 15:33:55,583 [INFO] auth: User mamad logged in.
+2022-01-01 15:33:59,975 [INFO] api: Adding user dana
+2022-01-01 15:34:00,257 [INFO] api: Adding user mamad
+2022-01-01 15:34:00,468 [INFO] auth: User dana logged in.
+2022-01-01 15:34:00,622 [INFO] auth: User mamad logged in.
+2022-01-01 15:40:26,873 [INFO] api: Adding user dana
+2022-01-01 15:40:27,244 [INFO] api: Adding user mamad
+2022-01-01 15:40:27,431 [INFO] auth: User dana logged in.
+2022-01-01 15:40:27,600 [INFO] auth: User mamad logged in.
+2022-01-01 15:41:49,610 [INFO] api: Adding user dana
+2022-01-01 15:41:49,982 [INFO] api: Adding user mamad
+2022-01-01 15:41:50,157 [INFO] auth: User dana logged in.
+2022-01-01 15:41:50,316 [INFO] auth: User mamad logged in.
+2022-01-01 15:42:08,231 [INFO] api: Adding user dana
+2022-01-01 15:42:08,513 [INFO] api: Adding user mamad
+2022-01-01 15:42:08,692 [INFO] auth: User dana logged in.
+2022-01-01 15:42:08,844 [INFO] auth: User mamad logged in.
+2022-01-01 15:43:31,278 [INFO] api: Adding user dana
+2022-01-01 15:43:31,563 [INFO] api: Adding user mamad
+2022-01-01 15:43:31,777 [INFO] auth: User dana logged in.
+2022-01-01 15:43:31,974 [INFO] auth: User mamad logged in.
+2022-01-01 15:43:32,246 [WARNING] api: mamad attempted to edit user mamad's invitation.
+2022-01-01 15:43:45,680 [INFO] api: Adding user dana
+2022-01-01 15:43:45,985 [INFO] api: Adding user mamad
+2022-01-01 15:43:46,175 [INFO] auth: User dana logged in.
+2022-01-01 15:43:46,349 [INFO] auth: User mamad logged in.
+2022-01-01 15:45:51,235 [INFO] api: Adding user dana
+2022-01-01 15:45:51,533 [INFO] api: Adding user mamad
+2022-01-01 15:45:51,702 [INFO] auth: User dana logged in.
+2022-01-01 15:45:51,857 [INFO] auth: User mamad logged in.
+2022-01-01 15:54:55,483 [INFO] api: Adding user dana
+2022-01-01 15:54:55,841 [INFO] api: Adding user mamad
+2022-01-01 15:54:56,015 [INFO] auth: User dana logged in.
+2022-01-01 15:54:56,192 [INFO] auth: User mamad logged in.
+2022-01-01 15:54:58,443 [INFO] api: Adding user dana
+2022-01-01 15:54:58,743 [INFO] api: Adding user mamad
+2022-01-01 15:54:58,936 [INFO] auth: User dana logged in.
+2022-01-01 15:54:59,114 [INFO] auth: User mamad logged in.
+2022-01-01 15:55:30,082 [INFO] api: Adding user dana
+2022-01-01 15:55:30,454 [INFO] api: Adding user mamad
+2022-01-01 15:55:30,666 [INFO] auth: User dana logged in.
+2022-01-01 15:55:30,829 [INFO] auth: User mamad logged in.
+2022-01-01 15:55:33,188 [INFO] api: Adding user dana
+2022-01-01 15:55:33,509 [INFO] api: Adding user mamad
+2022-01-01 15:55:33,699 [INFO] auth: User dana logged in.
+2022-01-01 15:55:33,855 [INFO] auth: User mamad logged in.

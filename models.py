@@ -83,7 +83,6 @@ class Discussion(db.Model):
         # Index('title_name', 'title', ''),
     )
 
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), nullable=False, index=True)
     description = db.Column(db.Text, nullable=False)
