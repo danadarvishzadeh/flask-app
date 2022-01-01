@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from flask import current_app, jsonify, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from sqlalchemy import UniqueConstraint, Index
 from discussion.app import db
 
 
@@ -30,13 +30,16 @@ class Invitation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text, nullable=False)
     date_sent = db.Column(db.DateTime, default=datetime.now())
-    inviter_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    invited_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    inviter_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    invited_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'), nullable=False)
     status = db.Column(db.String(10), nullable=False)
 
 
 class User(db.Model):
+    __table_args__ = (
+        Index('name_index', 'lastname', 'name'),
+    )
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
@@ -74,8 +77,15 @@ class User(db.Model):
 
 
 class Discussion(db.Model):
+
+    __table_args__ = (
+        UniqueConstraint('title', 'creator_id', name='unique_discussion'),
+        # Index('title_name', 'title', ''),
+    )
+
+
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), nullable=False)
+    title = db.Column(db.String(64), nullable=False, index=True)
     description = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now())
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -93,6 +103,10 @@ class Discussion(db.Model):
 
 
 class Post(db.Model):
+    __table_args__ = (
+        UniqueConstraint('author_id', 'discussion_id', 'body', name='creator_unique_post'),
+        Index('author_discussion', 'author_id', 'discussion_id'),
+    )
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now())

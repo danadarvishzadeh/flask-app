@@ -1,0 +1,71 @@
+2022-01-01 09:09:27,764 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 258, in create_invitations
+    return invitation_schema.dumps(invitation)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 577, in dumps
+    serialized = self.dump(obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 552, in dump
+    result = self._serialize(processed_obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 520, in _serialize
+    value = field_obj.serialize(attr_name, obj, accessor=self.get_attribute)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 339, in serialize
+    return self._serialize(value, attr, obj, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 625, in _serialize
+    return schema.dump(nested_obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 555, in dump
+    result = self._invoke_dump_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1063, in _invoke_dump_processors
+    data = self._invoke_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1220, in _invoke_processors
+    data = processor(data, many=many, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/schemas.py", line 154, in load_followed_by
+    followed_by = [summerised_user_schema.dump(User.query.get(f.follower_id)) for f in data['followed_by']]
+KeyError: 'followed_by'
+
+2022-01-01 09:09:53,911 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 258, in create_invitations
+    return invitation_schema.dumps(invitation)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 577, in dumps
+    serialized = self.dump(obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 552, in dump
+    result = self._serialize(processed_obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 520, in _serialize
+    value = field_obj.serialize(attr_name, obj, accessor=self.get_attribute)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 339, in serialize
+    return self._serialize(value, attr, obj, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 625, in _serialize
+    return schema.dump(nested_obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 555, in dump
+    result = self._invoke_dump_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1063, in _invoke_dump_processors
+    data = self._invoke_processors(
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 1220, in _invoke_processors
+    data = processor(data, many=many, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/schemas.py", line 154, in load_followed_by
+    followed_by = [summerised_user_schema.dump(User.query.get(f.follower_id)) for f in data['followed_by']]
+KeyError: 'followed_by'
+
+2022-01-01 09:16:22,205 [ERROR] api: uncaught exception: Traceback (most recent call last):
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/views.py", line 226, in create_posts
+    return post_schema.dumps(post)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 577, in dumps
+    serialized = self.dump(obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 552, in dump
+    result = self._serialize(processed_obj, many=many)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 520, in _serialize
+    value = field_obj.serialize(attr_name, obj, accessor=self.get_attribute)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 339, in serialize
+    return self._serialize(value, attr, obj, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 621, in _serialize
+    schema = self.schema
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/fields.py", line 569, in schema
+    nested = self.nested()
+  File "/home/dana/Documents/learning/flask_tutorial/discussion/blueprints/api/schemas.py", line 170, in <lambda>
+    parent_discussion = Nested(lambda: DiscussionSchema(exclude=('posts', 'author')))
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow_sqlalchemy/load_instance_mixin.py", line 45, in __init__
+    super().__init__(*args, **kwargs)
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 397, in __init__
+    self._init_fields()
+  File "/home/dana/Documents/learning/flask_tutorial/venv/lib/python3.9/site-packages/marshmallow/schema.py", line 974, in _init_fields
+    raise ValueError(message)
+ValueError: Invalid fields for <DiscussionSchema(many=False)>: {'author'}.
+

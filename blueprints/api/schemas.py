@@ -9,7 +9,7 @@ from discussion.models import (User, Discussion,
                                 Post, Invitation,
                                 Participate, Follow )
 # from flask_marshmallow.fields import URLFor
-from marshmallow.decorators import post_dump
+from marshmallow.decorators import post_dump, post_load
 
 
 class CreateUserSchema(ma.SQLAlchemyAutoSchema):
@@ -18,10 +18,18 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
 
     password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
+    email = ma.String(required=True, validate=[validate.Email()])
 
     def __init__(self):
         super().__init__()
         self.fields.pop('password_hash')
+    
+    @post_load()
+    def lower_case(self, data, **kwargs):
+        data['username'] = data['username'].lower()
+        data['name'] = data['name'].lower()
+        data['lastname'] = data['lastname'].lower()
+        return data
 
 
 class EditUserSchema(ma.SQLAlchemyAutoSchema):
@@ -70,12 +78,12 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     id = auto_field(dump_only=True)
     username = auto_field(dump_only=True)
     email = auto_field(dump_only=True)
-    created_discussions = Nested(lambda: DiscussionSchema(only=("id", "title", "description", 'participants', 'followed_by'), many=True), dump_only=True)
+    created_discussions = Nested(lambda: DiscussionSchema(only=("id", "title", "description", 'participants', 'followed_by'), many=True))
     invitations_sent = Nested('SummerisedInvitationSchema', many=True)
     invitations_recived = Nested('SummerisedInvitationSchema', many=True)
 
-    # participated = ma.Nested(lambda: UserSchema(only=('id', 'username', 'name', 'lastname', 'email'), many=True), dump_only=True)
-    # participated_with = ma.Nested(lambda: UserSchema(only=('id', 'username', 'name', 'lastname', 'email'), many=True), dump_only=True)
+    # participated = ma.Nested(lambda: UserSchema(only=('id', 'username', 'name', 'lastname', 'email'), many=True))
+    # participated_with = ma.Nested(lambda: UserSchema(only=('id', 'username', 'name', 'lastname', 'email'), many=True))
 
     @post_dump()
     def load_followed_discussions(self, data, **kwargs):
@@ -129,10 +137,8 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
             'followed_by',
         )
 
-    id = auto_field(dump_only=True)
-    date_created = auto_field(dump_only=True)
     creator = Nested(SummerisedUserSchema)
-    posts = Nested(lambda: PostSchema(only=('id', 'body', 'date_created'), many=True))
+    posts = Nested(lambda: SummerisedPostSchema(), many=True)
     invitations = Nested(lambda: InvitationSchema(only=('id', 'body', 'invited', 'status'), many=True))
 
     @post_dump()
@@ -159,10 +165,22 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
             'author',
             'parent_discussion',
         )
-    id = auto_field(dump_only=True)
-    date_created = auto_field(dump_only=True)
-    author = Nested(lambda: UserSchema(exclude=('created_discussions',)), dump_only=True)
-    parent_discussion = Nested(lambda: DiscussionSchema(exclude=('posts', 'author')), dump_only=True)
+    author = Nested(lambda: UserSchema(exclude=('created_discussions',)))
+    parent_discussion = Nested(lambda: DiscussionSchema(exclude=('posts', 'creator')))
+
+
+class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Post
+        fields = (
+            'id',
+            'body',
+            'date_created',
+            'author',
+            'parent_discussion',
+        )
+    author = Nested(lambda: SummerisedUserSchema())
+    parent_discussion = Nested(lambda: SummerisedDiscussionSchema())
 
 
 class CreatePostSchema(ma.SQLAlchemyAutoSchema):
@@ -198,10 +216,9 @@ class InvitationSchema(ma.SQLAlchemyAutoSchema):
             'discussion',
         )
 
-    invited = Nested(SummerisedUserSchema, dump_only=True)
-    inviter = Nested(SummerisedUserSchema, dump_only=True)
-    discussion = Nested(lambda: DiscussionSchema(only=(
-        'id', 'title', 'description', 'date_created', 'participants')), dump_only=True)
+    invited = Nested(SummerisedUserSchema)
+    inviter = Nested(SummerisedUserSchema)
+    discussion = Nested(lambda: SummerisedDiscussionSchema())
 
 
 class SummerisedInvitationSchema(ma.SQLAlchemyAutoSchema):
@@ -245,3 +262,5 @@ invitation_schema = InvitationSchema()
 summerised_user_schema = SummerisedUserSchema()
 summerised_discussion_schema = SummerisedDiscussionSchema()
 edit_user_schema = EditUserSchema()
+summerised_invitation_schema = SummerisedInvitationSchema()
+summerised_post_schema = SummerisedPostSchema()

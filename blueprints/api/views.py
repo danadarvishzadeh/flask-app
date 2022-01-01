@@ -5,13 +5,14 @@ from discussion.models import (Discussion, Follow, Invitation, Participate,
 from flask import Blueprint, abort, current_app, g, jsonify, request, url_for
 from sqlalchemy.exc import IntegrityError
 
-from . import bp, logger
-from .errors import *
-from .schemas import (create_discussion_schema, create_invitation_schema,
+from discussion.blueprints.api import bp, logger
+from discussion.blueprints.api.errors import *
+from discussion.blueprints.api.schemas import (create_discussion_schema, create_invitation_schema,
                       create_post_schema, create_user_schema,
                       discussion_schema, invitation_schema, post_schema,
-                      user_schema, edit_user_schema)
-from .utils import paginate_discussions, paginate_invitatinos, paginate_posts
+                      user_schema, edit_user_schema, summerised_invitation_schema,
+                      summerised_post_schema)
+from discussion.blueprints.api.utils import paginate_discussions, paginate_invitatinos, paginate_posts
 import traceback
 
 
@@ -28,7 +29,7 @@ def create_users():
     except:
         trace_info = traceback.format_exc()
         logger.error(f"uncaught exception: {trace_info}")
-        pass
+        raise InvalidAttemp()
     db.session.add(user)
     try:
         db.session.commit()
@@ -39,7 +40,7 @@ def create_users():
     except:
         trace_info = traceback.format_exc()
         logger.error(f"uncaught exception: {trace_info}")
-        pass
+        raise InvalidAttemp()
     else:
         logger.info(f"Adding user {user.username}")
         return user_schema.dumps(user)
@@ -69,7 +70,7 @@ def edit_user_detail(id):
             except:
                 trace_info = traceback.format_exc()
                 logger.error(f"uncaught exception: {trace_info}")
-                pass
+                raise InvalidAttemp()
             user.update(dict(data))
             db.session.commit()
             return user_schema.dumps(user.first())
@@ -111,7 +112,7 @@ def edit_discussion_detail(id):
                 except:
                     trace_info = traceback.format_exc()
                     logger.error(f"uncaught exception: {trace_info}")
-                    pass
+                    raise InvalidAttemp()
                 else:
                     discussion.update(dict(data))
                     db.session.commit()
@@ -140,12 +141,13 @@ def create_discussions():
         return discussion_schema.dumps(discussion)
     except ValidationError as e:
         raise JsonValidationError(e)
-    except IntegrityError:
+    except IntegrityError as e:
+        db.session.rollback()
         raise JsonIntegrityError()
     except:
         trace_info = traceback.format_exc()
         logger.error(f"uncaught exception: {trace_info}")
-        pass
+        raise InvalidAttemp()
 
 @bp.route('/users/discussions/<int:id>/', methods=get)
 def get_creator_discussions(id):
@@ -165,7 +167,7 @@ def get_posts():
 def get_post_detail(id):
     post = Post.query.get(id)
     if post is not None:
-        return post_schema.dumps(post)
+        return summerised_post_schema.dumps(post)
     else:
         logger.warning(f"Trying to access non-existing post with id {id}")
         raise ResourceDoesNotExists()
@@ -193,7 +195,7 @@ def edit_post_details(id):
                 except:
                     trace_info = traceback.format_exc()
                     logger.error(f"uncaught exception: {trace_info}")
-                    pass
+                    raise InvalidAttemp()
                 post.update(dict(data))
                 db.session.commit()
                 return post_schema.dumps(post.first())
@@ -213,25 +215,25 @@ def edit_post_details(id):
 def create_posts(id):
     req_json = request.get_json()
     discussion = Discussion.query.get(id)
-    participants = discussion.get_participant_ids()
     if discussion is not None:
         if discussion.creator_id == g.user.id or g.user.id in participants:
             try:
+                participants = discussion.get_participant_ids()
                 post = create_post_schema.load(req_json)
                 post.author_id = g.user.id
                 post.discussion_id = id
                 db.session.add(post)
                 db.session.commit()
+                return summerised_post_schema.dumps(post)
             except ValidationError as e:
                 raise JsonValidationError(e)
             except IntegrityError:
+                db.session.rollback()
                 raise JsonIntegrityError()
             except:
                 trace_info = traceback.format_exc()
                 logger.error(f"uncaught exception: {trace_info}")
-                pass
-            else:
-                return post_schema.dumps(post)
+                raise InvalidAttemp()
         else:
             logger.warning(f"{g.user.username} attempted to add posts to {discussion.creator.username}'s discussion.")
             raise JsonPermissionDenied()
@@ -254,16 +256,16 @@ def create_invitations(discussion_id, user_id):
                 invitation.status = 'Sent'
                 db.session.add(invitation)
                 db.session.commit()
+                return summerised_invitation_schema.dumps(invitation)
             except ValidationError as e:
                 raise JsonValidationError(e)
             except IntegrityError:
+                db.session.rollback()
                 raise JsonIntegrityError()
             except:
                 trace_info = traceback.format_exc()
                 logger.error(f"uncaught exception: {trace_info}")
-                pass
-            else:
-                return invitation_schema.dumps(invitation)
+                raise InvalidAttemp()
         else:
             logger.warning(f"{g.user.username} attempted to invite users to {discussion.creator.username}'s discussion.")
             raise JsonPermissionDenied()
@@ -298,11 +300,12 @@ def edit_invitation_details(id):
                             db.session.commit()
                             return jsonify({'response': 'Ok!'}), 200
                         except IntegrityError:
+                            db.session.rollback()
                             raise JsonIntegrityError()
                         except:
                             trace_info = traceback.format_exc()
                             logger.error(f"uncaught exception: {trace_info}")
-                            pass
+                            raise InvalidAttemp()
                 else:
                     raise ActionIsNotPossible('The action that you requested can not be done.')
             else:
@@ -324,11 +327,12 @@ def create_followes(id):
             db.session.add(follow)
             db.session.commit()
         except IntegrityError:
+            db.session.rollback()
             raise JsonIntegrityError()
         except:
             trace_info = traceback.format_exc()
             logger.error(f"uncaught exception: {trace_info}")
-            pass
+            raise InvalidAttemp()
         else:
             return jsonify({'response': 'Ok!'}), 200
     else:

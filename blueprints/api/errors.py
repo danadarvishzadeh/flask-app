@@ -3,7 +3,7 @@ from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import HTTPException, Forbidden
 
-from . import bp
+from discussion.blueprints.api import bp
 
 
 class JsonIntegrityError(HTTPException):
@@ -33,15 +33,6 @@ class JsonValidationError(HTTPException):
         self.messages = e.messages
 
 
-class JsonValidationError(HTTPException):
-    code = 400
-    status_code = 400
-
-    def __init__(self, e):
-        super().__init__()
-        self.messages = e.messages
-
-
 class ResourceDoesNotExists(HTTPException):
     code = 400
     status_code = 400
@@ -60,6 +51,16 @@ class ActionIsNotPossible(HTTPException):
         self.message = message
 
 
+class InvalidAttemp(HTTPException):
+    code = 500
+    status_code = 500
+
+    def __init__(self):
+        super().__init__()
+        self.message = 'Server responded with an error.'
+
+
+@bp.errorhandler(InvalidAttemp)
 @bp.errorhandler(ActionIsNotPossible)
 @bp.errorhandler(ResourceDoesNotExists)
 @bp.errorhandler(JsonIntegrityError)

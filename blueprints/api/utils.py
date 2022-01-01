@@ -1,6 +1,6 @@
 from discussion.models import Discussion, Post, Invitation
 from flask import current_app, url_for, jsonify
-from .schemas import discussion_schema, post_schema, invitation_schema
+from discussion.blueprints.api.schemas import discussion_schema, post_schema, invitation_schema
 
 
 

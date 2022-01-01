@@ -1,4 +1,4 @@
-from . import bp
+from discussion.blueprints.auth import bp
 from flask import jsonify, request, json, make_response, current_app
 from werkzeug.exceptions import HTTPException
 

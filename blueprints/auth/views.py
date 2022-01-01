@@ -4,8 +4,8 @@ import jwt
 from discussion.app import db
 from discussion.models import TokenBlackList, User
 from flask import abort, g, jsonify, request, current_app
-from . import bp, logger
-from .errors import *
+from discussion.blueprints.auth import bp, logger
+from discussion.blueprints.auth.errors import *
 
 
 def decode_auth_token(auth_token):
