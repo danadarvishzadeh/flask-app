@@ -1,15 +1,13 @@
 
 from discussion.app import ma
+from discussion.models import (Discussion, Follow, Invitation, Participate,
+                               Post, User)
 from flask_marshmallow import Schema, fields
-from marshmallow.fields import Nested
-from marshmallow import validate
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 from flask_marshmallow.sqla import HyperlinkRelated
-from discussion.models import (User, Discussion,
-                                Post, Invitation,
-                                Participate, Follow )
-# from flask_marshmallow.fields import URLFor
+from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
+from marshmallow.fields import Nested
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
 
 class CreateUserSchema(ma.SQLAlchemyAutoSchema):

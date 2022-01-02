@@ -1,20 +1,26 @@
+import traceback
+
 from discussion.app import db
+from discussion.blueprints.api import bp, logger
+from discussion.blueprints.api.errors import *
+from discussion.blueprints.api.schemas import (create_discussion_schema,
+                                               create_invitation_schema,
+                                               create_post_schema,
+                                               create_user_schema,
+                                               discussion_schema,
+                                               edit_user_schema,
+                                               invitation_schema, post_schema,
+                                               summerised_invitation_schema,
+                                               summerised_post_schema,
+                                               user_schema)
+from discussion.blueprints.api.utils import (paginate_discussions,
+                                             paginate_invitatinos,
+                                             paginate_posts)
 from discussion.blueprints.auth.views import token_required
 from discussion.models import (Discussion, Follow, Invitation, Participate,
                                Post, User)
 from flask import Blueprint, abort, current_app, g, jsonify, request, url_for
 from sqlalchemy.exc import IntegrityError
-
-from discussion.blueprints.api import bp, logger
-from discussion.blueprints.api.errors import *
-from discussion.blueprints.api.schemas import (create_discussion_schema, create_invitation_schema,
-                      create_post_schema, create_user_schema,
-                      discussion_schema, invitation_schema, post_schema,
-                      user_schema, edit_user_schema, summerised_invitation_schema,
-                      summerised_post_schema)
-from discussion.blueprints.api.utils import paginate_discussions, paginate_invitatinos, paginate_posts
-import traceback
-
 
 get, _post, put_delete = ['GET'], ['POST'], ['PUT', 'DELETE']
 

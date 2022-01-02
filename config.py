@@ -10,6 +10,9 @@ class Config:
     DISCUSSION_DISCUSSIONS_PER_PAGE = 3
     DISCUSSION_POSTS_PER_PAGE = 5
     DISCUSSION_INVITATIONS_PER_PAGE = 10
+    BLUEPRINTS = (
+        'blueprints',
+    )
 
     @staticmethod
     def init_app(app):

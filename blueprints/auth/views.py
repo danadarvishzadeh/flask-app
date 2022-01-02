@@ -6,7 +6,7 @@ from discussion.models import TokenBlackList, User
 from flask import abort, g, jsonify, request, current_app
 from discussion.blueprints.auth import bp, logger
 from discussion.blueprints.auth.errors import *
-from discussion.blueprints.api.errors import InvalidAttemp
+# from discussion.blueprints.api.errors import InvalidAttemp
 import traceback
 
 def decode_auth_token(auth_token):

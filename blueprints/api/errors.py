@@ -1,9 +1,8 @@
+from discussion.blueprints.api import bp
 from flask import json, make_response, request
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError as v
-from werkzeug.exceptions import HTTPException, Forbidden
-
-from discussion.blueprints.api import bp
+from werkzeug.exceptions import Forbidden, HTTPException
 
 
 class JsonIntegrityError(HTTPException):
