@@ -21,10 +21,10 @@ ma = Marshmallow()
 
 def configure_blueprints(app):
     for blueprint in app.config['BLUEPRINTS']:
-        bp = __import__('discussion.%s' % blueprint, fromlist=[blueprint])
+        bp = __import__('discussion.blueprints.%s' % blueprint, fromlist=[blueprint])
+        app.register_blueprint(getattr(bp, 'bp'))
 
-        for route in bp.__all__:
-            app.register_blueprint(getattr(bp, route))
+        # for route in bp.__all__:
 
 
 def create_app(config_name='default'):
