@@ -6,7 +6,6 @@ from .config import config, LOG_CONFIG
 from logging.config import dictConfig
 from logging.handlers import RotatingFileHandler
 from logging.config import dictConfig
-# from importlib import __import__
 
 
 dictConfig(LOG_CONFIG)
@@ -14,9 +13,6 @@ dictConfig(LOG_CONFIG)
 db = SQLAlchemy()
 migrate = Migrate()
 ma = Marshmallow()
-
-# from discussion.blueprints.api.views import bp as api
-# from discussion.blueprints.auth import bp as auth
 
 
 def configure_blueprints(app):
@@ -38,8 +34,6 @@ def create_app(config_name='default'):
     ma.init_app(app)
 
     configure_blueprints(app)
-    # app.register_blueprint(auth)
-    # app.register_blueprint(api)
 
     return app
 

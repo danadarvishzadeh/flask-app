@@ -27,6 +27,9 @@ class Participate(db.Model):
 
 
 class Invitation(db.Model):
+    __table_args__ = (
+        UniqueConstraint('inviter_id', 'invited_id', name='unique_invitation'),
+    )
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text, nullable=False)
     date_sent = db.Column(db.DateTime, default=datetime.now())
@@ -80,7 +83,6 @@ class Discussion(db.Model):
 
     __table_args__ = (
         UniqueConstraint('title', 'creator_id', name='unique_discussion'),
-        # Index('title_name', 'title', ''),
     )
 
     id = db.Column(db.Integer, primary_key=True)
