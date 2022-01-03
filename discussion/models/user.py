@@ -1,10 +1,15 @@
 from datetime import datetime
+
+from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy import UniqueConstraint, Index
+
 from discussion.app import db
+
+
 class User(db.Model):
     __table_args__ = (
         Index('name_index', 'lastname', 'name'),
+        UniqueConstraint('name', 'lastname', name='unique_person')
     )
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -29,10 +34,6 @@ class User(db.Model):
     participated_with_users = db.relationship('Participate',
             backref='participant',
             primaryjoin=id==Participate.participant_id)
-
-    # @property
-    # def password(self):
-    #     raise ValueError('not readable.')
 
     @password.setter
     def password(self, password):

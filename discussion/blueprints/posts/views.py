@@ -1,12 +1,14 @@
 import traceback
+
 from discussion.app import db
 from discussion.blueprints.invite import bp, logger
-from discussion.blueprints.invite.schemas import invitation_schema, summerised_invitation_schema
-from discussion.utils import paginate_invitations
+from discussion.blueprints.invite.schemas import (invitation_schema,
+                                                  summerised_invitation_schema)
 from discussion.blueprints.users.views import token_required
 from discussion.models import (Discussion, Follow, Invitation, Participate,
                                Post, User)
-from flask import Blueprint, current_app, g, jsonify, request
+from discussion.utils import paginate_invitations
+from flask import jsonify, request
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 

@@ -1,17 +1,17 @@
-from functools import wraps
-from datetime import datetime, timedelta
-import jwt
-from discussion.app import db
-from discussion.models import TokenBlackList, User
-from flask import abort, g, jsonify, request, current_app
-from discussion.blueprints.auth import bp, logger
-from discussion.blueprints.auth.errors import *
-# from discussion.blueprints.api.errors import InvalidAttemp
 import traceback
+from datetime import datetime, timedelta
 
+from discussion.app import db
+from discussion.blueprints.user import (create_user_schema, edit_user_schema,
+                                        user_schema)
+from discussion.blueprints.users import bp, logger
+from discussion.errors import *
+from discussion.models.tokenblacklist import TokenBlackList
+from discussion.models.user import user
+from flask import current_app, g, jsonify, request
+from discussion.utils import token_required
 
-
-@bp.route('/users/', methods=_post)
+@bp.route('/', methods=['POST'])
 def create_users():
     req_json = request.get_json()
     try:
@@ -36,7 +36,7 @@ def create_users():
         logger.error(f"uncaught exception: {trace_info}")
         raise InvalidAttemp()
 
-@bp.route('/users/', methods=put_delete)
+@bp.route('/', methods=['PUT', 'DELETE'])
 @token_required
 def edit_user_detail():
     user = g.user
@@ -61,7 +61,7 @@ def edit_user_detail():
         db.session.commit()
         return jsonify({'response': 'ok!'}), 200
 
-@bp.route('/users/<int:user_id>/', methods=get)
+@bp.route('/<int:user_id>/', methods=['GET'])
 def get_user_detail(user_id):
     user = User.query.get(user_id)
     if user is not None:
@@ -70,36 +70,13 @@ def get_user_detail(user_id):
         logger.warning(f"Trying to access non-existing user with id {user_id}")
         raise ResourceDoesNotExists()
 
-@bp.route('/users/discussions/<int:user_id>/', methods=get)
+@bp.route('/discussions/<int:user_id>/', methods=['GET'])
 def get_creator_discussions(user_id):
     page = request.args.get('page', 1, type=int)
     data_set = Discussion.query.filter_by(creator_id=user_id)
     return paginate_discussions(page, data_set, 'get_creator_discussions')
 
-
-def decode_auth_token(auth_token):
-    payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
-    user = User.query.get(payload['sub'])
-    return user
-
-def encode_auth_token(user):
-    payload = {
-        'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
-        'iat': datetime.utcnow(),
-        'sub': user.id
-    }
-    token = jwt.encode(
-        payload,
-        current_app.config.get('SECRET_KEY'),
-        algorithm='HS256').decode()
-    while TokenBlackList.query.filter_by(token=token).first():
-        token = jwt.encode(
-        payload,
-        current_app.config.get('SECRET_KEY'),
-        algorithm='HS256').decode()
-    return token
-
-@bp.route('/users/login/', methods=['POST'])
+@bp.route('/login/', methods=['POST'])
 def login_user():
     try:
         auth_token = request.headers.get('Authorization').split()[1]
@@ -128,46 +105,18 @@ def login_user():
         raise InvalidCredentials(message='Please provide full creadentials.')
     except AttributeError:
         raise InvalidCredentials(message='Please provide full creadentials.')
-        
 
-def token_required(f):
-    @wraps(f)
-    def decorator(*args, **kwargs):
-        try:
-            token = request.headers.get('Authorization').split()[1]
-            user = decode_auth_token(token)
-            if user is None:
-                raise InvalidCredentials(message='You provided an invalid token.')
-            g.user = user
-        except IndexError:
-            raise InvalidCredentials(message='You did not provided a token.')
-        except AttributeError as e:
-            raise InvalidCredentials(message='You did not provided a token.')
-        except jwt.InvalidTokenError:
-            raise InvalidToken('You have submitted an invalid token.')
-        except jwt.ExpiredSignatureError:
-            raise InvalidToken('You have submitted an expired token.')
-        else:
-          return f(*args, **kwargs)
-    return decorator
-
-@bp.route('/users/logout/', methods=['POST'])
+@bp.route('/logout/', methods=['POST'])
+@token_required
 def logout_user():
     try:
         token = request.headers.get('Authorization').split()[1]
-        decode_auth_token(token)
         tb = TokenBlackList(token=token)
         db.session.add(tb)
         db.session.commit()
         return jsonify({
             "response": "Ok!"
         })
-    except IndexError:
-        raise InvalidCredentials(message='You did not provided a token.')
-    except jwt.DecodeError:
-        raise InvalidToken('You have submitted an invalid token.')
-    except AttributeError:
-            raise InvalidCredentials(message='You did not provided a token.')
     except:
         trace_info = traceback.format_exc()
         logger.error(f"uncaught exception: {trace_info}")

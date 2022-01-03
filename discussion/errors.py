@@ -1,11 +1,14 @@
-from discussion.blueprints.auth import bp
-from flask import jsonify, request, json, make_response, current_app
-from werkzeug.exceptions import HTTPException
+from flask import current_app, json, jsonify, make_response, request
+from marshmallow.exceptions import ValidationError
+from sqlalchemy.exc import IntegrityError as v
+from werkzeug.exceptions import Forbidden, HTTPException
+
+from discussion.blueprints.api import bp
 
 
 class InvalidCredentials(HTTPException):
     code = 401
-    status_code = 401
+
     def __init__(self, message):
         super().__init__()
         self.message = message
@@ -13,48 +16,15 @@ class InvalidCredentials(HTTPException):
 
 class InvalidToken(Exception):
     code = 401
-    status_code = 401
+
     def __init__(self, message):
         super().__init__()
         self.message = message
         self.name = 'Invalid Token'
 
 
-@bp.app_errorhandler(InvalidCredentials)
-def invalid_auth_data(e):
-    response = e.get_response()
-    response.data = json.dumps({
-        "code": e.code,
-        "name": e.name,
-        "description": e.message,
-    })
-    response.content_type = "application/json"
-    response.status = e.code
-    return response
-
-@bp.app_errorhandler(InvalidToken)
-def invalid_auth_data(e):
-    response = make_response()
-    response.data = json.dumps({
-        "code": e.code,
-        "name": e.name,
-        "description": e.message,
-    })
-    response.content_type = "application/json"
-    response.status = e.code
-    return response
-
-
-from discussion.blueprints.api import bp
-from flask import json, make_response, request
-from marshmallow.exceptions import ValidationError
-from sqlalchemy.exc import IntegrityError as v
-from werkzeug.exceptions import Forbidden, HTTPException
-
-
 class JsonIntegrityError(HTTPException):
     code = 400
-    status_code = 400
 
     def __init__(self):
         super().__init__()
@@ -63,7 +33,6 @@ class JsonIntegrityError(HTTPException):
 
 class JsonPermissionDenied(Forbidden):
     code = 403
-    status_code = 403
 
     def __init__(self):
         super().__init__()
@@ -72,16 +41,14 @@ class JsonPermissionDenied(Forbidden):
 
 class JsonValidationError(HTTPException):
     code = 400
-    status_code = 400
 
     def __init__(self, e):
         super().__init__()
-        self.messages = e.messages
+        self.message = e.messages
 
 
 class ResourceDoesNotExists(HTTPException):
     code = 400
-    status_code = 400
 
     def __init__(self):
         super().__init__()
@@ -90,7 +57,6 @@ class ResourceDoesNotExists(HTTPException):
 
 class ActionIsNotPossible(HTTPException):
     code = 400
-    status_code = 400
 
     def __init__(self, message):
         super().__init__()
@@ -99,36 +65,26 @@ class ActionIsNotPossible(HTTPException):
 
 class InvalidAttemp(HTTPException):
     code = 500
-    status_code = 500
 
     def __init__(self):
         super().__init__()
         self.message = 'Server responded with an error.'
 
 
-@bp.errorhandler(ActionIsNotPossible)
-@bp.errorhandler(ResourceDoesNotExists)
-@bp.errorhandler(JsonIntegrityError)
-@bp.errorhandler(JsonPermissionDenied)
-@bp.errorhandler(InvalidAttemp)
-def not_allowed(e):
+@current_app.errorhandler(ActionIsNotPossible)
+@current_app.errorhandler(ResourceDoesNotExists)
+@current_app.errorhandler(JsonIntegrityError)
+@current_app.errorhandler(JsonPermissionDenied)
+@current_app.errorhandler(InvalidAttemp)
+@current_app.errorhandler(InvalidCredentials)
+@current_app.errorhandler(InvalidToken)
+@current_app.errorhandler(JsonValidationError)
+def error(e):
     response = make_response()
     response.data = json.dumps({
         "code": e.code,
         "name": e.name,
         "description": e.message,
-    })
-    response.content_type = "application/json"
-    response.status = e.code
-    return response
-
-@bp.errorhandler(JsonValidationError)
-def invalid_input_data(e):
-    response = make_response()
-    response.data = json.dumps({
-        "code": e.code,
-        "name": e.name,
-        "description": e.messages,
     })
     response.content_type = "application/json"
     response.status = e.code

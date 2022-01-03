@@ -1,5 +1,5 @@
 from discussion.app import ma
-from discussion.models import Post
+from discussion.models.post import Post
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
@@ -16,6 +16,8 @@ class CreatePostSchema(ma.SQLAlchemyAutoSchema):
             'body',
         )
         load_instance = True
+    
+    body = auto_field(validate=[validate.Length(min=20, max=500)])
 
 
 class PostSchema(ma.SQLAlchemyAutoSchema):

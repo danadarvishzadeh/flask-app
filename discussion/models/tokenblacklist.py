@@ -1,6 +1,5 @@
 
 from datetime import datetime
-from sqlalchemy import UniqueConstraint, Index
 from discussion.app import db
 
 class TokenBlackList(db.Model):

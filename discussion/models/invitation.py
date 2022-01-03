@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import UniqueConstraint, Index
+from sqlalchemy import UniqueConstraint
 from discussion.app import db
 
 class Invitation(db.Model):

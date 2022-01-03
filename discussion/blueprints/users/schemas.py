@@ -1,6 +1,8 @@
 
 from discussion.app import ma
-from discussion.models import Follow, Participate, User
+from discussion.models.follow import Follow
+from discussion.models.participate import Participate
+from discussion.models.user import User
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
@@ -16,10 +18,6 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
     password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
     email = ma.String(required=True, validate=[validate.Email()])
 
-    def __init__(self):
-        super().__init__()
-        self.fields.pop('password_hash')
-    
     @post_load
     def lower_case(self, data, **kwargs):
         data['username'] = data['username'].lower()
@@ -63,9 +61,6 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
             'invitations_recived',
         )
 
-    id = auto_field(dump_only=True)
-    username = auto_field(dump_only=True)
-    email = auto_field(dump_only=True)
     created_discussions = Nested(lambda: DiscussionSchema(only=("id", "title", "description", 'participants', 'followed_by'), many=True))
     invitations_sent = Nested('SummerisedInvitationSchema', many=True)
     invitations_recived = Nested('SummerisedInvitationSchema', many=True)
@@ -94,3 +89,6 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         data['host_for'] = host_of
         return data
 
+create_user_schema = CreateUserSchema()
+edit_user_schema = EditUserSchema()
+user_schema = UserSchema()
