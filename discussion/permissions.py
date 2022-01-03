@@ -1,8 +1,12 @@
-from discussion.models import Discussion, Invitation, Post
-from .errors import JsonPermissionDenied, ResourceDoesNotExists, ActionIsNotPossible
-from flask import g
 from abc import ABC, abstractmethod
 
+from flask import g
+
+from discussion.errors import (ActionIsNotPossible, JsonPermissionDenied,
+                               ResourceDoesNotExists)
+from discussion.models.discussion import Discussion
+from discussion.models.invite import Invitation
+from discussion.models.post import Post
 
 
 class PermissionBase(ABC):

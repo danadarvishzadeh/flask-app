@@ -1,8 +1,8 @@
-import sys
 from flask import current_app
 
 def str_to_class(classname):
-    return getattr(sys.modules[__name__], classname)
+    module = __import__('discussion/%')
+    return getattr(module, classname)
 
 def permission_required(should_have=None, one_of=None, shouldnt_have=None):
     def wraper(f):
