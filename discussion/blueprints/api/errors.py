@@ -18,9 +18,9 @@ class JsonPermissionDenied(Forbidden):
     code = 403
     status_code = 403
 
-    def __init__(self):
+    def __init__(self, message):
         super().__init__()
-        self.message = 'You are not allowed.'
+        self.message = message
 
 
 class JsonValidationError(HTTPException):

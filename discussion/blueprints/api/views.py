@@ -23,10 +23,7 @@ from flask import Blueprint, abort, current_app, g, jsonify, request, url_for
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
-from .permissions import (is_author, is_creator, is_creator_or_participant,
-                          is_follower, is_invited, is_inviter,
-                          is_inviter_or_invited, is_not_creator_nor_follower,
-                          is_participant)
+from .permissions import permission_required
 
 get, _post, put_delete = ['GET'], ['POST'], ['PUT', 'DELETE']
 
@@ -110,34 +107,27 @@ def get_discussion_detail(discussion_id):
 
 @bp.route('/discussions/<int:discussion_id>/', methods=put_delete)
 @token_required
-@is_creator
+@permission_required(should_have=['IsCreator'])
 def edit_discussion_detail(discussion_id):
     discussion = Discussion.query.get(discussion_id)
-    if discussion is not None:
-        if g.user.discussion_id == discussion.creator_discussion_id:
-            if request.method == 'PUT':
-                req_json = request.get_json()
-                try:
-                    data = discussion_schema.load(req_json, partial=True)
-                    discussion.query.update(dict(data))
-                    db.session.commit()
-                    return jsonify(discussion_schema.dump(discussion))
-                except ValidationError as e:
-                    raise JsonValidationError(e)
-                except:
-                    trace_info = traceback.format_exc()
-                    logger.error(f"uncaught exception: {trace_info}")
-                    raise InvalidAttemp()
-            else:
-                discussion.query.delete()
-                db.session.commit()
-                return jsonify({'response': 'ok!'}), 200
-        else:
-            logger.warning(f"{g.user.username} attempted to edit {discussion.creator.username}'s discussioin.")
-            raise JsonPermissionDenied()
+    if request.method == 'PUT':
+        req_json = request.get_json()
+        try:
+            data = discussion_schema.load(req_json, partial=True)
+            discussion.query.update(dict(data))
+            db.session.commit()
+            return jsonify(discussion_schema.dump(discussion))
+        except ValidationError as e:
+            raise JsonValidationError(e)
+        except:
+            trace_info = traceback.format_exc()
+            logger.error(f"uncaught exception: {trace_info}")
+            raise InvalidAttemp()
     else:
-        logger.warning(f"Trying to edit non-existing discussion with id {discussion_id}")
-        raise ResourceDoesNotExists()
+        discussion.query.delete()
+        db.session.commit()
+        return jsonify({'response': 'ok!'}), 200
+        raise JsonPermissionDenied()
 
 @bp.route('/discussions/', methods=_post)
 @token_required
@@ -188,7 +178,7 @@ def get_post_detail(discussion_id):
 
 @bp.route('/posts/<int:post_id>/', methods=put_delete)
 @token_required
-@is_author
+@permission_required(should_have=['IsAuthor'])
 def edit_post_details(post_id):
     post = Post.query.get(post_id)
     if post is not None:
@@ -215,7 +205,7 @@ def edit_post_details(post_id):
 
 @bp.route('/discussions/<int:discussion_id>/', methods=_post)
 @token_required
-@is_creator_or_participant
+@permission_required(one_of=['IsCreator', 'IsParticipant'])
 def create_posts(discussion_id):
     req_json = request.get_json()
     try:
@@ -237,7 +227,6 @@ def create_posts(discussion_id):
 
 @bp.route('/discussions/<int:discussion_id>/invite/<int:user_id>/', methods=_post)
 @token_required
-@is_creator
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)
@@ -271,7 +260,6 @@ def get_invitations():
 
 @bp.route('/invitations/<int:invitation_id>/', methods=['PUT'])
 @token_required
-@is_invited
 def edit_invitation_details(invitation_id):
     invitation = Invitation.query.get(invitation_id)
     if invitation.status == 'Sent':
@@ -302,7 +290,6 @@ def edit_invitation_details(invitation_id):
 
 @bp.route('/invitations/<int:invitation_id>/', methods=['DELETE'])
 @token_required
-@is_inviter_or_invited
 def delete_invitation(invitation_id):
     if g.user == invitation.invited or g.user == invitation.inviter:
         invitation.query.delete()
@@ -314,7 +301,6 @@ def delete_invitation(invitation_id):
 
 @bp.route('/discussions/<int:discussion_id>/follow/', methods=_post)
 @token_required
-@is_not_creator_nor_follower
 def create_followes(discussion_id):
     follow = Follow.query.filter_by(follower_id=g.user.id, discussion_id=discussion_id).first()
     discussion = Discussion.query.get(id)
@@ -339,7 +325,6 @@ def create_followes(discussion_id):
 
 @bp.route('/discussions/<int:discussion_id>/unfollow/', methods=_post)
 @token_required
-@is_follower
 def delete_followes(discussion_id):
     follow.query.delete()
     db.session.commit()
