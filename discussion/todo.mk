@@ -1,6 +1,6 @@
-1.permission -> class with permissions
-2-seprating utils file -> pagination
-3-breaking models into files
+1-breaking models into files
+2.permission -> class with permissions
+3-seprating utils file -> pagination
 4-breaking schemas into files
 5-creating general errors file
 6-full covering unittests
