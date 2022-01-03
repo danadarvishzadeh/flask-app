@@ -9,6 +9,74 @@ from discussion.blueprints.auth.errors import *
 # from discussion.blueprints.api.errors import InvalidAttemp
 import traceback
 
+
+
+@bp.route('/users/', methods=_post)
+def create_users():
+    req_json = request.get_json()
+    try:
+        user = create_user_schema.load(req_json)
+    except ValidationError as e:
+        raise JsonValidationError(e)
+    except:
+        trace_info = traceback.format_exc()
+        logger.error(f"uncaught exception: {trace_info}")
+        raise InvalidAttemp()
+    db.session.add(user)
+    try:
+        db.session.commit()
+        logger.info(f"Adding user {user.username}")
+        return jsonify(user_schema.dump(user))
+    except IntegrityError as e:
+        logger.warning(f"Attempt to register user. params: {e.params[:-1]} origin: {e.orig}")
+        db.session.rollback()
+        raise JsonIntegrityError()
+    except:
+        trace_info = traceback.format_exc()
+        logger.error(f"uncaught exception: {trace_info}")
+        raise InvalidAttemp()
+
+@bp.route('/users/', methods=put_delete)
+@token_required
+def edit_user_detail():
+    user = g.user
+    if request.method == 'PUT':
+        req_json = request.get_json()
+        try:
+            data = edit_user_schema.load(req_json, partial=True)
+            user.query.update(dict(data))
+            db.session.commit()
+            return jsonify(user_schema.dump(user).first())
+        except ValidationError as e:
+            raise JsonValidationError(e)
+        except IntegrityError as e:
+            db.session.rollback()
+            raise JsonIntegrityError()
+        except:
+            trace_info = traceback.format_exc()
+            logger.error(f"uncaught exception: {trace_info}")
+            raise InvalidAttemp()
+    else:
+        user.query.delete()
+        db.session.commit()
+        return jsonify({'response': 'ok!'}), 200
+
+@bp.route('/users/<int:user_id>/', methods=get)
+def get_user_detail(user_id):
+    user = User.query.get(user_id)
+    if user is not None:
+        return jsonify(user_schema.dumps(user))
+    else:
+        logger.warning(f"Trying to access non-existing user with id {user_id}")
+        raise ResourceDoesNotExists()
+
+@bp.route('/users/discussions/<int:user_id>/', methods=get)
+def get_creator_discussions(user_id):
+    page = request.args.get('page', 1, type=int)
+    data_set = Discussion.query.filter_by(creator_id=user_id)
+    return paginate_discussions(page, data_set, 'get_creator_discussions')
+
+
 def decode_auth_token(auth_token):
     payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
     user = User.query.get(payload['sub'])

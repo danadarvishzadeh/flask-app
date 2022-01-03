@@ -1,7 +1,7 @@
 from flask import Blueprint 
 import logging
 
-bp = Blueprint('api', __name__)
+bp = Blueprint('posts', __name__, url_prefix='/posts')
 
 logger = logging.getLogger(bp.name)
 

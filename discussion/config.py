@@ -11,8 +11,11 @@ class Config:
     DISCUSSION_POSTS_PER_PAGE = 5
     DISCUSSION_INVITATIONS_PER_PAGE = 10
     BLUEPRINTS = (
-        'auth',
-        'api'
+        'users',
+        'discussions',
+        'posts',
+        'follow',
+        'invite',
     )
 
     @staticmethod
