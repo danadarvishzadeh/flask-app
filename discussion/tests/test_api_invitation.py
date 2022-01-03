@@ -4,7 +4,7 @@ import unittest
 from discussion.app import create_app, db
 from discussion.fixtures import *
 from flask import url_for
-from discussion.models import User
+from discussion.models.user import User
 
 
 class InvitationViewsTest(unittest.TestCase):

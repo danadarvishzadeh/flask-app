@@ -1,10 +1,10 @@
 import json
 import unittest
-from discussion.blueprints.auth.views import decode_auth_token
+from discussion.blueprints.utils import decode_auth_token
 
 from discussion.app import create_app, db
 from discussion.fixtures import user_fixture
-from discussion.models import User
+from discussion.models.user import User
 from flask import url_for
 
 

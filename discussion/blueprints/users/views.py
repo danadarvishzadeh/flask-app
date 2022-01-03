@@ -2,14 +2,18 @@ import traceback
 from datetime import datetime, timedelta
 
 from discussion.app import db
-from discussion.blueprints.user import (create_user_schema, edit_user_schema,
-                                        user_schema)
 from discussion.blueprints.users import bp, logger
-from discussion.errors import *
+from discussion.blueprints.users.schemas import (create_user_schema,
+                                                 edit_user_schema, user_schema)
+from discussion.errors import (InvalidAttemp, InvalidCredentials,
+                               JsonIntegrityError, JsonValidationError,
+                               ResourceDoesNotExists)
 from discussion.models.tokenblacklist import TokenBlackList
-from discussion.models.user import user
+from discussion.models.user import User
+from discussion.utils import permission_required, token_required
 from flask import current_app, g, jsonify, request
-from discussion.utils import token_required
+from sqlalchemy.exc import IntegrityError
+
 
 @bp.route('/', methods=['POST'])
 def create_users():
@@ -65,7 +69,7 @@ def edit_user_detail():
 def get_user_detail(user_id):
     user = User.query.get(user_id)
     if user is not None:
-        return jsonify(user_schema.dumps(user))
+        return jsonify(user_schema.dump(user))
     else:
         logger.warning(f"Trying to access non-existing user with id {user_id}")
         raise ResourceDoesNotExists()
@@ -101,7 +105,8 @@ def login_user():
             })
         else:
             raise InvalidCredentials(message='Username or Password you provided are invalid.')
-    except AttributeError:
+    except AttributeError as e:
+        print(e)    
         raise InvalidCredentials(message='Please provide full creadentials.')
     except AttributeError:
         raise InvalidCredentials(message='Please provide full creadentials.')

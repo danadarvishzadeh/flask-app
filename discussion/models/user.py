@@ -1,9 +1,11 @@
 from datetime import datetime
 
 from sqlalchemy import Index, UniqueConstraint
-from werkzeug.security import check_password_hash, generate_password_hash
-
+from werkzeug.security import check_password_hash
+from discussion.models.invitation import Invitation
+from discussion.models.participate import Participate
 from discussion.app import db
+from discussion.models.discussion import Discussion
 
 
 class User(db.Model):
@@ -34,10 +36,6 @@ class User(db.Model):
     participated_with_users = db.relationship('Participate',
             backref='participant',
             primaryjoin=id==Participate.participant_id)
-
-    @password.setter
-    def password(self, password):
-        self.password = generate_password_hash(password)
 
     def password_check(self, password):
         return check_password_hash(self.password, password)

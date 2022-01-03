@@ -1,6 +1,7 @@
 
 from discussion.app import ma
-from discussion.models import Discussion, User
+from discussion.models.discussion import Discussion
+from discussion.models.user import User
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
@@ -59,3 +60,6 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
         followed_by = [summerised_user_schema.dump(User.query.get(f.follower_id)) for f in data['followed_by']]
         data['followed_by'] = followed_by
         return data
+
+create_discussion_schema = CreateDiscussionSchema()
+discussion_schema = DiscussionSchema()

@@ -1,8 +1,8 @@
 """first migration
 
-Revision ID: bb440a705d5f
+Revision ID: 649873efd438
 Revises: 
-Create Date: 2022-01-01 09:38:31.354664
+Create Date: 2022-01-03 17:05:42.027176
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bb440a705d5f'
+revision = '649873efd438'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,11 +31,13 @@ def upgrade():
     sa.Column('email', sa.String(length=64), nullable=False),
     sa.Column('name', sa.String(length=64), nullable=False),
     sa.Column('lastname', sa.String(length=64), nullable=False),
-    sa.Column('password_hash', sa.String(length=128), nullable=True),
+    sa.Column('password', sa.String(length=128), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('name', 'lastname', name='unique_person'),
     sa.UniqueConstraint('username')
     )
+    op.create_index('name_index', 'user', ['lastname', 'name'], unique=False)
     op.create_table('discussion',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=64), nullable=False),
@@ -66,7 +68,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['discussion_id'], ['discussion.id'], ),
     sa.ForeignKeyConstraint(['invited_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['inviter_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('inviter_id', 'invited_id', name='unique_invitation')
     )
     op.create_index(op.f('ix_invitation_invited_id'), 'invitation', ['invited_id'], unique=False)
     op.create_index(op.f('ix_invitation_inviter_id'), 'invitation', ['inviter_id'], unique=False)
@@ -107,6 +110,7 @@ def downgrade():
     op.drop_table('follow')
     op.drop_index(op.f('ix_discussion_title'), table_name='discussion')
     op.drop_table('discussion')
+    op.drop_index('name_index', table_name='user')
     op.drop_table('user')
     op.drop_table('token_black_list')
     # ### end Alembic commands ###

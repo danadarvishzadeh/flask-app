@@ -1,10 +1,19 @@
-from flask import current_app, json, jsonify, make_response, request
 from marshmallow.exceptions import ValidationError
-from sqlalchemy.exc import IntegrityError as v
+from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import Forbidden, HTTPException
 
-from discussion.blueprints.api import bp
 
+
+__all__ = [
+    'InvalidCredentials',
+    'InvalidToken',
+    'JsonIntegrityError',
+    'JsonPermissionDenied',
+    'JsonValidationError',
+    'ResourceDoesNotExists',
+    'ActionIsNotPossible',
+    'InvalidAttemp'
+]
 
 class InvalidCredentials(HTTPException):
     code = 401
@@ -69,23 +78,3 @@ class InvalidAttemp(HTTPException):
     def __init__(self):
         super().__init__()
         self.message = 'Server responded with an error.'
-
-
-@current_app.errorhandler(ActionIsNotPossible)
-@current_app.errorhandler(ResourceDoesNotExists)
-@current_app.errorhandler(JsonIntegrityError)
-@current_app.errorhandler(JsonPermissionDenied)
-@current_app.errorhandler(InvalidAttemp)
-@current_app.errorhandler(InvalidCredentials)
-@current_app.errorhandler(InvalidToken)
-@current_app.errorhandler(JsonValidationError)
-def error(e):
-    response = make_response()
-    response.data = json.dumps({
-        "code": e.code,
-        "name": e.name,
-        "description": e.message,
-    })
-    response.content_type = "application/json"
-    response.status = e.code
-    return response

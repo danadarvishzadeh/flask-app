@@ -1,6 +1,6 @@
 import json
 import unittest
-from discussion.models import User
+from discussion.models.user import User
 from discussion.app import create_app, db
 from discussion.fixtures import discussion_fixture, user_fixture
 from flask import url_for

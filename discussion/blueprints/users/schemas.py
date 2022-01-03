@@ -8,6 +8,8 @@ from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+from werkzeug.security import generate_password_hash
+from discussion.blueprints.discussions.schemas import DiscussionSchema
 
 
 class CreateUserSchema(ma.SQLAlchemyAutoSchema):
@@ -17,12 +19,14 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
 
     password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
     email = ma.String(required=True, validate=[validate.Email()])
+    
 
     @post_load
     def lower_case(self, data, **kwargs):
         data['username'] = data['username'].lower()
         data['name'] = data['name'].lower()
         data['lastname'] = data['lastname'].lower()
+        data['password'] = generate_password_hash(data['password'])
         return data
 
 

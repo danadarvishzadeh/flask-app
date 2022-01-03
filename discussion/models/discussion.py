@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Index, UniqueConstraint
 
 from discussion.app import db
+from discussion.models.post import Post
 
 
 class Discussion(db.Model):

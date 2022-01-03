@@ -77,7 +77,7 @@ class IsInviter(PermissionBase):
             raise ResourceDoesNotExists()
 
 
-class IsInviter(PermissionBase):
+class IsFollower(PermissionBase):
     def has_access(self, **kwargs):
         discussion = Discussion.query.get(kwargs.get('discussion_id'))
         if discussion is not None:

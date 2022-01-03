@@ -1,11 +1,10 @@
 import json
 import unittest
-from discussion.blueprints.api.errors import JsonPermissionDenied, ResourceDoesNotExists
+from discussion.errors import JsonPermissionDenied, ResourceDoesNotExists
 from discussion.app import create_app, db
 from discussion.fixtures import *
 from flask import url_for
-from discussion.models import User
-from discussion.blueprints.api.permissions import premission_to_add_posts
+from discussion.models.user import User
 
 
 

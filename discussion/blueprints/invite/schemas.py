@@ -1,5 +1,6 @@
 from discussion.app import ma
-from discussion.models import Invitation
+from discussion.models.invitation import Invitation
+from discussion.models.participate import Participate
 from flask_marshmallow import Schema, fields
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
@@ -19,22 +20,22 @@ class CreateInvitationSchema(ma.SQLAlchemyAutoSchema):
         )
 
 
-class InvitationSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Invitation
-        fields = (
-            'id',
-            'body',
-            'date_sent',
-            'invited',
-            'inviter',
-            'status',
-            'discussion',
-        )
+# class InvitationSchema(ma.SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = Invitation
+#         fields = (
+#             'id',
+#             'body',
+#             'date_sent',
+#             'invited',
+#             'inviter',
+#             'status',
+#             'discussion',
+#         )
 
-    invited = Nested('SummerisedUserSchema')
-    inviter = Nested('SummerisedUserSchema')
-    discussion = Nested(lambda: SummerisedDiscussionSchema())
+#     invited = Nested('SummerisedUserSchema')
+#     inviter = Nested('SummerisedUserSchema')
+#     discussion = Nested(lambda: SummerisedDiscussionSchema())
 
 
 class SummerisedInvitationSchema(ma.SQLAlchemyAutoSchema):
@@ -65,3 +66,6 @@ class ParticipateSchema(ma.SQLAlchemyAutoSchema):
     paricipated_with = Nested('SummerisedUserSchema')
     participated = Nested('SummerisedUserSchema')
     discussion = Nested('DiscussionSchema')
+
+summerized_invitation_schema = SummerisedInvitationSchema()
+create_invitation_schema = CreateInvitationSchema()

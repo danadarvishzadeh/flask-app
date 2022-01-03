@@ -5,7 +5,7 @@ from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
-
+from discussion.blueprints.discussions.schemas import discussion_schema
 
 
 
@@ -46,3 +46,6 @@ class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
         )
     author = Nested(lambda: SummerisedUserSchema())
     parent_discussion = Nested(lambda: SummerisedDiscussionSchema())
+
+create_post_schema = CreatePostSchema()
+post_schema = PostSchema()

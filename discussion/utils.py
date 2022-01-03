@@ -3,9 +3,10 @@ from functools import wraps
 import jwt
 from flask import current_app, g, request
 
-from discussion.errors import *
+from discussion.errors import InvalidCredentials, InvalidToken, JsonPermissionDenied
 from discussion.models.tokenblacklist import TokenBlackList
 from discussion.models.user import User
+
 
 
 def decode_auth_token(auth_token):
@@ -56,10 +57,10 @@ def token_required(f):
     return decorator
 
 def permission_required(should_have=None, one_of=None, shouldnt_have=None):
-    def wraper(f):
+    def wraper_function(f):
         @wraps(f)
         def decorator(*args, **kwargs):
-            if shouldn_have is not None:
+            if shouldnt_have is not None:
                 for permission_class in should_have:
                     permission = str_to_class(permission_class)()
                     if not permission.has_access(**kwargs):
@@ -76,4 +77,4 @@ def permission_required(should_have=None, one_of=None, shouldnt_have=None):
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
             return f(*args, **kwargs)
         return decorator
-    return wraper
+    return wraper_function

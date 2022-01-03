@@ -1,20 +1,21 @@
 import traceback
 from discussion.app import db
 from discussion.blueprints.invite import bp, logger
-from discussion.blueprints.invite.schemas import invitation_schema, summerised_invitation_schema
-from discussion.utils import paginate_invitations
-from discussion.blueprints.users.views import token_required
-from discussion.models import (Discussion, Follow, Invitation, Participate,
-                               Post, User)
+from discussion.blueprints.invite.schemas import create_invitation_schema, summerized_invitation_schema
+from discussion.models.invitation import Invitation
+from discussion.models.discussion import Discussion
+from discussion.models.participate import Participate
 from flask import Blueprint, current_app, g, jsonify, request
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
+from discussion.utils import token_required, permission_required
+from discussion.errors import (InvalidAttemp, JsonIntegrityError,
+                               JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
 
 
-
-@bp.route('/discussions/<int:discussion_id>/invite/<int:user_id>/', methods=_post)
+@bp.route('/discussions/<int:discussion_id>/invite/<int:user_id>/', methods=['POST'])
 @token_required
-@is_creator
+@permission_required(shouldnt_have=['IsCreator'])
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)
@@ -37,7 +38,7 @@ def create_invitations(discussion_id, user_id):
         logger.error(f"uncaught exception: {trace_info}")
         raise InvalidAttemp()
 
-@bp.route('/invitations/', methods=get)
+@bp.route('/invitations/', methods=['GET'])
 @token_required
 def get_invitations():
     page = request.args.get('page')
@@ -48,7 +49,7 @@ def get_invitations():
 
 @bp.route('/invitations/<int:invitation_id>/', methods=['PUT'])
 @token_required
-@is_invited
+@permission_required(shouldnt_have=['IsInvited'])
 def edit_invitation_details(invitation_id):
     invitation = Invitation.query.get(invitation_id)
     if invitation.status == 'Sent':
@@ -79,12 +80,8 @@ def edit_invitation_details(invitation_id):
 
 @bp.route('/invitations/<int:invitation_id>/', methods=['DELETE'])
 @token_required
-@is_inviter_or_invited
+@permission_required(one_of=['IsInviter', 'IsInvited'])
 def delete_invitation(invitation_id):
-    if g.user == invitation.invited or g.user == invitation.inviter:
-        invitation.query.delete()
-        db.session.commit()
-        return jsonify({'response': 'Ok!'}), 200
-    else:
-        logger.warning(f"{g.user.username} attempted to edit user {invitation.invited.username}'s invitation.")
-        raise JsonPermissionDenied()
+    invitation.query.delete()
+    db.session.commit()
+    return jsonify({'response': 'Ok!'}), 200
