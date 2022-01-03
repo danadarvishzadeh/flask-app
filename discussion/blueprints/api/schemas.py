@@ -18,9 +18,9 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
     password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
     email = ma.String(required=True, validate=[validate.Email()])
 
-    def __init__(self):
-        super().__init__()
-        self.fields.pop('password_hash')
+    # def __init__(self):
+    #     super().__init__()
+    #     self.fields.pop('password_hash')
     
     @post_load
     def lower_case(self, data, **kwargs):
