@@ -31,39 +31,39 @@ class PostViewsTest(unittest.TestCase):
         self.appctx.pop()
     
     def test_post_creation(self):
-        response = self.client.post(url_for('api.create_posts', id=1),
+        response = self.client.post(url_for('api.create_posts', discussion_id=1),
                         json=post_fixture['discussion1_post1'],
                         headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 200)
     
     def test_get_post(self):
-        self.client.post(url_for('api.create_posts', id=1),
+        self.client.post(url_for('api.create_posts', discussion_id=1),
         json=post_fixture['discussion1_post1'],
                 headers=[('Authorization', self.dana_token),])
         response = self.client.get(url_for('api.get_posts'))
         self.assertEqual(response.status_code, 200)
     
     def test_get_post_detail(self):
-        self.client.post(url_for('api.create_posts', id=1),
+        self.client.post(url_for('api.create_posts', discussion_id=1),
         json=post_fixture['discussion1_post1'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.get(url_for('api.get_post_detail', id=2))
+        response = self.client.get(url_for('api.get_post_detail', post_id=2))
         self.assertEqual(response.status_code, 400)
     
     def test_edit_post_details(self):
-        self.client.post(url_for('api.create_posts', id=1),
+        self.client.post(url_for('api.create_posts', discussion_id=1),
         json=post_fixture['discussion1_post1'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.put(url_for('api.edit_post_details', id=1),
+        response = self.client.put(url_for('api.edit_post_details', post_id=1),
                 json=post_fixture['discussion1_post2'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 200)
     
     def test_edit_post_details_without_permission(self):
-        self.client.post(url_for('api.create_posts', id=1),
+        self.client.post(url_for('api.create_posts', discussion_id=1),
                 json=post_fixture['discussion1_post1'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.put(url_for('api.edit_post_details', id=1),
+        response = self.client.put(url_for('api.edit_post_details', post_id=1),
                 json=post_fixture['discussion1_post2'],
                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 403)

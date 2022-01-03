@@ -37,7 +37,7 @@ class DiscussionViewsTest(unittest.TestCase):
         self.client.post(url_for('api.create_discussions', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.put(url_for('api.edit_discussion_detail', id='1'),
+        response = self.client.put(url_for('api.edit_discussion_detail', discussion_id='1'),
                 json=discussion_fixture['dana_second_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 200)
@@ -58,7 +58,7 @@ class DiscussionViewsTest(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
     
     def test_get_empty_user_discussions(self):
-        response = self.client.get(url_for('api.get_creator_discussions', id=2))
+        response = self.client.get(url_for('api.get_creator_discussions', user_id=2))
         self.assertEqual(response.json, {
         "count": 0,
         "discussions": [],

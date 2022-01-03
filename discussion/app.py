@@ -20,8 +20,6 @@ def configure_blueprints(app):
         bp = __import__('discussion.blueprints.%s' % blueprint, fromlist=[blueprint])
         app.register_blueprint(getattr(bp, 'bp'))
 
-        # for route in bp.__all__:
-
 
 def create_app(config_name='default'):
     app = Flask(__name__)

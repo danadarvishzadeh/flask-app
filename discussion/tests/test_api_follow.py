@@ -32,11 +32,11 @@ class InvitationViewsTest(unittest.TestCase):
         self.appctx.pop()
     
     def test_create_follows_valid(self):
-        response = self.client.post(url_for('api.create_followes', id=1),
+        response = self.client.post(url_for('api.create_followes', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 200)
     
     def test_create_follows_invalid(self):
-        response = self.client.post(url_for('api.create_followes', id=1),
+        response = self.client.post(url_for('api.create_followes', discussion_id=1),
                         headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 400)

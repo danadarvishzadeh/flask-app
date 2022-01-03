@@ -22,7 +22,7 @@ class InvitationViewsTest(unittest.TestCase):
         self.client.post(url_for('api.create_users'), json=user_fixture['user_mamad_valid'])
         self.dana_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid']).json['token']
         self.mamad_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['user_mamad_valid']).json['token']
-        response = self.client.post(url_for('api.create_discussions', ),
+        self.client.post(url_for('api.create_discussions', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
     
@@ -50,7 +50,7 @@ class InvitationViewsTest(unittest.TestCase):
         self.client.post(url_for('api.create_invitations', discussion_id=1, user_id=2),
                                 json=invitation_fixture['invite'],
                                 headers=[('Authorization', self.dana_token),])  
-        response = self.client.put(url_for('api.edit_invitation_details', id=1),
+        response = self.client.put(url_for('api.edit_invitation_details', invitation_id=1),
                                 json={'status': 'Accepted'},
                                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 200)
@@ -60,7 +60,7 @@ class InvitationViewsTest(unittest.TestCase):
         self.client.post(url_for('api.create_invitations', discussion_id=1, user_id=2),
                                 json=invitation_fixture['invite'],
                                 headers=[('Authorization', self.dana_token),])
-        response = self.client.delete(url_for('api.edit_invitation_details', id=1),
+        response = self.client.delete(url_for('api.edit_invitation_details', invitation_id=1),
                                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(User.query.get(1).invitations_sent), 0)

@@ -101,6 +101,9 @@ class Discussion(db.Model):
 
     def get_participant_ids(self):
         return [p.participant_id for p in self.participants]
+    
+    def get_follower_ids(self):
+        return [f.follower_id for f in self.followed_by]
 
 
 class Post(db.Model):
