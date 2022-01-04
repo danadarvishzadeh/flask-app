@@ -8,7 +8,7 @@ from discussion.models.user import User
 from flask import url_for
 
 
-class UserAuthViewsTest(unittest.TestCase):
+class UserViewsTest(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app('testing')

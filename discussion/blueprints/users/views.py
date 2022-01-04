@@ -14,6 +14,7 @@ from discussion.models.discussion import Discussion
 from discussion.utils import permission_required, token_required, decode_auth_token, encode_auth_token
 from flask import current_app, g, jsonify, request
 from sqlalchemy.exc import IntegrityError
+from discussion.blueprints.discussions.paginators import DiscussionPaginator
 
 
 @bp.route('/', methods=['POST'])
@@ -78,8 +79,9 @@ def get_user_detail(user_id):
 @bp.route('/discussions/<int:user_id>/', methods=['GET'])
 def get_creator_discussions(user_id):
     page = request.args.get('page', 1, type=int)
-    data_set = Discussion.query.filter_by(creator_id=user_id)
-    return paginate_discussions(page, data_set, 'get_creator_discussions')
+    paginator = DiscussionPaginator
+    paginator.filters = {'creator_id': user_id}
+    return DiscussionPaginator.return_page(page, 'get_creator_discussions')
 
 @bp.route('/login/', methods=['POST'])
 def login_user():

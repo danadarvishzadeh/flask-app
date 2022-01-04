@@ -67,8 +67,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         )
 
     created_discussions = Nested('DiscussionSchema', only=("id", "title", "description", 'participants', 'followed_by'), many=True)
-    invitations_sent = Nested('SummerisedInvitationSchema', many=True)
-    invitations_recived = Nested('SummerisedInvitationSchema', many=True)
+    invitations_sent = Nested('InvitationSchema', many=True)
+    invitations_recived = Nested('InvitationSchema', many=True)
 
     @post_dump()
     def load_followed_discussions(self, data, **kwargs):

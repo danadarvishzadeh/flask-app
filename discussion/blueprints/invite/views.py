@@ -1,7 +1,7 @@
 import traceback
 from discussion.app import db
 from discussion.blueprints.invite import bp, logger
-from discussion.blueprints.invite.schemas import create_invitation_schema, summerized_invitation_schema
+from discussion.blueprints.invite.schemas import create_invitation_schema, invitation_schema
 from discussion.models.invitation import Invitation
 from discussion.models.discussion import Discussion
 from discussion.models.participate import Participate
@@ -12,6 +12,8 @@ from discussion.utils import token_required, permission_required
 from discussion.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
 from marshmallow.exceptions import ValidationError
+from discussion.blueprints.invite.paginators import InvitationPaginator
+
 
 @bp.route('/<int:discussion_id>/<int:user_id>/', methods=['POST'])
 @token_required
@@ -27,7 +29,7 @@ def create_invitations(discussion_id, user_id):
         invitation.status = 'Sent'
         db.session.add(invitation)
         db.session.commit()
-        return jsonify(summerized_invitation_schema.dump(invitation))
+        return jsonify(invitation_schema.dump(invitation))
     except ValidationError as e:
         print(e)
         raise JsonValidationError(e)
@@ -43,10 +45,7 @@ def create_invitations(discussion_id, user_id):
 @token_required
 def get_invitations():
     page = request.args.get('page')
-    print(g.user.id)
-    print(g.user.username)
-    data_set = db.session.query(Invitation).filter(or_(Invitation.invited_id==g.user.id, Invitation.inviter_id==g.user.id))
-    return paginate_invitatinos(page, data_set, 'get_invitations')
+    return InvitationPaginator.return_page(page, 'get_invitations')
 
 @bp.route('/<int:invitation_id>/', methods=['PUT'])
 @token_required

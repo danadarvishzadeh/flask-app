@@ -35,20 +35,6 @@ class InvitationSchema(ma.SQLAlchemyAutoSchema):
     discussion = Nested('SummerisedDiscussionSchema')
 
 
-class SummerisedInvitationSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Invitation
-        fields = (
-            'id',
-            'body',
-            'date_sent',
-            'status',
-        )
-
-    invited = Nested('SummerisedUserSchema')
-    inviter = Nested('SummerisedUserSchema')
-    discussion = Nested('SummerisedDiscussionSchema')
-
 class ParticipateSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Participate
@@ -64,5 +50,5 @@ class ParticipateSchema(ma.SQLAlchemyAutoSchema):
     participated = Nested('SummerisedUserSchema')
     discussion = Nested('DiscussionSchema')
 
-summerized_invitation_schema = SummerisedInvitationSchema()
+invitation_schema = InvitationSchema()
 create_invitation_schema = CreateInvitationSchema()

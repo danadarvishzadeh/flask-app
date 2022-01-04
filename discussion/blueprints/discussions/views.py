@@ -12,12 +12,13 @@ from flask import g, request, jsonify
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
 import traceback
+from discussion.blueprints.discussions.paginators import DiscussionPaginator
+from discussion.blueprints.posts.paginators import PostPaginator
 
 @bp.route('/', methods=['GET'])
 def get_discussions():
     page = request.args.get('page', 1, type=int)
-    data_set = Discussion.query
-    return paginate_discussions(page, data_set, 'get_discussions')
+    return DiscussionPaginator.return_page(page, 'get_discussions')
 
 
 @bp.route('/<int:discussion_id>/', methods=['GET'])
@@ -77,5 +78,4 @@ def create_discussions():
 @bp.route('/<int:discussion_id>/posts/', methods=['GET'])
 def get_discussion_posts(discussion_id):
     page = request.args.get('page')
-    data_set = Post.query.filter_by(discussion_id=discussion_id)
-    return paginate_posts(page, data_set, 'get_discussion_posts')
+    return PostPaginator.return_page(page, 'get_discussion_posts')

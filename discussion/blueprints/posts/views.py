@@ -10,12 +10,12 @@ from discussion.utils import permission_required, token_required
 from flask import g, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from marshmallow.exceptions import ValidationError
+from discussion.blueprints.posts.paginators import PostPaginator
 
 @bp.route('/', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    data_set = Post.query
-    return paginate_posts(page, data_set, 'get_posts')
+    return PostPaginator.return_page(page, 'get_posts')
 
 @bp.route('/<int:post_id>/', methods=['GET'])
 def get_post_detail(post_id):

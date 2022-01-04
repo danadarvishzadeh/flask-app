@@ -56,3 +56,14 @@ class DiscussionViewsTest(unittest.TestCase):
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 400)
+    
+    def test_discussion_paginator(self):
+        self.client.post(url_for('discussions.create_discussions'),
+                json=discussion_fixture['dana_first_discussion_valid'],
+                headers=[('Authorization', self.dana_token),])
+        self.client.post(url_for('discussions.create_discussions'),
+                json=discussion_fixture['dana_second_discussion_valid'],
+                headers=[('Authorization', self.dana_token),])
+        response = self.client.get(url_for('discussions.get_discussions'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('discussions', response.json)
