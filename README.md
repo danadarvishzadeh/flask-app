@@ -1,11 +1,11 @@
 Changes until now:
 ==================
 
-1. Restructuring BLueprints.
-2. Restructuring models folder.
-3. Putting together the error classes and registering them with the app instance.
-4. Creating permission classes and permission decorator.
-5. Adding paginagion files and classes with model, filters and schema fields.
+1. [Restructuring BLueprints.](discussion/blueprints)
+2. [Restructuring models folder.](discussion/models)
+3. [Putting together the error classes and registering them with the app instance.](discussion/errors.py)
+4. Creating permission classes and permission decorator.[permissions](discussion/permission) [decorator](discussion/utils.py)
+5. Adding paginagion files and classes with model, filters and schema fields. [pagination base class](discussion/utils.py)
 
 Ongoing changes:
 ==================
