@@ -1,15 +1,15 @@
 import traceback
 
 from discussion.app import db
-from discussion.blueprints.invite import bp, logger
-from discussion.blueprints.posts.schemas import create_post_schema, post_schema
+from discussion.blueprints.posts import bp, logger
+from discussion.blueprints.posts.schemas import create_post_schema, post_schema, summerised_post_schema
 from discussion.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists)
 from discussion.models.post import Post
 from discussion.utils import permission_required, token_required
 from flask import g, jsonify, request
 from sqlalchemy.exc import IntegrityError
-
+from marshmallow.exceptions import ValidationError
 
 @bp.route('/', methods=['GET'])
 def get_posts():
@@ -17,13 +17,13 @@ def get_posts():
     data_set = Post.query
     return paginate_posts(page, data_set, 'get_posts')
 
-@bp.route('/<int:discussion_id>/', methods=['GET'])
-def get_post_detail(discussion_id):
-    post = Post.query.get(discussion_id)
+@bp.route('/<int:post_id>/', methods=['GET'])
+def get_post_detail(post_id):
+    post = Post.query.get(post_id)
     if post is not None:
         return jsonify(summerised_post_schema.dump(post))
     else:
-        logger.warning(f"Trying to access non-existing post with id {discussion_id}")
+        logger.warning(f"Trying to access non-existing post with id {post_id}")
         raise ResourceDoesNotExists()
 
 @bp.route('/<int:post_id>/', methods=['PUT', 'DELETE'])

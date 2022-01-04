@@ -11,11 +11,11 @@ from sqlalchemy.exc import IntegrityError
 from discussion.utils import token_required, permission_required
 from discussion.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
+from marshmallow.exceptions import ValidationError
 
-
-@bp.route('/discussions/<int:discussion_id>/invite/<int:user_id>/', methods=['POST'])
+@bp.route('/<int:discussion_id>/<int:user_id>/', methods=['POST'])
 @token_required
-@permission_required(shouldnt_have=['IsCreator'])
+@permission_required(should_have=['IsCreator'])
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)
@@ -27,8 +27,9 @@ def create_invitations(discussion_id, user_id):
         invitation.status = 'Sent'
         db.session.add(invitation)
         db.session.commit()
-        return jsonify(summerised_invitation_schema.dump(invitation))
+        return jsonify(summerized_invitation_schema.dump(invitation))
     except ValidationError as e:
+        print(e)
         raise JsonValidationError(e)
     except IntegrityError:
         db.session.rollback()
@@ -38,7 +39,7 @@ def create_invitations(discussion_id, user_id):
         logger.error(f"uncaught exception: {trace_info}")
         raise InvalidAttemp()
 
-@bp.route('/invitations/', methods=['GET'])
+@bp.route('/', methods=['GET'])
 @token_required
 def get_invitations():
     page = request.args.get('page')
@@ -47,9 +48,9 @@ def get_invitations():
     data_set = db.session.query(Invitation).filter(or_(Invitation.invited_id==g.user.id, Invitation.inviter_id==g.user.id))
     return paginate_invitatinos(page, data_set, 'get_invitations')
 
-@bp.route('/invitations/<int:invitation_id>/', methods=['PUT'])
+@bp.route('/<int:invitation_id>/', methods=['PUT'])
 @token_required
-@permission_required(shouldnt_have=['IsInvited'])
+@permission_required(should_have=['IsInvited'])
 def edit_invitation_details(invitation_id):
     invitation = Invitation.query.get(invitation_id)
     if invitation.status == 'Sent':
@@ -78,10 +79,10 @@ def edit_invitation_details(invitation_id):
     else:
         raise ActionIsNotPossible('The action that you requested can not be done.')
 
-@bp.route('/invitations/<int:invitation_id>/', methods=['DELETE'])
+@bp.route('/<int:invitation_id>/', methods=['DELETE'])
 @token_required
 @permission_required(one_of=['IsInviter', 'IsInvited'])
 def delete_invitation(invitation_id):
-    invitation.query.delete()
+    invitation = Invitation.query.filter_by(id=invitation_id).delete()
     db.session.commit()
     return jsonify({'response': 'Ok!'}), 200

@@ -17,8 +17,8 @@ class DiscussionViewsTest(unittest.TestCase):
         self.reqctx.push()
         db.drop_all()
         db.create_all()
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        self.dana_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        self.dana_token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
         
     
     def tearDown(self):
@@ -27,41 +27,32 @@ class DiscussionViewsTest(unittest.TestCase):
         self.appctx.pop()
     
     def test_create_discussion(self):
-        response = self.client.post(url_for('api.create_discussions', ),
+        response = self.client.post(url_for('discussions.create_discussions', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(User.query.get(1).created_discussions), 1)
     
     def test_edit_discussion(self):
-        self.client.post(url_for('api.create_discussions', ),
+        self.client.post(url_for('discussions.create_discussions', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.put(url_for('api.edit_discussion_detail', discussion_id='1'),
+        response = self.client.put(url_for('discussions.edit_discussion_detail', discussion_id='1'),
                 json=discussion_fixture['dana_second_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 200)
     
     def test_create_invalid_discussion(self):
-        response = self.client.post(url_for('api.create_discussions'),
+        response = self.client.post(url_for('discussions.create_discussions'),
                 json=discussion_fixture['dana_first_discussion_invalid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 400)
     
     def test_create_repetative_discussion(self):
-        self.client.post(url_for('api.create_discussions'),
+        self.client.post(url_for('discussions.create_discussions'),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
-        response = self.client.post(url_for('api.create_discussions'),
+        response = self.client.post(url_for('discussions.create_discussions'),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 400)
-    
-    def test_get_empty_user_discussions(self):
-        response = self.client.get(url_for('api.get_creator_discussions', user_id=2))
-        self.assertEqual(response.json, {
-        "count": 0,
-        "discussions": [],
-        "next": None,
-        "prev": None
-        })

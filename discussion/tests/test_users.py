@@ -1,6 +1,6 @@
 import json
 import unittest
-from discussion.blueprints.utils import decode_auth_token
+from discussion.utils import decode_auth_token
 
 from discussion.app import create_app, db
 from discussion.fixtures import user_fixture
@@ -26,7 +26,7 @@ class UserAuthViewsTest(unittest.TestCase):
         self.reqctx.pop()
 
     def test_create_user(self):
-        response = self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {
             'name': 'dana',
@@ -44,8 +44,8 @@ class UserAuthViewsTest(unittest.TestCase):
         })
     
     def test_create_duplicte_user(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json, {
             "code": 400,
@@ -54,7 +54,7 @@ class UserAuthViewsTest(unittest.TestCase):
         })
 
     def test_create_user_invalid_input(self):
-        response = self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_invalid'])
+        response = self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_invalid'])
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json, {
             "code": 400,
@@ -73,33 +73,42 @@ class UserAuthViewsTest(unittest.TestCase):
         })
     
     def test_user_valid_login(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid'])
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(decode_auth_token(response.json['token']), User)
     
     def test_invalid_login(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('auth.login_user'), json=user_fixture['user_mamad_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_mamad_valid'])
         self.assertEqual(response.status_code, 401)
     
     def test_valid_logout(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid'])
         token = 'token ' + response.json['token']
-        response = self.client.post(url_for('auth.logout_user'), headers=[('Authorization', token),])
+        response = self.client.post(url_for('users.logout_user'), headers=[('Authorization', token),])
         self.assertEqual(response.status_code, 200)
         
     def test_invalid_logout(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid'])
         token = response.json['token'][:-1]
-        response = self.client.post(url_for('auth.logout_user'), headers=[('Authorization', token)])
+        response = self.client.post(url_for('users.logout_user'), headers=[('Authorization', token)])
         self.assertEqual(response.status_code, 401)
 
     def test_invalid_login_with_token(self):
-        self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-        response = self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid'])
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid'])
         token = 'token ' + response.json['token']
-        response = self.client.post(url_for('auth.login_user'), headers=[('Authorization', token),], json=user_fixture['user_dana_valid'])
+        response = self.client.post(url_for('users.login_user'), headers=[('Authorization', token),], json=user_fixture['user_dana_valid'])
         self.assertEqual(response.status_code, 401)
+    
+    def test_get_empty_user_discussions(self):
+        response = self.client.get(url_for('users.get_creator_discussions', user_id=2))
+        self.assertEqual(response.json, {
+        "count": 0,
+        "discussions": [],
+        "next": None,
+        "prev": None
+        })

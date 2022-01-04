@@ -1,5 +1,5 @@
 import traceback
-from datetime import datetime, timedelta
+from marshmallow.exceptions import ValidationError
 
 from discussion.app import db
 from discussion.blueprints.users import bp, logger
@@ -10,7 +10,8 @@ from discussion.errors import (InvalidAttemp, InvalidCredentials,
                                ResourceDoesNotExists)
 from discussion.models.tokenblacklist import TokenBlackList
 from discussion.models.user import User
-from discussion.utils import permission_required, token_required
+from discussion.models.discussion import Discussion
+from discussion.utils import permission_required, token_required, decode_auth_token, encode_auth_token
 from flask import current_app, g, jsonify, request
 from sqlalchemy.exc import IntegrityError
 
@@ -106,7 +107,6 @@ def login_user():
         else:
             raise InvalidCredentials(message='Username or Password you provided are invalid.')
     except AttributeError as e:
-        print(e)    
         raise InvalidCredentials(message='Please provide full creadentials.')
     except AttributeError:
         raise InvalidCredentials(message='Please provide full creadentials.')

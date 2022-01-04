@@ -4,7 +4,9 @@ from sqlalchemy import Index, UniqueConstraint
 
 from discussion.app import db
 from discussion.models.post import Post
-
+from discussion.models.follow import Follow
+from discussion.models.participate import Participate
+from discussion.models.invitation import Invitation
 
 class Discussion(db.Model):
 

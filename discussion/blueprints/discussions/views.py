@@ -1,13 +1,17 @@
+from discussion.app import db
 from discussion.blueprints.discussions import bp, logger
+from discussion.blueprints.discussions.schemas import (
+    create_discussion_schema, discussion_schema)
+from discussion.errors import (ActionIsNotPossible, InvalidAttemp,
+                               JsonIntegrityError, JsonValidationError,
+                               ResourceDoesNotExists)
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
-from flask import g, request
-from sqlalchemy.exc import IntegrityError
-from discussion.app import db
 from discussion.utils import permission_required, token_required
-from discussion.blueprints.discussions.schemas import create_discussion_schema, discussion_schema
-from discussion.errors import (InvalidAttemp, JsonIntegrityError,
-                               JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
+from flask import g, request, jsonify
+from marshmallow.exceptions import ValidationError
+from sqlalchemy.exc import IntegrityError
+import traceback
 
 @bp.route('/', methods=['GET'])
 def get_discussions():
@@ -27,7 +31,7 @@ def get_discussion_detail(discussion_id):
 
 @bp.route('/<int:discussion_id>/', methods=['PUT', 'DELETE'])
 @token_required
-@permission_required(shouldnt_have=['IsCreator'])
+@permission_required(should_have=['IsCreator'])
 def edit_discussion_detail(discussion_id):
     discussion = Discussion.query.get(discussion_id)
     if request.method == 'PUT':
@@ -41,6 +45,8 @@ def edit_discussion_detail(discussion_id):
             raise JsonValidationError(e)
         except:
             trace_info = traceback.format_exc()
+            print(logger)
+            print(trace_info)
             logger.error(f"uncaught exception: {trace_info}")
             raise InvalidAttemp()
     else:

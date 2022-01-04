@@ -9,7 +9,8 @@ from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 from werkzeug.security import generate_password_hash
-from discussion.blueprints.discussions.schemas import DiscussionSchema
+# from discussion.blueprints.discussions.schemas import \
+#     summerised_discussion_schema
 
 
 class CreateUserSchema(ma.SQLAlchemyAutoSchema):
@@ -65,7 +66,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
             'invitations_recived',
         )
 
-    created_discussions = Nested(lambda: DiscussionSchema(only=("id", "title", "description", 'participants', 'followed_by'), many=True))
+    created_discussions = Nested('DiscussionSchema', only=("id", "title", "description", 'participants', 'followed_by'), many=True)
     invitations_sent = Nested('SummerisedInvitationSchema', many=True)
     invitations_recived = Nested('SummerisedInvitationSchema', many=True)
 
@@ -96,3 +97,4 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 create_user_schema = CreateUserSchema()
 edit_user_schema = EditUserSchema()
 user_schema = UserSchema()
+summerised_user_schema = SummerisedUserSchema()

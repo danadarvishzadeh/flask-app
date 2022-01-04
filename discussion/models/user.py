@@ -2,10 +2,13 @@ from datetime import datetime
 
 from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash
-from discussion.models.invitation import Invitation
-from discussion.models.participate import Participate
+
 from discussion.app import db
 from discussion.models.discussion import Discussion
+from discussion.models.invitation import Invitation
+from discussion.models.participate import Participate
+from discussion.models.post import Post
+from discussion.models.follow import Follow
 
 
 class User(db.Model):

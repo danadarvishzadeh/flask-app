@@ -5,7 +5,7 @@ from flask import g
 from discussion.errors import (ActionIsNotPossible, JsonPermissionDenied,
                                ResourceDoesNotExists)
 from discussion.models.discussion import Discussion
-from discussion.models.invite import Invitation
+from discussion.models.invitation import Invitation
 from discussion.models.post import Post
 
 
@@ -81,7 +81,7 @@ class IsFollower(PermissionBase):
     def has_access(self, **kwargs):
         discussion = Discussion.query.get(kwargs.get('discussion_id'))
         if discussion is not None:
-            if g.user.id in discusison.get_follower_ids():
+            if g.user.id in discussion.get_follower_ids():
                 return True
             else:
                 return False

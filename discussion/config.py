@@ -94,12 +94,27 @@ LOG_CONFIG = {
             'level': 'DEBUG',
             'propagate': True
         },
-        'api': {
+        'discussions': {
             'handlers': ['debug', 'error'],
             'level': 'DEBUG',
             'propagate': True
         },
-        'auth': {
+        'posts': {
+            'handlers': ['debug', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'users': {
+            'handlers': ['debug', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'follow': {
+            'handlers': ['debug', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'invite': {
             'handlers': ['debug', 'error'],
             'level': 'DEBUG',
             'propagate': True

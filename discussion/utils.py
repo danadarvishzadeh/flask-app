@@ -2,7 +2,7 @@ from functools import wraps
 
 import jwt
 from flask import current_app, g, request
-
+from datetime import datetime, timedelta
 from discussion.errors import InvalidCredentials, InvalidToken, JsonPermissionDenied
 from discussion.models.tokenblacklist import TokenBlackList
 from discussion.models.user import User
@@ -15,7 +15,7 @@ def decode_auth_token(auth_token):
     return user
 
 def str_to_class(classname):
-    module = __import__('discussion/%')
+    module = __import__('discussion.permissions', fromlist=['permissions'])
     return getattr(module, classname)
 
 def encode_auth_token(user):
@@ -60,7 +60,7 @@ def permission_required(should_have=None, one_of=None, shouldnt_have=None):
     def wraper_function(f):
         @wraps(f)
         def decorator(*args, **kwargs):
-            if shouldnt_have is not None:
+            if should_have is not None:
                 for permission_class in should_have:
                     permission = str_to_class(permission_class)()
                     if not permission.has_access(**kwargs):
@@ -78,3 +78,4 @@ def permission_required(should_have=None, one_of=None, shouldnt_have=None):
             return f(*args, **kwargs)
         return decorator
     return wraper_function
+

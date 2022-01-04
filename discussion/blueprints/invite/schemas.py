@@ -6,9 +6,6 @@ from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
 
-
-
-
 class CreateInvitationSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Invitation
@@ -20,22 +17,22 @@ class CreateInvitationSchema(ma.SQLAlchemyAutoSchema):
         )
 
 
-# class InvitationSchema(ma.SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = Invitation
-#         fields = (
-#             'id',
-#             'body',
-#             'date_sent',
-#             'invited',
-#             'inviter',
-#             'status',
-#             'discussion',
-#         )
+class InvitationSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Invitation
+        fields = (
+            'id',
+            'body',
+            'date_sent',
+            'invited',
+            'inviter',
+            'status',
+            'discussion',
+        )
 
-#     invited = Nested('SummerisedUserSchema')
-#     inviter = Nested('SummerisedUserSchema')
-#     discussion = Nested(lambda: SummerisedDiscussionSchema())
+    invited = Nested('SummerisedUserSchema')
+    inviter = Nested('SummerisedUserSchema')
+    discussion = Nested('SummerisedDiscussionSchema')
 
 
 class SummerisedInvitationSchema(ma.SQLAlchemyAutoSchema):

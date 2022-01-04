@@ -1,12 +1,11 @@
 from discussion.app import ma
+# from discussion.blueprints.discussions.schemas import discussion_schema
 from discussion.models.post import Post
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
-from discussion.blueprints.discussions.schemas import discussion_schema
-
 
 
 class CreatePostSchema(ma.SQLAlchemyAutoSchema):
@@ -30,8 +29,8 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
             'author',
             'parent_discussion',
         )
-    author = Nested(lambda: UserSchema(exclude=('created_discussions',)))
-    parent_discussion = Nested(lambda: DiscussionSchema(exclude=('posts', 'creator')))
+    author = Nested('UserSchema', exclude=('created_discussions',))
+    parent_discussion = Nested('DiscussionSchema', exclude=('posts', 'creator'))
 
 
 class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
@@ -44,8 +43,10 @@ class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
             'author',
             'parent_discussion',
         )
-    author = Nested(lambda: SummerisedUserSchema())
-    parent_discussion = Nested(lambda: SummerisedDiscussionSchema())
+    author = Nested('SummerisedUserSchema')
+    parent_discussion = Nested('SummerisedDiscussionSchema')
+
 
 create_post_schema = CreatePostSchema()
 post_schema = PostSchema()
+summerised_post_schema = SummerisedPostSchema()

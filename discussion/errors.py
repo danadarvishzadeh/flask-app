@@ -1,8 +1,6 @@
-from marshmallow.exceptions import ValidationError
+
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import Forbidden, HTTPException
-
-
 
 __all__ = [
     'InvalidCredentials',

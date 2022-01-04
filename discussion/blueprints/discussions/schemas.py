@@ -1,5 +1,6 @@
 
 from discussion.app import ma
+from discussion.blueprints.invite.schemas import InvitationSchema
 from discussion.models.discussion import Discussion
 from discussion.models.user import User
 from flask_marshmallow import Schema, fields
@@ -7,7 +8,7 @@ from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
-
+from discussion.blueprints.users.schemas import summerised_user_schema
 
 class SummerisedDiscussionSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -45,8 +46,8 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
         )
 
     creator = Nested('SummerisedUserSchema')
-    posts = Nested(lambda: SummerisedPostSchema(), many=True)
-    invitations = Nested(lambda: InvitationSchema(only=('id', 'body', 'invited', 'status'), many=True))
+    posts = Nested('SummerisedPostSchema', many=True)
+    invitations = Nested('InvitationSchema', only=('id', 'body', 'invited', 'status'), many=True)
 
     @post_dump()
     def load_participants(self, data, **kwargs):
@@ -63,3 +64,4 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
 
 create_discussion_schema = CreateDiscussionSchema()
 discussion_schema = DiscussionSchema()
+summerised_discussion_schema = SummerisedDiscussionSchema()
