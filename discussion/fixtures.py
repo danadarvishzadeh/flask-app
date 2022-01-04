@@ -13,6 +13,13 @@ user_fixture = {
         'lastname': 'mamadplastiki',
         'password': '123456789'
     },
+    'user_dana_invalid_edit': {
+        'name': 'mamad',
+        'lastname': 'mamadplastiki',
+    },
+    'user_dana_valid_edit': {
+        'lastname': 'mamadplastiki',
+    },
     'user_dana_invalid': {
         'username': 1,
         'email': 'dana.dana.com',
@@ -51,6 +58,9 @@ post_fixture = {
     },
     'discussion1_post2': {
         'body': 'discussion1 post2 body',
+    },
+    'discussion1_post2_invalid': {
+        'body': 5,
     },
     'discussion2_post1': {
         'body': 'discussion2 post1 body',

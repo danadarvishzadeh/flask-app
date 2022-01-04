@@ -12,7 +12,7 @@ import traceback
 
 @bp.route('/discussions/<int:discussion_id>/follow/', methods=['POST'])
 @token_required
-@permission_required(shouldnt_have=['IsCreator', 'IsFollower'])
+@permission_required(shouldnt_have=['IsCreator'])
 def create_follows(discussion_id):
     follow = Follow.query.filter_by(follower_id=g.user.id, discussion_id=discussion_id).first()
     discussion = Discussion.query.get(discussion_id)

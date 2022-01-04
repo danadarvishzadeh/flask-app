@@ -52,7 +52,7 @@ def edit_user_detail():
             data = edit_user_schema.load(req_json, partial=True)
             user.query.update(dict(data))
             db.session.commit()
-            return jsonify(user_schema.dump(user).first())
+            return jsonify(user_schema.dump(user))
         except ValidationError as e:
             raise JsonValidationError(e)
         except IntegrityError as e:
@@ -64,6 +64,9 @@ def edit_user_detail():
             raise InvalidAttemp()
     else:
         user.query.delete()
+        token = request.headers.get('Authorization').split()[1]
+        tb = TokenBlackList(token=token)
+        db.session.add(tb)
         db.session.commit()
         return jsonify({'response': 'ok!'}), 200
 
@@ -95,7 +98,7 @@ def login_user():
             logger.info(f"User {user.username} tried log in, having valid token.")
             raise InvalidCredentials(message='You have a already registered token and hence, logged in.')
         else:
-            logger.info(f"User {user.username} tried log in, having invalid token.")
+            logger.info(f"User with depricated token {auth_token} tried log in, having invalid token.")
             raise InvalidCredentials(message='The Token you provided is invalid.')
     req_json = request.get_json()
     try:

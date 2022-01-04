@@ -67,3 +67,35 @@ class PostViewsTest(unittest.TestCase):
                 json=post_fixture['discussion1_post2'],
                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 403)
+    
+    def test_edit_post_details_invalid(self):
+        self.client.post(url_for('posts.create_posts', discussion_id=1),
+                json=post_fixture['discussion1_post1'],
+                headers=[('Authorization', self.dana_token),])
+        response = self.client.put(url_for('posts.edit_post_details', post_id=1),
+                json=post_fixture['discussion1_post2_invalid'],
+                headers=[('Authorization', self.dana_token),])
+        self.assertEqual(response.status_code, 400)
+    
+    def test_create_post_details_invalid(self):
+        response = self.client.put(url_for('posts.edit_post_details', post_id=1),
+                json=post_fixture['discussion1_post2_invalid'],
+                headers=[('Authorization', self.dana_token),])
+        self.assertEqual(response.status_code, 400)
+
+    def test_delete_post(self):
+        self.client.post(url_for('posts.create_posts', discussion_id=1),
+                json=post_fixture['discussion1_post1'],
+                headers=[('Authorization', self.dana_token),])
+        response = self.client.delete(url_for('posts.create_posts', discussion_id=1),
+                headers=[('Authorization', self.dana_token),])
+        self.assertEqual(response.status_code, 200)
+    
+    def test_create_repeatative_posts(self):
+        self.client.post(url_for('posts.create_posts', discussion_id=1),
+                json=post_fixture['discussion1_post1'],
+                headers=[('Authorization', self.dana_token),])
+        response = self.client.post(url_for('posts.create_posts', discussion_id=1),
+                json=post_fixture['discussion1_post1'],
+                headers=[('Authorization', self.dana_token),])
+        self.assertEqual(response.status_code, 400)

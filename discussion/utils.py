@@ -10,6 +10,8 @@ from discussion.models.user import User
 
 
 def decode_auth_token(auth_token):
+    if TokenBlackList.query.filter_by(token=auth_token).first() is not None:
+        return None
     payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
     user = User.query.get(payload['sub'])
     return user
@@ -28,7 +30,13 @@ def encode_auth_token(user):
         payload,
         current_app.config.get('SECRET_KEY'),
         algorithm='HS256').decode()
-    while TokenBlackList.query.filter_by(token=token).first():
+    while TokenBlackList.query.filter_by(token=token).first() is not None:
+        payload = {
+            'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
+            'iat': datetime.utcnow(),
+            'sub': user.id
+        }
+        print(token)
         token = jwt.encode(
         payload,
         current_app.config.get('SECRET_KEY'),

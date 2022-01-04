@@ -112,3 +112,36 @@ class UserViewsTest(unittest.TestCase):
         "next": None,
         "prev": None
         })
+    
+    def test_invalid_edit_user_details(self):
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        response = self.client.put(url_for('users.edit_user_detail'), headers=[('Authorization', token),], json=user_fixture['user_dana_invalid'])
+        self.assertEqual(response.status_code, 400)
+    
+    def test_valid_edit_user_details(self):
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        response = self.client.put(url_for('users.edit_user_detail'), headers=[('Authorization', token),], json=user_fixture['user_dana_valid_edit'])
+        self.assertEqual(response.status_code, 200)
+    
+    def test_delete_user(self):
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        response = self.client.delete(url_for('users.edit_user_detail'), headers=[('Authorization', token),])
+        self.assertEqual(response.status_code, 200)
+        
+    def test_depricated_token_login_deleted_user(self):
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        self.client.delete(url_for('users.edit_user_detail'), headers=[('Authorization', token),])
+        response = self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid'])
+        self.assertEqual(response.status_code, 401)
+    
+    def test_depricated_token_login_logged_out_user(self):
+        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
+        token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
+        self.client.post(url_for('users.logout_user'), headers=[('Authorization', token),])
+        response = self.client.post(url_for('users.login_user'), headers=[('Authorization', token),], json=user_fixture['user_dana_valid'])
+        self.assertEqual(response.status_code, 401)
+        

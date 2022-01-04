@@ -47,3 +47,10 @@ class InvitationViewsTest(unittest.TestCase):
         response = self.client.delete(url_for('follow.delete_follows', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 200)
+    
+    def test_create_follow_repeatative(self):
+        self.client.post(url_for('follow.create_follows', discussion_id=1),
+                        headers=[('Authorization', self.mamad_token),])
+        response = self.client.post(url_for('follow.create_follows', discussion_id=1),
+                        headers=[('Authorization', self.mamad_token),])
+        self.assertEqual(response.status_code, 400)
