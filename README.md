@@ -7,6 +7,7 @@ Changes until now:
 4. Creating permission classes and permission decorator.[permissions](discussion/permission,py) [decorator](discussion/utils.py)
 5. Adding paginagion files and classes with model, filters and schema fields. [pagination base class](discussion/utils.py)
 6. Almost Full covering unittests
+7. Adding installation and requirements to the README file
 
 Ongoing changes:
 ==================
@@ -16,7 +17,6 @@ Ongoing changes:
 - implementing Caching and Redis
 - Editing loggers and log files
 - Restructuring schemas
-- Adding installation and requirements to the README file
 - Changing root directory of the application
 - Adding id, is\_active, created\_at and modified\_at fields to all models
 

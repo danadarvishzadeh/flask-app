@@ -121,3 +121,177 @@ LOG_CONFIG = {
         },
     },
 }
+
+template = {
+    "swagger": "2.0",
+    "info": {
+        "title": "Discussion API",
+        "description": "API for discussion app",
+        "version": "1.0.0"
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": [
+        "http",
+    ],
+    "definitions":{
+        "Discussion": {
+            "type": "object",
+            "properties":{
+                "discussion_id":{
+                    "type": "integer"
+                },
+                "creator_id":{
+                    "type": "integer"
+                },
+                "title":{
+                    "type": "string"
+                },
+                "description":{
+                    "type": "string"
+                },
+                "date_created":{
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "followed_by": {
+                    "$ref": "#/definitions/Follow"
+                },
+                "invitations": {
+                    "$ref": "#/definitions/Invitation"
+                },
+                "creator":{
+                    "$ref": "#/definitions/User"
+                },
+                "posts": {
+                    "$ref": "#/definitions/Post"
+                },
+                "participants": {
+                    "$ref": "#/definitions/Participate"
+                },
+            },
+        },
+        "Follow": {
+            "type": "object",
+            "properties": {
+                "follower_id": {
+                    "type": "integer"
+                },
+                "discussion_id": {
+                    "type": "integer"
+                },
+                "started_following": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+            },
+        },
+        "Invitation": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "inviter_id": {
+                    "type": "integer"
+                },
+                "invited_id": {
+                    "type": "integer"
+                },
+                "discussion_id": {
+                    "type": "integer"
+                },
+                "date_sent": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "body": {
+                    "type": "string",
+                },
+                "status": {
+                    "type": "string",
+                },
+            },
+        },
+        "Participate": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "host_id": {
+                    "type": "integer"
+                },
+                "participant_id": {
+                    "type": "integer"
+                },
+                "discussion_id": {
+                    "type": "integer"
+                },
+                "date_started": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+            },
+        },
+        "Post": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "author_id": {
+                    "type": "integer"
+                },
+                "discussion_id": {
+                    "type": "integer"
+                },
+                "date_created": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "body": {
+                    "type": "string",
+                },
+            },
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string",
+                },
+                "username": {
+                    "type": "string",
+                },
+                "name": {
+                    "type": "string",
+                },
+                "lastname": {
+                    "type": "string",
+                },
+                "created_discussions": {
+                    "$ref": "#/definitions/Discussion"
+                },
+                "posts": {
+                    "$ref": "#/definitions/Post"
+                },
+                "invitations_sent": {
+                    "$ref": "#/definitions/Invitation"
+                },
+                "invitations_recived": {
+                    "$ref": "#/definitions/Invitation"
+                },
+                "host_for": {
+                    "$ref": "#/definitions/Participate"
+                },
+                "participated_with_users": {
+                    "$ref": "#/definitions/Participate"
+                },
+            },
+        },
+    },
+}

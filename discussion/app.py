@@ -5,15 +5,16 @@ from flask import Flask, json, make_response
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from .config import LOG_CONFIG, config, template
+from flasgger import Swagger
 
-from .config import LOG_CONFIG, config
 
 dictConfig(LOG_CONFIG)
 
 db = SQLAlchemy()
 migrate = Migrate()
 ma = Marshmallow()
-
+swagger = Swagger(template=template)
 
 def configure_blueprints(app):
     for blueprint in app.config['BLUEPRINTS']:
@@ -45,11 +46,10 @@ def create_app(config_name='default'):
     db.init_app(app)
     migrate.init_app(app, db)
     ma.init_app(app)
+    swagger.init_app(app)
 
     configure_blueprints(app)
     register_error_handlers(app)
 
-    return app
 
-# if __name__ == "__main__":
-#     create_app().run(debug=True)
+    return app
