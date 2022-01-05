@@ -25,19 +25,26 @@ Installation:
 
 To get started, clone the project using:
 
-`git clone git@github.com:danadarvishzadeh/flask-app.git`
+```
+git clone git@github.com:danadarvishzadeh/flask-app.git
+```
 
 From inside `flask-app`, create a virtual environment using:
 
-`python -m venv venv`
+```
+python -m venv venv
+```
 
 Activate virtual environment using:
 
-`. venv/bin/activate`
+```
+. venv/bin/activate
+```
 
 Then you can install the project requirements using:
 
-`pip install -r requirements.txt`
+```pip install -r requirements.txt
+```
 
 After that, set `FLASK_APP` and `FLASK_ENV` environment variables using:
 ```
@@ -49,4 +56,6 @@ But be aware that this setting will be reset each time you close your shell sess
 
 And finally, you can run the app using:
 
-`flask run`
+```
+flask run
+```
