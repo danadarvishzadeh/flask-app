@@ -33,7 +33,7 @@ def register_error_handlers(app):
         response.status = e.code
         return response
     
-    errors_file = __import__('discussion.errors', fromlist=['errors'])
+    errors_file = __import__('discussion.utils.errors', fromlist=['errors'])
     for err in errors_file.__all__:
         app.register_error_handler(getattr(errors_file, err), error)
 

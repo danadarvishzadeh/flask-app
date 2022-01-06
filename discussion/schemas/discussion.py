@@ -1,14 +1,16 @@
 
-from discussion.app import ma
-from discussion.blueprints.invite.schemas import InvitationSchema
-from discussion.models.discussion import Discussion
-from discussion.models.user import User
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
-from discussion.blueprints.users.schemas import summerised_user_schema
+
+from discussion.app import ma
+from discussion.models.discussion import Discussion
+from discussion.models.user import User
+from discussion.schemas.invitation import InvitationSchema
+from discussion.schemas.user import summerised_user_schema
+
 
 class SummerisedDiscussionSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

@@ -1,7 +1,7 @@
 import traceback
 from discussion.app import db
 from discussion.blueprints.invite import bp, logger
-from discussion.blueprints.invite.schemas import create_invitation_schema, invitation_schema
+from discussion.schemas.invitation import create_invitation_schema, invitation_schema
 from discussion.models.invitation import Invitation
 from discussion.models.discussion import Discussion
 from discussion.models.participate import Participate

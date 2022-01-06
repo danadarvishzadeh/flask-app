@@ -1,16 +1,16 @@
 
-from discussion.app import ma
-from discussion.models.follow import Follow
-from discussion.models.participate import Participate
-from discussion.models.user import User
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 from werkzeug.security import generate_password_hash
-# from discussion.blueprints.discussions.schemas import \
-#     summerised_discussion_schema
+
+from discussion.app import ma
+from discussion.models.follow import Follow
+from discussion.models.participate import Participate
+from discussion.models.user import User
+
 
 
 class CreateUserSchema(ma.SQLAlchemyAutoSchema):

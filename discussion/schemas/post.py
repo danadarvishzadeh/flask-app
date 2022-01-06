@@ -1,11 +1,11 @@
-from discussion.app import ma
-# from discussion.blueprints.discussions.schemas import discussion_schema
-from discussion.models.post import Post
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+
+from discussion.app import ma
+from discussion.models.post import Post
 
 
 class CreatePostSchema(ma.SQLAlchemyAutoSchema):

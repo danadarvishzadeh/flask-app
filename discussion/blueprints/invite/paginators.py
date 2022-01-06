@@ -1,4 +1,4 @@
-from discussion.blueprints.invite.schemas import invitation_schema
+from discussion.blueprints.invitation import invitation_schema
 from discussion.models.invitation import Invitation
 from discussion.utils import PaginatorBase
 

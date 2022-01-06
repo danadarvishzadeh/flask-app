@@ -2,7 +2,7 @@ import traceback
 
 from discussion.app import db
 from discussion.blueprints.posts import bp, logger
-from discussion.blueprints.posts.schemas import create_post_schema, post_schema, summerised_post_schema
+from discussion.schemas.post import create_post_schema, post_schema, summerised_post_schema
 from discussion.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists)
 from discussion.models.post import Post

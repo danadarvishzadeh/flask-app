@@ -1,9 +1,10 @@
-from discussion.app import ma
-from discussion.models.invitation import Invitation
-from discussion.models.participate import Participate
 from flask_marshmallow import Schema, fields
 from marshmallow.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+
+from discussion.app import ma
+from discussion.models.invitation import Invitation
+from discussion.models.participate import Participate
 
 
 class CreateInvitationSchema(ma.SQLAlchemyAutoSchema):

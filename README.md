@@ -8,6 +8,8 @@ Changes until now:
 5. Adding paginagion files and classes with model, filters and schema fields. [pagination base class](discussion/utils.py)
 6. Almost Full covering unittests
 7. Adding installation and requirements to the README file
+8. Adding id, is\_active, created\_at and modified\_at fields to all models
+9. Restructuring schemas
 
 Ongoing changes:
 ==================
@@ -16,9 +18,8 @@ Ongoing changes:
 - SQl and Postgresql
 - implementing Caching and Redis
 - Editing loggers and log files
-- Restructuring schemas
 - Changing root directory of the application
-- Adding id, is\_active, created\_at and modified\_at fields to all models
+- Changing permissions to work indipendent of models
 
 Installation:
 ------------------

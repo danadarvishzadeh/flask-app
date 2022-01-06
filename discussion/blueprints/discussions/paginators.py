@@ -1,6 +1,6 @@
 from discussion.models.discussion import Discussion
 from discussion.utils import PaginatorBase
-from discussion.blueprints.discussions.schemas import discussion_schema
+from discussion.schemas.discussion import discussion_schema
 
 
 class DiscussionPaginator(PaginatorBase):
