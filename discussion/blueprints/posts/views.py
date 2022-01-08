@@ -28,7 +28,7 @@ def get_post_detail(post_id):
 
 @bp.route('/<int:post_id>/', methods=['PUT', 'DELETE'])
 @token_required
-@permission_required(should_have=['IsAuthor'])
+@permission_required(Post, required=['IsOwner'])
 def edit_post_details(post_id):
     post = Post.query.get(post_id)
     if request.method == 'PUT':
@@ -51,7 +51,7 @@ def edit_post_details(post_id):
 
 @bp.route('/<int:discussion_id>/', methods=['POST'])
 @token_required
-@permission_required(one_of=['IsCreator', 'IsParticipant'])
+@permission_required(Discussion, one_of=['IsOwner', 'InPartners'])
 def create_posts(discussion_id):
     req_json = request.get_json()
     try:

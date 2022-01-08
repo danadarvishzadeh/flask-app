@@ -17,7 +17,7 @@ from discussion.blueprints.invite.paginators import InvitationPaginator
 
 @bp.route('/<int:discussion_id>/<int:user_id>/', methods=['POST'])
 @token_required
-@permission_required(should_have=['IsCreator'])
+@permission_required(Discussion, required=['IsOwner'])
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)
@@ -49,7 +49,7 @@ def get_invitations():
 
 @bp.route('/<int:invitation_id>/', methods=['PUT'])
 @token_required
-@permission_required(should_have=['IsInvited'])
+@permission_required(Invitation ,one_of=['IsPartner'])
 def edit_invitation_details(invitation_id):
     invitation = Invitation.query.get(invitation_id)
     if invitation.status == 'Sent':
@@ -80,7 +80,7 @@ def edit_invitation_details(invitation_id):
 
 @bp.route('/<int:invitation_id>/', methods=['DELETE'])
 @token_required
-@permission_required(one_of=['IsInviter', 'IsInvited'])
+@permission_required(Invitation, one_of=['IsOwner', 'IsPartner'])
 def delete_invitation(invitation_id):
     invitation = Invitation.query.filter_by(id=invitation_id).delete()
     db.session.commit()

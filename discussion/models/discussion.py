@@ -13,7 +13,7 @@ class Discussion(db.Model):
     __tablename__ = 'discussions'
 
     __table_args__ = (
-        UniqueConstraint('title', 'creator_id', name='unique_discussion'),
+        UniqueConstraint('title', 'owner_id', name='unique_discussion'),
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,18 +23,22 @@ class Discussion(db.Model):
 
     title = db.Column(db.String(64), nullable=False, index=True)
     description = db.Column(db.Text, nullable=False)
-    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
     posts = db.relationship('Post', backref='parent_discussion', lazy=True)
+    
     followed_by = db.relationship('Follow', backref='discussion', lazy=True)
-    participants = db.relationship('Participate', backref='discussion')
+    partners = db.relationship('Participate', backref='discussion')
     invitations = db.relationship('Invitation', backref='discussion', lazy=True)
 
-    def get_participants(self):
-        return [p.participant for p in self.participants]
+    @property
+    def followers(self):
+        return [i.owner for i in self.followed_by]
 
-    def get_participant_ids(self):
-        return [p.participant_id for p in self.participants]
+    @property
+    def partner_users(self):
+        return [i.partner for i in self.participants]
     
-    def get_follower_ids(self):
-        return [f.follower_id for f in self.followed_by]
+    @property
+    def invited_users(self):
+        return [i.partner for i in self.invitations]

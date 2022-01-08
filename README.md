@@ -15,11 +15,11 @@ Ongoing changes:
 ==================
 
 - Open-api and Swager
-- SQl and Postgresql
 - implementing Caching and Redis
 - Editing loggers and log files
 - Changing root directory of the application
 - Changing permissions to work indipendent of models
+- SQl and Postgresql
 
 Installation:
 ------------------

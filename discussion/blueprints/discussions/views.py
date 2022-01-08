@@ -17,101 +17,12 @@ from discussion.blueprints.posts.paginators import PostPaginator
 
 @bp.route('/', methods=['GET'])
 def get_discussions():
-    """ Returns list of discussions
-    ---
-    responses:
-        200:
-            description: A paginated list of discussions
-            schema:
-                id: Discussion
-                items:
-                    $ref: '#/definitions/Discussion'
-            examples:
-                {
-                "creator": {
-                    "email": "ali@dana.ir",
-                    "id": 3,
-                    "lastname": "danad",
-                    "name": "ali",
-                    "username": "ali"
-                },
-                "date_created": "2022-01-04T08:40:33.539633",
-                "description": "fifth description",
-                "followed_by": [],
-                "id": 1,
-                "invitations": [
-                    {
-                        "body": "I'll be happy to talk about this...",
-                        "id": 1,
-                        "invited": {
-                            "email": "mamad@dana.ir",
-                            "id": 2,
-                            "lastname": "danad",
-                            "name": "mamad",
-                            "username": "mamad"
-                        },
-                        "status": "Sent"
-                    }
-                ],
-                "participants": [],
-                "posts": [],
-                "title": "fifth discussion"
-            }
-    """
     page = request.args.get('page', 1, type=int)
     return DiscussionPaginator.return_page(page, 'get_discussions')
 
 
 @bp.route('/<int:discussion_id>/', methods=['GET'])
 def get_discussion_detail(discussion_id):
-    """Find discussions by id
-    ---
-    parameters:
-        -   name: discussion_id
-            in: path
-            type: integer
-            required: true
-    responses:
-        200:
-            description: A discussion object
-            schema:
-                $ref: '#/definitions/Discussion'
-            examples:
-                {
-                "creator": {
-                    "email": "ali@dana.ir",
-                    "id": 3,
-                    "lastname": "danad",
-                    "name": "ali",
-                    "username": "ali"
-                },
-                "date_created": "2022-01-04T08:40:33.539633",
-                "description": "fifth description",
-                "followed_by": [],
-                "id": 1,
-                "invitations": [
-                    {
-                        "body": "I'll be happy to talk about this...",
-                        "id": 1,
-                        "invited": {
-                            "email": "mamad@dana.ir",
-                            "id": 2,
-                            "lastname": "danad",
-                            "name": "mamad",
-                            "username": "mamad"
-                        },
-                        "status": "Sent"
-                    }
-                ],
-                "participants": [],
-                "posts": [],
-                "title": "fifth discussion"
-            }
-        400:
-            description: A discussion object
-            schema:
-                $ref: '#/definitions/Discussion'
-    """
     discussion = Discussion.query.get(discussion_id)
     if discussion is not None:
         return jsonify(discussion_schema.dump(discussion))
@@ -121,7 +32,7 @@ def get_discussion_detail(discussion_id):
 
 @bp.route('/<int:discussion_id>/', methods=['PUT', 'DELETE'])
 @token_required
-@permission_required(should_have=['IsCreator'])
+@permission_required(Discussion,required=['IsOwner'])
 def edit_discussion_detail(discussion_id):
     discussion = Discussion.query.get(discussion_id)
     if request.method == 'PUT':

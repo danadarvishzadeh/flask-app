@@ -9,6 +9,6 @@ class Participate(db.Model):
     modified_at = db.Column(db.DateTime, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, default=True)
     
-    host_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    participant_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    partner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'))

@@ -1,11 +1,8 @@
 from functools import wraps
 
 import jwt
-from flask import current_app, g, request, jsonify
-from datetime import datetime, timedelta
-from discussion.errors import InvalidCredentials, InvalidToken, JsonPermissionDenied
-from discussion.models.tokenblacklist import TokenBlackList
-from discussion.models.user import User
+from flask import g, request, jsonify
+from discussion.errors import JsonPermissionDenied
 
 
 
@@ -17,14 +14,14 @@ def str_to_class(classname):
 
 
 
-def permission_required(should_have=None, one_of=None, shouldnt_have=None):
+def permission_required(resource, required=None, one_of=None, forbidden=None):
     def wraper_function(f):
         @wraps(f)
         def decorator(*args, **kwargs):
-            if should_have is not None:
-                for permission_class in should_have:
+            if required is not None:
+                for permission_class in required:
                     permission = str_to_class(permission_class)()
-                    if not permission.has_access(**kwargs):
+                    if not permission.has_access(resource, **kwargs):
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
             if one_of is not None:
                 for permission_class in one_of:
@@ -32,8 +29,8 @@ def permission_required(should_have=None, one_of=None, shouldnt_have=None):
                     if permission.has_access(**kwargs):
                         return f(*args, **kwargs)
                 raise JsonPermissionDenied(f"Premission {permission_class} required.")
-            if shouldnt_have is not None:
-                for permission_class in shouldnt_have:
+            if forbidden is not None:
+                for permission_class in forbidden:
                     permission = str_to_class(permission_class)()
                     if permission.has_access(**kwargs):
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")

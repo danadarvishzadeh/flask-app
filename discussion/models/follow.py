@@ -13,5 +13,5 @@ class Follow(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
 
-    follower_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'), primary_key=True)

@@ -7,7 +7,7 @@ class Invitation(db.Model):
     __tablename__ = 'invitations'
 
     __table_args__ = (
-        UniqueConstraint('inviter_id', 'invited_id', name='unique_invitation'),
+        UniqueConstraint('owner_id', 'partner_id', name='unique_invitation'),
     )
     
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +18,6 @@ class Invitation(db.Model):
     body = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(10), nullable=False)
 
-    inviter_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-    invited_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    partner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'), nullable=False)

@@ -7,8 +7,8 @@ class Post(db.Model):
     __tablename__ = 'posts'
 
     __table_args__ = (
-        UniqueConstraint('author_id', 'discussion_id', 'body', name='creator_unique_post'),
-        Index('author_discussion', 'author_id', 'discussion_id'),
+        UniqueConstraint('owner_id', 'discussion_id', 'body', name='creator_unique_post'),
+        Index('author_discussion', 'owner_id', 'discussion_id'),
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,5 +18,5 @@ class Post(db.Model):
 
     body = db.Column(db.Text, nullable=False)
     
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'))

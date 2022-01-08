@@ -33,20 +33,25 @@ class User(db.Model):
     
     password = db.Column(db.String(128))
     
-    created_discussions = db.relationship('Discussion', backref='creator', lazy=True)
-    posts = db.relationship('Post', backref='author', lazy=True)
-    invitations_sent = db.relationship('Invitation',
-            backref='inviter',
-            primaryjoin=id==Invitation.inviter_id)
-    invitations_recived = db.relationship('Invitation',
-            backref='invited',
-            primaryjoin=id==Invitation.invited_id)
-    host_for = db.relationship('Participate',
-            backref='host',
-            primaryjoin=id==Participate.host_id)
-    participated_with_users = db.relationship('Participate',
-            backref='participant',
-            primaryjoin=id==Participate.participant_id)
+    owned_discussions = db.relationship('Discussion', backref='owner', lazy=True)
+    owned_posts = db.relationship('Post', backref='owner', lazy=True)
+    owned_follows = db.relationship('Follow',
+            backref='owner',
+            primaryjoin=id==Follow.owner_id)
+
+    owned_invitations = db.relationship('Invitation',
+            backref='owner',
+            primaryjoin=id==Invitation.owner_id)
+    pertnered_invitations = db.relationship('Invitation',
+            backref='partner',
+            primaryjoin=id==Invitation.pertner_id)
+    owned_participations = db.relationship('Participate',
+            backref='owner',
+            primaryjoin=id==Participate.owner_id)
+    pertnered_participations = db.relationship('Participate',
+            backref='partner',
+            primaryjoin=id==Participate.pertner_id)
+    
 
     def password_check(self, password):
         return check_password_hash(self.password, password)
@@ -54,3 +59,23 @@ class User(db.Model):
     @password.setter
     def password(self, password):
         self.password = generate_password_hash(password)
+    
+    @property
+    def invited_users(self):
+        return [i.partner for i in self.owned_invitations]
+    
+    @property
+    def inviter_users(self):
+        return [i.owner for i in self.partnered_invitations]
+    
+    @property
+    def participated_users(self):
+        return [i.partner for i in self.owned_participations]
+    
+    @property
+    def partnered_users(self):
+        return [i.owner for i in self.partnered_participations]
+    
+    @property
+    def followed_discussions(self):
+        return [i.owner for i in self.owned_follows]

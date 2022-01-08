@@ -12,7 +12,7 @@ import traceback
 
 @bp.route('/discussions/<int:discussion_id>/follow/', methods=['POST'])
 @token_required
-@permission_required(shouldnt_have=['IsCreator'])
+@permission_required(Discussion, forbidden=['IsOwner'])
 def create_follows(discussion_id):
     follow = Follow.query.filter_by(follower_id=g.user.id, discussion_id=discussion_id).first()
     discussion = Discussion.query.get(discussion_id)
@@ -34,8 +34,9 @@ def create_follows(discussion_id):
 
 @bp.route('/<int:discussion_id>/', methods=['DELETE'])
 @token_required
-@permission_required(should_have=['IsFollower'])
 def delete_follows(discussion_id):
-    follow = Follow.query.filter_by(discussion_id=discussion_id).delete()
+    follow = Follow.query.filter_by(discussion_id=discussion_id)
+    if follow.owner_id == g.user.id:
+        follow.delete()
     db.session.commit()
     return jsonify({'response': 'Ok!'}), 200
