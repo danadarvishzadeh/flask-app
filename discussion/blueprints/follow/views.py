@@ -1,10 +1,11 @@
 from discussion.app import db
 from discussion.blueprints.follow import bp, logger
-from discussion.errors import (ActionIsNotPossible, InvalidAttemp,
+from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
                                JsonIntegrityError, JsonValidationError,
                                ResourceDoesNotExists)
 from discussion.models.follow import Follow
-from discussion.utils import permission_required, token_required
+from discussion.utils.perms.decorators import permission_required
+from discussion.utils.auth import token_required
 from flask import g, jsonify
 from discussion.models.discussion import Discussion
 from sqlalchemy.exc import IntegrityError
@@ -14,11 +15,11 @@ import traceback
 @token_required
 @permission_required(Discussion, forbidden=['IsOwner'])
 def create_follows(discussion_id):
-    follow = Follow.query.filter_by(follower_id=g.user.id, discussion_id=discussion_id).first()
+    follow = Follow.query.filter_by(partner_id=g.user.id, discussion_id=discussion_id).first()
     discussion = Discussion.query.get(discussion_id)
     try:
         follow = Follow()
-        follow.follower_id = g.user.id
+        follow.partner_id = g.user.id
         follow.discussion_id = discussion_id
         db.session.add(follow)
         db.session.commit()

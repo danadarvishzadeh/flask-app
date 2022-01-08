@@ -2,7 +2,7 @@ import json
 import unittest
 
 from discussion.app import create_app, db
-from discussion.fixtures import *
+from discussion.tests.fixtures import *
 from flask import url_for
 from discussion.models.user import User
 
@@ -27,6 +27,7 @@ class InvitationViewsTest(unittest.TestCase):
                 headers=[('Authorization', self.dana_token),])
     
     def tearDown(self):
+        db.session.close()
         db.drop_all()
         self.reqctx.pop()
         self.appctx.pop()

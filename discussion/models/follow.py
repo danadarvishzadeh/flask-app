@@ -14,4 +14,4 @@ class Follow(db.Model):
 
 
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'), primary_key=True)
+    discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), primary_key=True)

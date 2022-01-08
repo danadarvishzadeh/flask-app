@@ -40,17 +40,17 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
             'id',
             'title',
             'description',
-            'date_created',
-            'creator',
+            'created_at',
+            'owner',
             'posts',
             'invitations',
             'participants',
             'followed_by',
         )
 
-    creator = Nested('SummerisedUserSchema')
+    owner = Nested('SummerisedUserSchema')
     posts = Nested('SummerisedPostSchema', many=True)
-    invitations = Nested('InvitationSchema', only=('id', 'body', 'invited', 'status'), many=True)
+    invitations = Nested('InvitationSchema', only=('id', 'body', 'partner', 'status'), many=True)
 
     # @post_dump()
     # def load_participants(self, data, **kwargs):
@@ -65,6 +65,6 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
     #     data['followed_by'] = followed_by
     #     return data
 
-create_discussion_schema = CreateDiscussionSchema()
 discussion_schema = DiscussionSchema()
 summerised_discussion_schema = SummerisedDiscussionSchema()
+create_discussion_schema = CreateDiscussionSchema()

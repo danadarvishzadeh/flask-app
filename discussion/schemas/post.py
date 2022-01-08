@@ -25,12 +25,12 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
         fields = (
             'id',
             'body',
-            'date_created',
-            'author',
+            'created_at',
+            'owner',
             'parent_discussion',
         )
-    author = Nested('UserSchema', exclude=('created_discussions',))
-    parent_discussion = Nested('DiscussionSchema', exclude=('posts', 'creator'))
+    owner = Nested('SummerisedUserSchema')
+    parent_discussion = Nested('DiscussionSchema', exclude=('posts', 'owner'))
 
 
 class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
@@ -40,10 +40,10 @@ class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
             'id',
             'body',
             'date_created',
-            'author',
+            'owner',
             'parent_discussion',
         )
-    author = Nested('SummerisedUserSchema')
+    owner = Nested('SummerisedUserSchema')
     parent_discussion = Nested('SummerisedDiscussionSchema')
 
 

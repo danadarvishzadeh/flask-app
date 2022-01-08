@@ -3,10 +3,12 @@ import traceback
 from discussion.app import db
 from discussion.blueprints.posts import bp, logger
 from discussion.schemas.post import create_post_schema, post_schema, summerised_post_schema
-from discussion.errors import (InvalidAttemp, JsonIntegrityError,
+from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists)
 from discussion.models.post import Post
-from discussion.utils import permission_required, token_required
+from discussion.models.discussion import Discussion
+from discussion.utils.perms.decorators import permission_required
+from discussion.utils.auth import token_required
 from flask import g, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from marshmallow.exceptions import ValidationError
@@ -56,7 +58,7 @@ def create_posts(discussion_id):
     req_json = request.get_json()
     try:
         post = create_post_schema.load(req_json)
-        post.author_id = g.user.id
+        post.owner_id = g.user.id
         post.discussion_id = discussion_id
         db.session.add(post)
         db.session.commit()

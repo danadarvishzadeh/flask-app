@@ -31,7 +31,7 @@ class User(db.Model):
     name = db.Column(db.String(64), nullable=False)
     lastname = db.Column(db.String(64), nullable=False)
     
-    password = db.Column(db.String(128))
+    password_hash = db.Column(db.String(128))
     
     owned_discussions = db.relationship('Discussion', backref='owner', lazy=True)
     owned_posts = db.relationship('Post', backref='owner', lazy=True)
@@ -42,23 +42,26 @@ class User(db.Model):
     owned_invitations = db.relationship('Invitation',
             backref='owner',
             primaryjoin=id==Invitation.owner_id)
-    pertnered_invitations = db.relationship('Invitation',
+    partnered_invitations = db.relationship('Invitation',
             backref='partner',
-            primaryjoin=id==Invitation.pertner_id)
+            primaryjoin=id==Invitation.partner_id)
     owned_participations = db.relationship('Participate',
             backref='owner',
             primaryjoin=id==Participate.owner_id)
-    pertnered_participations = db.relationship('Participate',
+    partnered_participations = db.relationship('Participate',
             backref='partner',
-            primaryjoin=id==Participate.pertner_id)
+            primaryjoin=id==Participate.partner_id)
     
+    @property
+    def password(self):
+        raise AttributeError()
 
     def password_check(self, password):
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.password_hash, password)
     
     @password.setter
     def password(self, password):
-        self.password = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
     
     @property
     def invited_users(self):
@@ -79,3 +82,11 @@ class User(db.Model):
     @property
     def followed_discussions(self):
         return [i.owner for i in self.owned_follows]
+    
+    @property
+    def participated_discussions(self):
+        return [i.discussion for i in self.partnered_participations]
+    
+    @property
+    def hosted_discussions(self):
+        return [i.discussion for i in self.owned_participations]

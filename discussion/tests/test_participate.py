@@ -1,8 +1,8 @@
 import json
 import unittest
-from discussion.errors import JsonPermissionDenied, ResourceDoesNotExists
+from discussion.utils.errors import JsonPermissionDenied, ResourceDoesNotExists
 from discussion.app import create_app, db
-from discussion.fixtures import *
+from discussion.tests.fixtures import *
 from flask import url_for
 from discussion.models.user import User
 

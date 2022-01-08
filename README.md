@@ -10,6 +10,7 @@ Changes until now:
 7. Adding installation and requirements to the README file
 8. Adding id, is\_active, created\_at and modified\_at fields to all models
 9. Restructuring schemas
+10. Changing model fields for permissions to work indipendent of models
 
 Ongoing changes:
 ==================
@@ -18,7 +19,6 @@ Ongoing changes:
 - implementing Caching and Redis
 - Editing loggers and log files
 - Changing root directory of the application
-- Changing permissions to work indipendent of models
 - SQl and Postgresql
 
 Installation:

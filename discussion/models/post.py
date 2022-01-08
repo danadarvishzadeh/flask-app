@@ -19,4 +19,4 @@ class Post(db.Model):
     body = db.Column(db.Text, nullable=False)
     
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'))
+    discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'))

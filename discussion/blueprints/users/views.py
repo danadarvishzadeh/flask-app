@@ -3,15 +3,16 @@ from marshmallow.exceptions import ValidationError
 
 from discussion.app import db
 from discussion.blueprints.users import bp, logger
-from discussion.blueprints.users.schemas import (create_user_schema,
+from discussion.schemas.user import (CreateUserSchema,
                                                  edit_user_schema, user_schema)
-from discussion.errors import (InvalidAttemp, InvalidCredentials,
+from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                JsonIntegrityError, JsonValidationError,
                                ResourceDoesNotExists)
 from discussion.models.tokenblacklist import TokenBlackList
 from discussion.models.user import User
 from discussion.models.discussion import Discussion
-from discussion.utils import permission_required, token_required, decode_auth_token, encode_auth_token
+from discussion.utils.perms.decorators import permission_required
+from discussion.utils.auth import token_required, decode_auth_token, encode_auth_token
 from flask import current_app, g, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from discussion.blueprints.discussions.paginators import DiscussionPaginator
@@ -21,7 +22,7 @@ from discussion.blueprints.discussions.paginators import DiscussionPaginator
 def create_users():
     req_json = request.get_json()
     try:
-        user = create_user_schema.load(req_json)
+        user = CreateUserSchema().load(req_json)
     except ValidationError as e:
         raise JsonValidationError(e)
     except:
@@ -83,7 +84,7 @@ def get_user_detail(user_id):
 def get_creator_discussions(user_id):
     page = request.args.get('page', 1, type=int)
     paginator = DiscussionPaginator
-    paginator.filters = {'creator_id': user_id}
+    paginator.filters = {'owner_id': user_id}
     return DiscussionPaginator.return_page(page, 'get_creator_discussions')
 
 @bp.route('/login/', methods=['POST'])

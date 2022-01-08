@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from flask import g
 
-from discussion.errors import (ActionIsNotPossible, JsonPermissionDenied,
+from discussion.utils.errors import (ActionIsNotPossible, JsonPermissionDenied,
                                ResourceDoesNotExists)
 from discussion.models.discussion import Discussion
 from discussion.models.invitation import Invitation

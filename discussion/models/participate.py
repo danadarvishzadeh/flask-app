@@ -11,4 +11,4 @@ class Participate(db.Model):
     
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     partner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'))
+    discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'))

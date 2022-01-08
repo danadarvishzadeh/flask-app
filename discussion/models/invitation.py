@@ -20,4 +20,4 @@ class Invitation(db.Model):
 
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     partner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-    discussion_id = db.Column(db.Integer, db.ForeignKey('discussion.id'), nullable=False)
+    discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), nullable=False)

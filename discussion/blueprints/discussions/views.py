@@ -1,13 +1,14 @@
 from discussion.app import db
 from discussion.blueprints.discussions import bp, logger
-from discussion.blueprints.discussions.schemas import (
+from discussion.schemas.discussion import (
     create_discussion_schema, discussion_schema)
-from discussion.errors import (ActionIsNotPossible, InvalidAttemp,
+from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
                                JsonIntegrityError, JsonValidationError,
                                ResourceDoesNotExists)
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
-from discussion.utils import permission_required, token_required
+from discussion.utils.perms.decorators import permission_required
+from discussion.utils.auth import token_required
 from flask import g, request, jsonify
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
@@ -61,7 +62,7 @@ def create_discussions():
     req_json = request.get_json()
     try:
         discussion = create_discussion_schema.load(req_json)
-        discussion.creator_id = g.user.id
+        discussion.owner_id = g.user.id
         db.session.add(discussion)
         db.session.commit()
         return jsonify(discussion_schema.dump(discussion))

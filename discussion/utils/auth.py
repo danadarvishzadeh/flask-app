@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 import jwt
-from discussion.errors import InvalidCredentials, InvalidToken
+from discussion.utils.errors import InvalidCredentials, InvalidToken
 from discussion.models.tokenblacklist import TokenBlackList
 from discussion.models.user import User
 from flask import current_app, g, request

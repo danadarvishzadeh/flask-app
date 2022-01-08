@@ -24,15 +24,15 @@ class InvitationSchema(ma.SQLAlchemyAutoSchema):
         fields = (
             'id',
             'body',
-            'date_sent',
-            'invited',
-            'inviter',
+            'created_at',
+            'partner',
+            'owner',
             'status',
             'discussion',
         )
 
-    invited = Nested('SummerisedUserSchema')
-    inviter = Nested('SummerisedUserSchema')
+    partner = Nested('SummerisedUserSchema')
+    owner = Nested('SummerisedUserSchema')
     discussion = Nested('SummerisedDiscussionSchema')
 
 
@@ -42,13 +42,13 @@ class ParticipateSchema(ma.SQLAlchemyAutoSchema):
         fields = (
             'id',
             'date_started',
-            'paricipated_with',
-            'participated',
+            'owned_participations',
+            'partnered_participations',
             'discussion',
         )
     
-    paricipated_with = Nested('SummerisedUserSchema')
-    participated = Nested('SummerisedUserSchema')
+    owned_participations = Nested('SummerisedUserSchema')
+    partnered_participations = Nested('SummerisedUserSchema')
     discussion = Nested('DiscussionSchema')
 
 invitation_schema = InvitationSchema()

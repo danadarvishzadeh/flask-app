@@ -2,7 +2,7 @@ import json
 import unittest
 from discussion.models.user import User
 from discussion.app import create_app, db
-from discussion.fixtures import discussion_fixture, user_fixture, post_fixture
+from discussion.tests.fixtures import discussion_fixture, user_fixture, post_fixture
 from flask import url_for
 from discussion.models.discussion import Discussion
 
@@ -24,6 +24,7 @@ class DiscussionViewsTest(unittest.TestCase):
             url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
 
     def tearDown(self):
+        db.session.close()
         db.drop_all()
         self.reqctx.pop()
         self.appctx.pop()
@@ -33,7 +34,7 @@ class DiscussionViewsTest(unittest.TestCase):
                                     json=discussion_fixture['dana_first_discussion_valid'],
                                     headers=[('Authorization', self.dana_token), ])
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(User.query.get(1).created_discussions), 1)
+        self.assertEqual(len(User.query.get(1).owned_discussions), 1)
 
     def test_edit_discussion(self):
         self.client.post(url_for('discussions.create_discussions', ),

@@ -1,5 +1,5 @@
 from discussion.models.discussion import Discussion
-from discussion.utils import PaginatorBase
+from discussion.utils.paginator import PaginatorBase
 from discussion.schemas.discussion import discussion_schema
 
 

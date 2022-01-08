@@ -8,8 +8,9 @@ from discussion.models.participate import Participate
 from flask import Blueprint, current_app, g, jsonify, request
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
-from discussion.utils import token_required, permission_required
-from discussion.errors import (InvalidAttemp, JsonIntegrityError,
+from discussion.utils.perms.decorators import permission_required
+from discussion.utils.auth import token_required 
+from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
 from marshmallow.exceptions import ValidationError
 from discussion.blueprints.invite.paginators import InvitationPaginator
@@ -23,8 +24,8 @@ def create_invitations(discussion_id, user_id):
     discussion = Discussion.query.get(discussion_id)
     try:
         invitation = create_invitation_schema.load(req_json)
-        invitation.inviter_id = g.user.id
-        invitation.invited_id = user_id
+        invitation.owner_id = g.user.id
+        invitation.partner_id = user_id
         invitation.discussion_id = discussion_id
         invitation.status = 'Sent'
         db.session.add(invitation)
@@ -57,8 +58,8 @@ def edit_invitation_details(invitation_id):
         if status == 'Accepted':
             invitation.query.update({'status':status})
             participate = Participate()
-            participate.host_id = invitation.inviter_id
-            participate.participant_id = invitation.invited_id
+            participate.owner_id = invitation.owner_id
+            participate.partner_id = invitation.partner_id
             participate.discussion_id = invitation.discussion_id
             db.session.add(participate)
         elif status == 'Rejected':
