@@ -33,7 +33,7 @@ def get_discussion_detail(discussion_id):
 
 @bp.route('/<int:discussion_id>/', methods=['PUT', 'DELETE'])
 @token_required
-@permission_required(Discussion,required=['IsOwner'])
+@permission_required(Discussion,required_permissions=['IsOwner'])
 def edit_discussion_detail(discussion_id):
     discussion = Discussion.query.get(discussion_id)
     if request.method == 'PUT':

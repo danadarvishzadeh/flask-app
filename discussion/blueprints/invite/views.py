@@ -18,7 +18,7 @@ from discussion.blueprints.invite.paginators import InvitationPaginator
 
 @bp.route('/<int:discussion_id>/<int:user_id>/', methods=['POST'])
 @token_required
-@permission_required(Discussion, required=['IsOwner'])
+@permission_required(Discussion, required_permissions=['IsOwner'])
 def create_invitations(discussion_id, user_id):
     req_json = request.get_json()
     discussion = Discussion.query.get(discussion_id)

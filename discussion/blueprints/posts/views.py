@@ -30,7 +30,7 @@ def get_post_detail(post_id):
 
 @bp.route('/<int:post_id>/', methods=['PUT', 'DELETE'])
 @token_required
-@permission_required(Post, required=['IsOwner'])
+@permission_required(Post, required_permissions=['IsOwner'])
 def edit_post_details(post_id):
     post = Post.query.get(post_id)
     if request.method == 'PUT':
