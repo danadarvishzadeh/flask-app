@@ -8,11 +8,11 @@ from discussion.models.user import User
 from flask import current_app, g, request
 
 
-def encode_auth_token(user):
+def encode_auth_token(user_id):
     payload = {
         'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
         'iat': datetime.utcnow(),
-        'sub': user.id
+        'sub': user_id
     }
     token = jwt.encode(
         payload,
@@ -57,3 +57,20 @@ def token_required(f):
         else:
           return f(*args, **kwargs)
     return decorator
+
+def authenticate(username, password):
+    user = User.query.filter_by(username=username).first()
+    if user is None or not user.is_active:
+        raise InvalidCredentials('invalid credentials.')
+    return user.password_check(password)
+
+def login(username):
+    user = User.query.filter_by(username=username).first()
+    user.last_login = datetime.utcnow()
+    user.save()
+    return encode_auth_token(user.id)
+
+def logout(user):
+    user.update_last_seen()
+    tb = TokenBlackList(token=token)
+    tb.save()

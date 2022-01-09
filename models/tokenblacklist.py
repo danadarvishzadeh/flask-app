@@ -12,3 +12,13 @@ class TokenBlackList(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
     token = db.Column(db.String(500), unique=True, nullable=False)
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+    
+    def delete(self):
+        db.session.delete(self)
+        db.commit()
+        return self

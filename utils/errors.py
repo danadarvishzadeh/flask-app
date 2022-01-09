@@ -55,7 +55,7 @@ class JsonValidationError(HTTPException):
 
 
 class ResourceDoesNotExists(HTTPException):
-    code = 400
+    code = 404
 
     def __init__(self):
         super().__init__()

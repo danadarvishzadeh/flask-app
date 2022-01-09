@@ -20,8 +20,12 @@ Ongoing changes:
 - Editing loggers and log files
 - Changing root directory of the application
 - SQl and Postgresql
+- UTC dates
+- Changing paginators to accept filters
+- adding url property to models
 
 Installation:
+==================
 ------------------
 
 To get started, clone the project using:

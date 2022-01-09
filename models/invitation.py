@@ -21,3 +21,21 @@ class Invitation(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     partner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        return self
+    
+    def accept(self):
+        self.status = "Accepted"
+        sekf.save()
+    
+    def reject(self):
+        self.status = "Rejected"
+        self.save()

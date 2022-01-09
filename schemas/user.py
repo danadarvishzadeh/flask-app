@@ -17,14 +17,20 @@ class CreateUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
         load_instance = True
-
+        fields = (
+            'username',
+            'name',
+            'lastname',
+            'password',
+            'email',
+        )
     password = ma.String(required=True, validate=[validate.Length(min=8, max=24)])
     email = ma.String(required=True, validate=[validate.Email()])
     
-    @pre_load()
-    def remove_password_hash(self, data, **kwargs):
-        self.fields.pop('password_hash')
-        return data
+    # @pre_load()
+    # def remove_password_hash(self, data, **kwargs):
+    #     self.fields.pop('password_hash')
+    #     return data
 
     @post_load
     def lower_case(self, data, **kwargs):

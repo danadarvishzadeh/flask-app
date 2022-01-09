@@ -23,6 +23,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     modified_at = db.Column(db.DateTime, default=datetime.utcnow())
+    last_login = db.Column(db.DateTime, default=datetime.utcnow())
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, default=True)
 
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -90,3 +92,28 @@ class User(db.Model):
     @property
     def hosted_discussions(self):
         return [i.discussion for i in self.owned_participations]
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+    
+    def delete(self):
+        db.session.delete(self)
+        db.commit()
+        return self
+    
+    def follow(self, discussion_id):
+        discussion = Discussion.query.get(discussion_id)
+        follow = Follow()
+        follow.partner_id = g.user.id
+        follow.discussion_id = discussion_id
+        follow.save()
+
+    def unfollow(self, discussion_id):
+        follow = Follow.query.filter_by(discussion_id=discussion_id).first()
+        follow.delete()
+    
+    def update_last_seen(self):
+        self.last_seen = datetime.utcnow()
+        self.save()

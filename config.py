@@ -15,6 +15,7 @@ class Config:
         'discussions',
         'posts',
         'follow',
+        'unfollow',
         'invite',
     )
 
@@ -71,55 +72,55 @@ LOG_CONFIG = {
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
         },
-        'debug': {
-            'level': 'DEBUG',
-            'formatter': 'standard',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': './discussion/logs/debug.log',
-            'maxBytes': 1000000,
-            'backupCount': 3,
-        },
-        'error': {
-            'level': 'ERROR',
-            'formatter': 'standard',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': './discussion/logs/error.log',
-            'maxBytes': 1000000,
-            'backupCount': 3,
-        },
+    #     'debug': {
+    #         'level': 'DEBUG',
+    #         'formatter': 'standard',
+    #         'class': 'logging.handlers.RotatingFileHandler',
+    #         'filename': './discussion/logs/debug.log',
+    #         'maxBytes': 1000000,
+    #         'backupCount': 3,
+    #     },
+    #     'error': {
+    #         'level': 'ERROR',
+    #         'formatter': 'standard',
+    #         'class': 'logging.handlers.RotatingFileHandler',
+    #         'filename': './discussion/logs/error.log',
+    #         'maxBytes': 1000000,
+    #         'backupCount': 3,
+    #     },
     },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'discussions': {
-            'handlers': ['debug', 'error'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'posts': {
-            'handlers': ['debug', 'error'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'users': {
-            'handlers': ['debug', 'error'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'follow': {
-            'handlers': ['debug', 'error'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'invite': {
-            'handlers': ['debug', 'error'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-    },
+    # 'loggers': {
+    #     '': {
+    #         'handlers': ['console'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    #     'discussions': {
+    #         'handlers': ['debug', 'error'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    #     'posts': {
+    #         'handlers': ['debug', 'error'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    #     'users': {
+    #         'handlers': ['debug', 'error'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    #     'follow': {
+    #         'handlers': ['debug', 'error'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    #     'invite': {
+    #         'handlers': ['debug', 'error'],
+    #         'level': 'DEBUG',
+    #         'propagate': True
+    #     },
+    # },
 }
 
 template = {

@@ -42,3 +42,23 @@ class Discussion(db.Model):
     @property
     def invited_users(self):
         return [i.partner for i in self.invitations]
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        return self
+
+    def invite(self, user_id, body):
+        invitation = Invitation()
+        invitation.body = body
+        invitation.owner_id = self.ower
+        invitation.partner_id = user_id
+        invitation.discussion_id = self.id
+        invitation.status = 'Sent'
+        invitation.save()
+        return invitation
