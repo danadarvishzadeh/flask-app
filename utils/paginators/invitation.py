@@ -1,6 +1,7 @@
-from discussion.schemas.invitation import invitation_schema
+
 from discussion.models.invitation import Invitation
-from discussion.utils.paginator import PaginatorBase
+from discussion.schemas.invitation import invitation_schema
+from discussion.utils.paginators.base_paginator import PaginatorBase
 
 
 class InvitationPaginator(PaginatorBase):

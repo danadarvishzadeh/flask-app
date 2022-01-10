@@ -43,6 +43,11 @@ class Discussion(db.Model):
     def invited_users(self):
         return [i.partner for i in self.invitations]
     
+    def update(self, data):
+        self.query.update(dict(data))
+        db.session.commit()
+        return self
+
     def save(self):
         db.session.add(self)
         db.session.commit()

@@ -1,6 +1,6 @@
 import traceback
 from discussion.app import db
-from discussion.blueprints.invite import bp, logger
+from discussion.blueprints.invites import bp, logger
 from discussion.schemas.invitation import create_invitation_schema, invitation_schema, InvitationSchema, CreateInvitationSchema
 from discussion.models.invitation import Invitation
 from discussion.models.discussion import Discussion
@@ -8,12 +8,12 @@ from discussion.models.participate import Participate
 from flask import Blueprint, current_app, g, jsonify, request
 from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
-from discussion.utils.perms.decorators import permission_required
+from discussion.utils.permissions.decorators import permission_required
 from discussion.utils.auth import token_required 
 from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                JsonValidationError, ResourceDoesNotExists, ActionIsNotPossible)
 from marshmallow.exceptions import ValidationError
-from discussion.blueprints.invite.paginators import InvitationPaginator
+from discussion.utils.paginators.invitation import InvitationPaginator
 from flasgger import SwaggerView
 from discussion.schemas.response import ErrorSchema, OkResponse
 

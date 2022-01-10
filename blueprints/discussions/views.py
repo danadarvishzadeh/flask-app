@@ -2,8 +2,8 @@ import traceback
 
 from discussion.app import db
 from discussion.blueprints.discussions import bp, logger
-from discussion.blueprints.discussions.paginators import DiscussionPaginator
-from discussion.blueprints.posts.paginators import PostPaginator
+from discussion.utils.paginators.discussion import DiscussionPaginator
+from discussion.utils.paginators.post import PostPaginator
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.discussion import (CreateDiscussionSchema,
@@ -15,21 +15,78 @@ from discussion.utils.auth import token_required
 from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
                                      JsonIntegrityError, JsonValidationError,
                                      ResourceDoesNotExists)
-from discussion.utils.perms.decorators import permission_required
+from discussion.utils.permissions.decorators import permission_required
 from flasgger import SwaggerView
 from flask import g, jsonify, request
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
 
 
-class DiscussionView(SwaggerView):
+
+
+class DiscussionCreationView(SwaggerView):
+
+    tags = ['discussion']
+    decorators = [
+        token_required,
+    ]
+    parameters = [
+        {
+            "in": "body",
+            "name": "discussion",
+            "type": "object",
+            "schema": CreateDiscussionSchema
+        }
+    ]
+    security = {
+        0: {
+            "bearerAuth": []
+        }
+    }
+    validate = True
+    responses = {
+        200: {
+            "description": "Created discusison.",
+            "schema": DiscussionSchema
+        },
+        400: {
+            "description": "Invalid input.",
+            "schema": ErrorSchema
+        },
+        500: {
+            "description": "Invalid attemp.",
+            "schema": ErrorSchema
+        },
+    }
+
+    def post(self):
+        req_json = request.get_json()
+        try:
+            discussion = create_discussion_schema.load(req_json)
+            discussion.owner_id = g.user.id
+            discussion.save()
+            return jsonify(discussion_schema.dump(discussion))
+        except ValidationError as e:
+            raise JsonValidationError(e)
+        except IntegrityError as e:
+            db.session.rollback()
+            raise JsonIntegrityError()
+        except:
+            trace_info = traceback.format_exc()
+            logger.error(f"uncaught exception: {trace_info}")
+            raise InvalidAttemp()
+
+
+class DiscussionDetailView(SwaggerView):
     tags = ['discussion']
     parameters = [
         {
+            "in": "path",
             "name": "user_id",
             "description": "Id of user to filter discussions."
         },
         {
+            "in": "path",
             "name": "discussion_id",
             "description": "Id of discussion to be presented."
         },
@@ -49,28 +106,32 @@ class DiscussionView(SwaggerView):
     def get(self, user_id, discussion_id):
         if user_id is not None:
             page = request.args.get('page', 1, type=int)
-            paginator = DiscussionPaginator
-            paginator.filters = {'owner_id': user_id}
-            return DiscussionPaginator.return_page(page, 'get_creator_discussions')
+            paginator = DiscussionPaginator({'owner_id': user_id})
+            return paginator.return_page(page, 'get_creator_discussions')
         elif discussion_id is not None:
             discussion = Discussion.query.get(discussion_id)
-            if discussion is not None:
+            if discussion:
                 return jsonify(discussion_schema.dump(discussion))
             else:
                 logger.warning(f"Trying to access non-existing discussion with id {discussion_id}")
                 raise ResourceDoesNotExists()
         else:
             page = request.args.get('page', 1, type=int)
-            return DiscussionPaginator.return_page(page, 'get_discussions')
+            return DiscussionPaginator().return_page(page, 'get_discussions')
 
 
 class ChangeDiscussionView(SwaggerView):
 
-    tags = ['discusison']
+    tags = ['discussion']
     decorators = [
         token_required,
         permission_required(Discussion,required_permissions=['IsOwner'])
     ]
+    security = {
+        0: {
+            "bearerAuth": []
+        }
+    }
     parameters = [
         {
             "name": "discussion_id",
@@ -104,66 +165,37 @@ class ChangeDiscussionView(SwaggerView):
         req_json = request.get_json()
         try:
             data = discussion_schema.load(req_json, partial=True)
-            discussion.query.update(dict(data))
-            db.session.commit()
+            discussion.update(data)
             return jsonify(discussion_schema.dump(discussion))
         except ValidationError as e:
             raise JsonValidationError(e)
         except:
             trace_info = traceback.format_exc()
-            print(logger)
-            print(trace_info)
             logger.error(f"uncaught exception: {trace_info}")
             raise InvalidAttemp()
     
     def delete(self, discussion_id):
         discussion = Discussion.query.get(discussion_id)
-        discussion.query.delete()
-        db.session.commit()
+        discussion.delete()
         return jsonify({'response': 'ok!'}), 200
 
 
-class CreateDiscussionView(SwaggerView):
+bp.add_url_rule('/',
+                view_func=DiscussionCreationView.as_view('create_discussions'),
+                methods=["POST"])
 
-    tags = ['discussion']
-    parameters = [
-        {
-            "in": "body",
-            "name": "discussion",
-            "type": "object",
-            "schema": CreateDiscussionSchema
-        }
-    ]
-    validate = True
-    responses = {
-        200: {
-            "description": "Created discusison.",
-            "schema": DiscussionSchema
-        },
-        400: {
-            "description": "Invalid input.",
-            "schema": ErrorSchema
-        },
-        500: {
-            "description": "Invalid attemp.",
-            "schema": ErrorSchema
-        },
-    }
+bp.add_url_rule('/',
+                view_func=DiscussionDetailView.as_view('get_discussions'),
+                methods=["GET"], defaults={'user_id': None, 'discussion_id': None})
 
-    def post(self):
-        req_json = request.get_json()
-        try:
-            discussion = create_discussion_schema.load(req_json)
-            discussion.owner_id = g.user.id
-            db.session.add(discussion)
-            db.session.commit()
-            return jsonify(discussion_schema.dump(discussion))
-        except ValidationError as e:
-            raise JsonValidationError(e)
-        except IntegrityError as e:
-            db.session.rollback()
-            raise JsonIntegrityError()
-        except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
-            raise InvalidAttemp()
+bp.add_url_rule('/<int:discussion_id>/',
+                view_func=DiscussionDetailView.as_view('get_discussion_detail'),
+                methods=["GET"], defaults={'user_id': None})
+
+bp.add_url_rule('/<int:user_id>/',
+                view_func=DiscussionDetailView.as_view('get_user_discussions'),
+                methods=["GET"], defaults={'discussion_id': None})
+
+bp.add_url_rule('/<int:discussion_id>/',
+                view_func=ChangeDiscussionView.as_view('edit_discussion_details'),
+                methods=["PUT", "DELETE"])

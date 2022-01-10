@@ -1,7 +1,7 @@
 from flask import Blueprint 
 import logging
 
-bp = Blueprint('unfollow', __name__, url_prefix='/unfollow')
+bp = Blueprint('unfollows', __name__, url_prefix='/unfollows')
 
 logger = logging.getLogger(bp.name)
 

@@ -23,34 +23,25 @@ class PermissionBase(ABC):
 class IsOwner(PermissionBase):
     def has_access(self, resource, **kwargs):
         resource = resource.query.get(kwargs[self.get_resource_id_name(resource)])
-        if resource is not None:
-            if g.user.id == resource.owner_id:
-                return True
-            else:
-                return False
+        if resource:
+            return g.user.id == resource.owner_id
         else:
-                raise ResourceDoesNotExists()
+            raise ResourceDoesNotExists()
 
 
 class IsPartner(PermissionBase):
     def has_access(self, resource, **kwargs):
         resource = resource.query.get(kwargs[self.get_resource_id_name(resource)])
-        if resource is not None:
-            if g.user.id == resource.partner_id:
-                return True
-            else:
-                return False
-        else:
+        if not resource:
             raise ResourceDoesNotExists()
+
+        return g.user.id == resource.partner_id
 
 
 class InPartners(PermissionBase):
     def has_access(self, resource, **kwargs):
         resource = resource.query.get(kwargs[self.get_resource_id_name(resource)])
         if resource is not None:
-            if g.user.id in resource.partner_users:
-                return True
-            else:
-                return False
+            return g.user.id in resource.partner_users
         else:
             raise ResourceDoesNotExists()

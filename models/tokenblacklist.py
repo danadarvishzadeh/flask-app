@@ -13,6 +13,11 @@ class TokenBlackList(db.Model):
 
     token = db.Column(db.String(500), unique=True, nullable=False)
     
+    @staticmethod
+    def depricate_token(token):
+        tb = TokenBlackList(token=token)
+        tb.save()
+
     def save(self):
         db.session.add(self)
         db.session.commit()

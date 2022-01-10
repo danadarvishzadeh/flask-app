@@ -43,7 +43,7 @@ def token_required(f):
         try:
             token = request.headers.get('Authorization').split()[1]
             user = decode_auth_token(token)
-            if user is None:
+            if not user:
                 raise InvalidCredentials(message='You provided an invalid token.')
             g.user = user
         except IndexError:
@@ -59,10 +59,15 @@ def token_required(f):
     return decorator
 
 def authenticate(username, password):
-    user = User.query.filter_by(username=username).first()
-    if user is None or not user.is_active:
-        raise InvalidCredentials('invalid credentials.')
-    return user.password_check(password)
+    if username and password:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return False
+        if not user.is_active:
+            return False
+        return user.password_check(password)
+    else:
+        return False
 
 def login(username):
     user = User.query.filter_by(username=username).first()
@@ -70,7 +75,10 @@ def login(username):
     user.save()
     return encode_auth_token(user.id)
 
-def logout(user):
-    user.update_last_seen()
-    tb = TokenBlackList(token=token)
-    tb.save()
+def logout(user, token):
+    splited_token = token.split()
+    if len(splited_token) == 2:
+        user.update_last_seen()
+        TokenBlackList.depricate_token(token[1])
+    else:
+        raise InvalidToken()

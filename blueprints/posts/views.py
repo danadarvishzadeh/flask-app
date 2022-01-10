@@ -2,18 +2,18 @@ import traceback
 
 from discussion.app import db
 from discussion.blueprints.posts import bp, logger
-from discussion.blueprints.posts.paginators import PostPaginator
+from discussion.utils.paginators.post import PostPaginator
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.post import (CreatePostSchema, PostSchema,
                                      create_post_schema, post_schema,
-                                     summerised_post_schema)
+                                     post_schema)
 from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
 from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                      JsonValidationError,
                                      ResourceDoesNotExists)
-from discussion.utils.perms.decorators import permission_required
+from discussion.utils.permissions.decorators import permission_required
 from flasgger import SwaggerView
 from flask import g, jsonify, request
 from marshmallow.exceptions import ValidationError
@@ -52,8 +52,8 @@ class PostView(SwaggerView):
             return paginator.return_page(page, 'get_discussion_posts')
         elif discussion_id is not None:
             post = Post.query.get(post_id)
-            if post is not None:
-                return jsonify(summerised_post_schema.dump(post))
+            if post:
+                return jsonify(post_schema.dump(post))
             else:
                 logger.warning(f"Trying to access non-existing post with id {post_id}")
                 raise ResourceDoesNotExists()
@@ -160,7 +160,7 @@ class CreatePostView(SwaggerView):
             post.discussion_id = discussion_id
             db.session.add(post)
             db.session.commit()
-            return jsonify(summerised_post_schema.dump(post))
+            return jsonify(post_schema.dump(post))
         except ValidationError as e:
             raise JsonValidationError(e)
         except IntegrityError:

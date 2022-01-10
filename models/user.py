@@ -2,6 +2,8 @@ from datetime import datetime
 
 from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash, generate_password_hash
+from jwt import decode
+from jwt.exceptions import ExpiredSignatureError
 
 from discussion.app import db
 from discussion.models.discussion import Discussion
@@ -9,6 +11,7 @@ from discussion.models.invitation import Invitation
 from discussion.models.participate import Participate
 from discussion.models.post import Post
 from discussion.models.follow import Follow
+from discussion.models.tokenblacklist import TokenBlackList
 
 
 class User(db.Model):
@@ -27,6 +30,7 @@ class User(db.Model):
     last_seen = db.Column(db.DateTime, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, default=True)
 
+    last_token = db.Column(db.String(500), default=None)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     
@@ -59,7 +63,10 @@ class User(db.Model):
         raise AttributeError()
 
     def password_check(self, password):
-        return check_password_hash(self.password_hash, password)
+        if password:
+            return check_password_hash(self.password_hash, password)
+        else:
+            return False
     
     @password.setter
     def password(self, password):
@@ -98,9 +105,15 @@ class User(db.Model):
         db.session.commit()
         return self
     
+    def update(self, data):
+        self.query.update(dict(data))
+        db.session.commit()
+        return self
+
     def delete(self):
+        TokenBlackList.depricate_token(self.last_token)
         db.session.delete(self)
-        db.commit()
+        db.session.commit()
         return self
     
     def follow(self, discussion_id):
@@ -117,3 +130,16 @@ class User(db.Model):
     def update_last_seen(self):
         self.last_seen = datetime.utcnow()
         self.save()
+    
+    def has_expired_last_token(self):
+        if not self.last_token:
+            return True
+        try:
+            decode(self.last_token)
+        except ExpiredSignatureError:
+            TokenBlackList.depricate_token(self.last_token)
+            self.last_token = None
+            self.save()
+            return True
+        else:
+            return False

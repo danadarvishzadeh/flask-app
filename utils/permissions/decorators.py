@@ -9,7 +9,7 @@ from discussion.utils.errors import JsonPermissionDenied
 
 
 def str_to_class(classname):
-    module = __import__('discussion.utils.perms.permissions', fromlist=['permissions'])
+    module = __import__('discussion.utils.permissions.permissions', fromlist=['permissions'])
     return getattr(module, classname)
 
 

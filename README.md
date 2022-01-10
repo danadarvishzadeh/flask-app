@@ -11,6 +11,7 @@ Changes until now:
 8. Adding id, is\_active, created\_at and modified\_at fields to all models
 9. Restructuring schemas
 10. Changing model fields for permissions to work indipendent of models
+11. Changing paginators to accept filters
 
 Ongoing changes:
 ==================
@@ -21,7 +22,6 @@ Ongoing changes:
 - Changing root directory of the application
 - SQl and Postgresql
 - UTC dates
-- Changing paginators to accept filters
 - adding url property to models
 
 Installation:

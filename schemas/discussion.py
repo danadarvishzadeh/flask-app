@@ -9,18 +9,9 @@ from discussion.app import ma
 from discussion.models.discussion import Discussion
 from discussion.models.user import User
 from discussion.schemas.invitation import InvitationSchema
-from discussion.schemas.user import summerised_user_schema
+from discussion.schemas.user import user_schema
 from flasgger import Schema, fields
 
-
-class SummerisedDiscussionSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Discussion
-        fields = (
-            'id',
-            'title',
-            'body',
-        )
 
 
 class CreateDiscussionSchema(ma.SQLAlchemyAutoSchema):
@@ -48,23 +39,9 @@ class DiscussionSchema(ma.SQLAlchemyAutoSchema):
             'followed_by',
         )
 
-    owner = Nested('SummerisedUserSchema')
-    posts = Nested('SummerisedPostSchema', many=True)
+    owner = Nested('UserSchema', only=('id', 'username', 'email', 'name', ))
+    posts = Nested('PostSchema', only=('id', 'body'), many=True)
     invitations = Nested('InvitationSchema', only=('id', 'body', 'partner', 'status'), many=True)
 
-    # @post_dump()
-    # def load_participants(self, data, **kwargs):
-    #     discussion = Discussion.query.get(data['id'])
-    #     participants = summerised_user_schema.dump(discussion.get_participants(), many=True)
-    #     data['participants'] = participants
-    #     return data
-    
-    # @post_dump()
-    # def load_followed_by(self, data, **kwargs):
-    #     followed_by = [summerised_user_schema.dump(User.query.get(f.follower_id)) for f in data['followed_by']]
-    #     data['followed_by'] = followed_by
-    #     return data
-
 discussion_schema = DiscussionSchema()
-summerised_discussion_schema = SummerisedDiscussionSchema()
 create_discussion_schema = CreateDiscussionSchema()

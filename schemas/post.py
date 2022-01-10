@@ -29,24 +29,11 @@ class PostSchema(ma.SQLAlchemyAutoSchema):
             'owner',
             'parent_discussion',
         )
-    owner = Nested('SummerisedUserSchema')
-    parent_discussion = Nested('DiscussionSchema', exclude=('posts', 'owner'))
+    owner = Nested('UserSchema', only=('id', 'username', 'email'))
+    parent_discussion = Nested('DiscussionSchema', only=('id', 'title'))
 
 
-class SummerisedPostSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Post
-        fields = (
-            'id',
-            'body',
-            'date_created',
-            'owner',
-            'parent_discussion',
-        )
-    owner = Nested('SummerisedUserSchema')
-    parent_discussion = Nested('SummerisedDiscussionSchema')
 
 
 create_post_schema = CreatePostSchema()
 post_schema = PostSchema()
-summerised_post_schema = SummerisedPostSchema()

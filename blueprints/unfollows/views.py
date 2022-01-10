@@ -1,10 +1,10 @@
 from discussion.app import db
-from discussion.blueprints.follow import bp, logger
+from discussion.blueprints.follows import bp, logger
 from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
                                JsonIntegrityError, JsonValidationError,
                                ResourceDoesNotExists)
 from discussion.models.follow import Follow
-from discussion.utils.perms.decorators import permission_required
+from discussion.utils.permissions.decorators import permission_required
 from discussion.utils.auth import token_required
 from flask import g, jsonify
 from discussion.models.discussion import Discussion
@@ -41,7 +41,7 @@ class UnfollowView(SwaggerView):
     }
     def delete(self, discussion_id):
         follow = Follow.query.filter_by(discussion_id=discussion_id).first()
-        if follow is not None:
+        if follow:
             if follow.owner_id == g.user.id:
                 follow.delete()
                 db.session.commit()
