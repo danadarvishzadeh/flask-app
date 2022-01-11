@@ -28,6 +28,15 @@ Ongoing changes:
 - SQl and Postgresql
 - OpenID Connect
 - Oaouth2
+- MongoDB
+
+Loggers:
+==================
+- Request logger -> info : time - remote addr - url - ip - 
+- Response logger -> info : status code - exceptions - ip - remote addr - url - ip - time
+- Raised exceptions logger -> warning : time - module - function - line - request payload - ip - path
+- Uncaught exceptions logger -> error
+- User creation, login and logout -> info
 
 
 Questions:

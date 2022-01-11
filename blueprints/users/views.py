@@ -25,7 +25,7 @@ class UserView(MethodView):
     def post(self, registration_data):
         try:
             logger.info('here')
-            return User(**registration_data).save()
+            return User(registration_data).save()
         except IntegrityError as e:
             logger.warning(f"Attempt to register user. params: {e.params[:-1]} origin: {e.orig}")
             db.session.rollback()
