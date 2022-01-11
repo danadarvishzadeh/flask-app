@@ -1,5 +1,5 @@
 import traceback
-
+from sqlalchemy import or_, and_
 from discussion.app import db
 from discussion.blueprints.invites import bp, logger
 from discussion.models.discussion import Discussion
@@ -20,18 +20,23 @@ from sqlalchemy.exc import IntegrityError
 @bp.route('/<int:discussion_id>', methods=["GET", "POST", "PUT"])
 class InvitationView(MethodView):
 
-
+    @token_required
+    @permission_required(Discussion, one_of=["IsOwner", "IsPartner"])
+    @bp.response(200, InvitationSchema)
     def get(self, discussion_id):
-        page = request.args.get('page')
-        return InvitationPaginator.return_page(page, 'get_invitations')
+        return Invitation.query.filter(
+                    and_(Invitation.discussion_id==discussion_id,
+                        or_(Invitation.partner_id==g.user.id,
+                            Invitation.owner_id==g.user.id)))
         
     @token_required
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.arguments(CreateInvitationSchema)
+    @bp.response(200, InvitationSchema)
     def post(self, creation_data, discussion_id):
         try:
             creation_data.update({'discussion_id': discussion_id, 'owner_id': g.user.id})
-            return jsonify(InvitationSchema().dump(Invitation(**creation_data).save()))
+            return Invitation(**creation_data).save()
         except IntegrityError:
             db.session.rollback()
             raise JsonIntegrityError()
@@ -43,6 +48,7 @@ class InvitationView(MethodView):
     @token_required
     @permission_required(Discussion, required_permissions=["IsInvited"])
     @bp.arguments(InvitaionResponseSchema)
+    @bp.response(204)
     def put(self, response_data, discussion_id):
         try:
             Invitation.query.filter('discussion_id'==discussion_id, 'partner_id'==g.user.id).update(response_data)

@@ -5,8 +5,7 @@ from discussion.blueprints.posts import bp, logger
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.post import (CreatePostSchema, EditPostSchema,
-                                     PostSchema, create_post_schema,
-                                     post_schema)
+                                     PostSchema)
 from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
 from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
@@ -21,16 +20,18 @@ from sqlalchemy.exc import IntegrityError
 @bp.route('/<int:post_id>', methods=["GET", "PUT", "DELETE"])
 class PostDetailView(MethodView):
 
+    @bp.response(200, PostSchema)
     def get(self, post_id):
         post = Post.query.get(post_id)
         if post:
-            return jsonify(post_schema.dump(post))
+            return post
         logger.warning(f"Trying to access non-existing post with id {post_id}")
         raise ResourceDoesNotExists()
     
     @token_required
     @permission_required(Post, required_permissions=["IsOwner"])
     @bp.arguments(EditPostSchema)
+    @bp.response(204)
     def put(self, update_data, post_id):
         try:
             g.resource.update(update_data)
@@ -46,6 +47,7 @@ class PostDetailView(MethodView):
 
     @token_required    
     @permission_required(Post, required_permissions=["IsOwner"])
+    @bp.response(204)
     def delete(self, post_id):
         g.resource.delete()
 
@@ -57,10 +59,11 @@ class PostView(MethodView):
     @token_required
     @permission_required(Post, required_permissions=["IsOwner"])
     @bp.arguments(CreatePostSchema)
+    @bp.response(200, PostSchema)
     def post(self, creation_data, discussion_id):
         try:
             creation_data.upadte({'discussion_id': discussion_id, 'owner_id': g.user.id})
-            return jsonify(post_schema.dump(Post(**creation_data).save()))
+            return Post(**creation_data).save()
         except IntegrityError:
             db.session.rollback()
             raise JsonIntegrityError()

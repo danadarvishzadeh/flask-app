@@ -68,8 +68,3 @@ class UserLoginSchema(Schema):
 
 class LoginResponse(Schema):
     token = Str()
-
-
-create_user_schema = CreateUserSchema()
-edit_user_schema = EditUserSchema()
-user_schema = UserSchema()

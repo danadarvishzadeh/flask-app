@@ -15,7 +15,7 @@ from discussion.models.follow import Follow
 
 class User(db.Model):
 
-    __tablebame__ = 'users'
+    __tablename__ = 'users'
 
     __table_args__ = (
         Index('name_index', 'last_name', 'first_name'),

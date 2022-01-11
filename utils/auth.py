@@ -50,6 +50,8 @@ def token_required(f):
 
 def authenticate(creadentials):
     if 'username' in creadentials and 'password' in creadentials:
+        username = creadentials['username']
+        password = creadentials['password']
         user = User.query.filter(User.username==username, User.is_active==True).first()
         if user and user.password_check(password):
             g.user = user

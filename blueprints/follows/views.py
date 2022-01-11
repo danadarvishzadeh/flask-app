@@ -20,9 +20,10 @@ class FollowView(MethodView):
 
     @token_required
     @permission_required(Follow, forbidden_permissions=["IsOwner", "InPartners"])
+    @bp.response(204)
     def post(self, discussion_id):
         try:
-            follow = Follow({'owner_id': g.user.id, 'discussion_id': discussion_id}).save()
+            Follow({'owner_id': g.user.id, 'discussion_id': discussion_id}).save()
         except IntegrityError:
             db.session.rollback()
             raise JsonIntegrityError()

@@ -18,7 +18,7 @@ class Post(db.Model):
 
     body = db.Column(db.Text, nullable=False)
     
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'))
 
     def save(self):

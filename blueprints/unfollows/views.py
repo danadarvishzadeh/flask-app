@@ -16,6 +16,7 @@ class UnfollowView(MethodView):
 
     @token_required
     @permission_required(Follow, required_permissions=["IsOwner"])
+    @bp.response(204)
     def delete(self, discussion_id):
         try:
             Follow.query.filter('discussion_id'==discussion_id, 'owner_id'==g.user.id).first().delete()

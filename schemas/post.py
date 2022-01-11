@@ -19,7 +19,3 @@ class PostSchema(Schema):
 
 class EditPostSchema(Schema):
     body = Str(validate=[validate.Length(min=20, max=500)])
-
-
-create_post_schema = CreatePostSchema()
-post_schema = PostSchema()

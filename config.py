@@ -5,11 +5,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'jifaor24t5g249gjeomf'
-    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
-    DISCUSSION_DISCUSSIONS_PER_PAGE = 3
-    DISCUSSION_POSTS_PER_PAGE = 5
-    DISCUSSION_INVITATIONS_PER_PAGE = 10
+    
+    #Blueprints
     BLUEPRINTS = (
         'users',
         'discussions',
@@ -18,6 +15,14 @@ class Config:
         'unfollows',
         'invites',
     )
+    
+
+    #SQLAlchemy
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    
+
+    #Documentation
     API_TITLE = "Discussion API"
     API_VERSION = "v1"
     OPENAPI_VERSION = "3.0.2"
@@ -26,7 +31,14 @@ class Config:
     OPENAPI_SWAGGER_UI_PATH = '/swagger'
     # The following is equivalent to OPENAPI_SWAGGER_UI_VERSION = '3.19.5'
     OPENAPI_SWAGGER_UI_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/'
+
+
+    #Pagination
+    DISCUSSION_DISCUSSIONS_PER_PAGE = 3
+    DISCUSSION_POSTS_PER_PAGE = 5
+    DISCUSSION_INVITATIONS_PER_PAGE = 10
     
+
     @staticmethod
     def init_app(app):
         pass

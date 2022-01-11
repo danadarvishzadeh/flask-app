@@ -23,10 +23,11 @@ class DiscussionView(MethodView):
 
     @token_required
     @bp.arguments(CreateDiscussionSchema)
+    @bp.response(200, DiscussionSchema)
     def post(self, creation_data):
         try:
             creation_data.update({'owner_id': g.user.id})
-            return jsonify(DiscussionSchema().dump(Discussion(**creation_data).save()))
+            return Discussion(**creation_data).save()
         except IntegrityError as e:
             db.session.rollback()
             raise JsonIntegrityError()
@@ -39,16 +40,18 @@ class DiscussionView(MethodView):
 @bp.route('/<int:discussion_id>', methods=['GET', 'PUT', 'DELETE'])
 class DiscussionDetailView(MethodView):
 
+    @bp.response(200, DiscussionSchema)
     def get(self, discussion_id):
         discussion = Discussion.query.get(discussion_id)
         if discussion:
-            return jsonify(DiscussionSchema().dump(discussion))
+            return discussion
         logger.warning(f"Trying to access non-existing discussion with id {discussion_id}")
         raise ResourceDoesNotExists()
 
     @token_required
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.arguments(EditDiscussionSchema)
+    @bp.response(204)
     def put(self, update_data, discussion_id):
         try:
             g.resource.update(update_data)
@@ -61,5 +64,6 @@ class DiscussionDetailView(MethodView):
     
     @token_required
     @permission_required(Discussion, required_permissions=["IsOwner"])
+    @bp.response(204)
     def delete(self, discussion_id):
         g.resource.delete()

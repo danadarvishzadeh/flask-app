@@ -23,7 +23,7 @@ class Discussion(db.Model):
 
     title = db.Column(db.String(64), nullable=False, index=True)
     description = db.Column(db.Text, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     posts = db.relationship('Post', backref='parent_discussion', lazy=True)
     

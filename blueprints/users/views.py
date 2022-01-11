@@ -21,20 +21,24 @@ from sqlalchemy.exc import IntegrityError
 class UserView(MethodView):
 
     @bp.arguments(CreateUserSchema)
+    @bp.response(200, UserSchema)
     def post(self, registration_data):
         try:
-            return jsonify(user_schema.dump(User(registration_data).save()))
+            logger.info('here')
+            return User(**registration_data).save()
         except IntegrityError as e:
             logger.warning(f"Attempt to register user. params: {e.params[:-1]} origin: {e.orig}")
             db.session.rollback()
             raise JsonIntegrityError()
         except:
+            print(traceback)
             trace_info = traceback.format_exc()
             logger.error(f"uncaught exception: {trace_info}")
             raise InvalidAttemp()
 
     @token_required
     @bp.arguments(EditUserSchema)
+    @bp.response(204)
     def put(self, update_data):
         try:
             g.user.update(update_data)
@@ -47,6 +51,7 @@ class UserView(MethodView):
             raise InvalidAttemp()
 
     @token_required
+    @bp.response(204)
     def delete(self):
         g.user.delete()
 
@@ -58,30 +63,28 @@ class UserDetailView(MethodView):
     def get(self, user_id):
         user = User.query.get(user_id)
         if user:
-            return jsonify(user_schema.dump(user))
-        else:
-            logger.warning(f"Trying to access non-existing user with id {user_id}")
-            raise ResourceDoesNotExists()
+            return user
+        logger.warning(f"Trying to access non-existing user with id {user_id}")
+        raise ResourceDoesNotExists()
 
 
 @bp.route('/login', methods=['POST'])
 class LoginView(MethodView):
 
     @bp.arguments(UserLoginSchema)
+    @bp.response(200, LoginResponse)
     def post(self, creadentials):
         if authenticate(creadentials):
             token = login()
-            return jsonify({
-                    'token': token
-                })    
-        else:
-            raise InvalidCredentials(message='Username or Password you provided are invalid.')
+            return {'token':token}
+        raise InvalidCredentials(message='Username or Password you provided are invalid.')
 
 
 @bp.route('/logout', methods=["GET"])
 class LogOutView(MethodView):
 
     @token_required
+    @bp.response(204)
     def get(self):
         token = request.headers.get('Authorization')
         try:

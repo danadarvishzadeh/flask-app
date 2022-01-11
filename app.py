@@ -1,7 +1,7 @@
 from logging.config import dictConfig
 from logging.handlers import RotatingFileHandler
 
-from flask import Flask, json, make_response
+from flask import Flask, json, make_response, jsonify
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -42,13 +42,12 @@ def configure_blueprints(app):
 
 def register_error_handlers(app):
     def error(e):
-        response = make_response()
-        response.data = json.dumps({
+        response = jsonify({
             "code": e.code,
-            "name": e.name,
-            "description": e.message,
+            "status": e.name,
+            "message": e.message,
+            "errors": getattr(e, 'errors', None) or {}
         })
-        response.content_type = "application/json"
         response.status = e.code
         return response
     
@@ -66,8 +65,6 @@ def create_app(config_name='default'):
     migrate.init_app(app, db)
     ma.init_app(app)
     api.init_app(app)
-    # from discussion.blueprints.users import bp as user_bp
-    # api.register_blueprint(user_bp)
 
     configure_blueprints(app)
     register_error_handlers(app)

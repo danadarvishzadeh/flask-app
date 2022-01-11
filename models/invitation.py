@@ -19,8 +19,8 @@ class Invitation(db.Model):
     body = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(10), default="Sent")
 
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
-    partner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    partner_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), nullable=False)
 
     def save(self):
