@@ -43,21 +43,6 @@ class Discussion(db.Model):
     def invited_users(self):
         return [i.partner for i in self.invitations]
     
-    def update(self, data):
-        self.query.update(dict(data))
-        db.session.commit()
-        return self
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return self
-
     def invite(self, user_id, body):
         invitation = Invitation()
         invitation.body = body

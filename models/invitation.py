@@ -22,11 +22,6 @@ class Invitation(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     partner_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), nullable=False)
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
     
     def update(self, response_data):
         self.query.update(response_data)
@@ -38,11 +33,6 @@ class Invitation(db.Model):
             }).save()
         self.session.commit()
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return self
-    
     def accept(self):
         self.status = "Accepted"
         sekf.save()

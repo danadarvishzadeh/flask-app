@@ -15,13 +15,3 @@ class Follow(db.Model):
 
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     discussion_id = db.Column(db.Integer, db.ForeignKey('discussions.id'), primary_key=True)
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
-    
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return self

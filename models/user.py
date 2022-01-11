@@ -97,22 +97,7 @@ class User(db.Model):
     @property
     def hosted_discussions(self):
         return [i.discussion for i in self.owned_participations]
-    
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-        return self
-    
-    def update(self, data):
-        self.query.update(dict(data))
-        db.session.commit()
-        return self
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return self
-    
+        
     def follow(self, discussion_id):
         discussion = Discussion.query.get(discussion_id)
         follow = Follow()
@@ -127,15 +112,3 @@ class User(db.Model):
     def update_last_seen(self):
         self.last_seen = datetime.utcnow()
         self.save()
-    
-    def has_expired_last_token(self):
-        if not self.last_token:
-            return True
-        try:
-            decode(self.last_token)
-        except ExpiredSignatureError:
-            #TODO check redis
-            self.save()
-            return True
-        else:
-            return False
