@@ -1,6 +1,7 @@
 from datetime import datetime
 from sqlalchemy import UniqueConstraint
 from discussion.app import db
+from discussion.models.participate import Participate
 
 class Invitation(db.Model):
 
@@ -16,7 +17,7 @@ class Invitation(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
     body = db.Column(db.Text, nullable=False)
-    status = db.Column(db.String(10), nullable=False)
+    status = db.Column(db.String(10), default="Sent")
 
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
     partner_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
@@ -27,6 +28,16 @@ class Invitation(db.Model):
         db.session.commit()
         return self
     
+    def update(self, response_data):
+        self.query.update(response_data)
+        if response_data['response'] == 'Accepted':
+            Participate({
+                'owner_id': self.owner_id,
+                'partner_id': self.partner_id,
+                'discussion_id': self.discussion_id
+            }).save()
+        self.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()

@@ -18,7 +18,15 @@ class Config:
         'unfollows',
         'invites',
     )
-
+    API_TITLE = "Discussion API"
+    API_VERSION = "v1"
+    OPENAPI_VERSION = "3.0.2"
+    OPENAPI_URL_PREFIX = '/doc'
+    OPENAPI_REDOC_PATH = '/redoc'
+    OPENAPI_SWAGGER_UI_PATH = '/swagger'
+    # The following is equivalent to OPENAPI_SWAGGER_UI_VERSION = '3.19.5'
+    OPENAPI_SWAGGER_UI_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/'
+    
     @staticmethod
     def init_app(app):
         pass
@@ -121,26 +129,4 @@ LOG_CONFIG = {
     #         'propagate': True
     #     },
     # },
-}
-
-template = {
-    "swagger": "2.0",
-    "info": {
-        "title": "Discussion API",
-        "description": "API for discussion app",
-        "version": "1.0.0"
-    },
-    "host": "localhost:5000",
-    "basePath": "/",
-    "schemes": [
-        "http",
-    ],
-    "securitySchemes":{
-        "bearerAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT",
-        },
-    },
-    # "security": {}
 }

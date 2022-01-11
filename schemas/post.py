@@ -1,38 +1,24 @@
 from flask_marshmallow import Schema, fields
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
-from marshmallow.fields import Nested
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+from marshmallow.fields import *
 
-from discussion.app import ma
 from discussion.models.post import Post
 
 
-class CreatePostSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Post
-        fields = (
-            'body',
-        )
-        load_instance = True
-    
-    body = auto_field(validate=[validate.Length(min=20, max=500)])
+class CreatePostSchema(Schema):
+    body = Str(validate=[validate.Length(min=20, max=500)])
 
 
-class PostSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Post
-        fields = (
-            'id',
-            'body',
-            'created_at',
-            'owner',
-            'parent_discussion',
-        )
+class PostSchema(Schema):
+    id = Integer()
+    body = Str()
+    created_at = DateTime()
     owner = Nested('UserSchema', only=('id', 'username', 'email'))
     parent_discussion = Nested('DiscussionSchema', only=('id', 'title'))
 
-
+class EditPostSchema(Schema):
+    body = Str(validate=[validate.Length(min=20, max=500)])
 
 
 create_post_schema = CreatePostSchema()

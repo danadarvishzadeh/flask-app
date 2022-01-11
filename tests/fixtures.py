@@ -2,29 +2,29 @@ user_fixture = {
     'user_dana_valid': {
         'username': 'dana',
         'email': 'dana@dana.com',
-        'name': 'dana',
-        'lastname': 'danaplastiki',
+        'first_name': 'dana',
+        'last_name': 'danaplastiki',
         'password': '123456789'
     },
     'user_mamad_valid': {
         'username': 'mamad',
         'email': 'mamad@dana.com',
-        'name': 'mamad',
-        'lastname': 'mamadplastiki',
+        'first_name': 'mamad',
+        'last_name': 'mamadplastiki',
         'password': '123456789'
     },
     'user_dana_invalid_edit': {
-        'name': 'mamad',
-        'lastname': 'mamadplastiki',
+        'first_name': 'mamad',
+        'last_name': 'mamadplastiki',
     },
     'user_dana_valid_edit': {
-        'lastname': 'mamadplastiki',
+        'last_name': 'mamadplastiki',
     },
     'user_dana_invalid': {
         'username': 1,
         'email': 'dana.dana.com',
-        'name': 'dana',
-        'lastname': 'danaplastiki',
+        'first_name': 'dana',
+        'last_name': 'danaplastiki',
         'password': '1234567'
     },
 }

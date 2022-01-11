@@ -1,8 +1,7 @@
-from flask import Blueprint 
 import logging
+from flask_smorest import Blueprint
 
-bp = Blueprint('unfollows', __name__, url_prefix='/unfollows')
-
+bp = Blueprint('unfollow', 'unfollows', __name__, url_prefix='/unfollows')
 logger = logging.getLogger(bp.name)
 
 from . import views

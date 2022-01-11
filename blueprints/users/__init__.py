@@ -1,7 +1,7 @@
-from flask import Blueprint 
 import logging
+from flask_smorest import Blueprint
 
-bp = Blueprint('users', __name__, url_prefix='/users')
+bp = Blueprint('user', 'users', __name__, url_prefix='/users')
 
 logger = logging.getLogger(bp.name)
 

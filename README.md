@@ -12,6 +12,8 @@ Changes until now:
 9. Restructuring schemas
 10. Changing model fields for permissions to work indipendent of models
 11. Changing paginators to accept filters
+12. UTC dates
+13. Changing root directory of the application
 
 Ongoing changes:
 ==================
@@ -19,10 +21,19 @@ Ongoing changes:
 - Open-api and Swager
 - implementing Caching and Redis
 - Editing loggers and log files
-- Changing root directory of the application
 - SQl and Postgresql
-- UTC dates
-- adding url property to models
+- view refactoring
+- models base class
+- overal refactor
+- OpenID Connect
+- Oaouth2
+- sever side authorization (redis)
+
+
+Questions:
+==================
+1. Best practices of handling exceptions.
+
 
 Installation:
 ==================

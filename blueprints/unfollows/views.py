@@ -1,52 +1,25 @@
-from discussion.app import db
-from discussion.blueprints.follows import bp, logger
-from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
-                               JsonIntegrityError, JsonValidationError,
-                               ResourceDoesNotExists)
-from discussion.models.follow import Follow
-from discussion.utils.permissions.decorators import permission_required
-from discussion.utils.auth import token_required
-from flask import g, jsonify
-from discussion.models.discussion import Discussion
-from sqlalchemy.exc import IntegrityError
 import traceback
-from flasgger import SwaggerView
+
+from discussion.blueprints.unfollows import bp, logger
+from discussion.models.follow import Follow
 from discussion.schemas.response import ErrorSchema, OkResponse
+from discussion.utils.auth import token_required
+from discussion.utils.errors import InvalidAttemp, ResourceDoesNotExists
+from discussion.utils.permissions.decorators import permission_required
+from flask import g, jsonify
+from flask.views import MethodView
+from sqlalchemy.exc import IntegrityError
 
 
-class UnfollowView(SwaggerView):
-    decorators = [
-        token_required,
-    ]
-    parameters = [
-        {
-            "in": "path",
-            "name": "discussion_id",
-            "type": "string"
-        }
-    ]
-    responses = {
-        200: {
-            "description": "successful.",
-            "schema": OkResponse
-        },
-        400: {
-            "description": "Invalid input.",
-            "schema": ErrorSchema
-        },
-        500: {
-            "description": "Invalid attemp.",
-            "schema": ErrorSchema
-        },
-    }
+@bp.route('/<int:discussion_id>', methods=['DELETE'])
+class UnfollowView(MethodView):
+
+    @token_required
+    @permission_required(Follow, required_permissions=["IsOwner"])
     def delete(self, discussion_id):
-        follow = Follow.query.filter_by(discussion_id=discussion_id).first()
-        if follow:
-            if follow.owner_id == g.user.id:
-                follow.delete()
-                db.session.commit()
-                return jsonify({'response': 'Ok!'}), 200
-            else:
-                raise InvalidAttemp()
-        else:
+        try:
+            Follow.query.filter('discussion_id'==discussion_id, 'owner_id'==g.user.id).first().delete()
+        except AttributeError:
             raise ResourceDoesNotExists()
+        except:
+            raise InvalidAttemp()

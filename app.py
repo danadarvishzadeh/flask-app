@@ -5,21 +5,40 @@ from flask import Flask, json, make_response
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from .config import LOG_CONFIG, config, template
-from flasgger import Swagger
-
+from .config import LOG_CONFIG, config
+from flask_smorest import Api
 
 dictConfig(LOG_CONFIG)
 
-db = SQLAlchemy()
+
+
+
+from flask_sqlalchemy import Model
+
+
+class BaseModel(Model):
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+    
+    def update(self, data):
+        self.query.update(dict())
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete()
+
+db = SQLAlchemy(model_class=BaseModel)
 migrate = Migrate()
 ma = Marshmallow()
-swagger = Swagger(template=template)
+api = Api()
 
 def configure_blueprints(app):
     for blueprint in app.config['BLUEPRINTS']:
         bp = __import__('discussion.blueprints.%s' % blueprint, fromlist=[blueprint])
-        app.register_blueprint(getattr(bp, 'bp'))
+        api.register_blueprint(getattr(bp, 'bp'))
 
 def register_error_handlers(app):
     def error(e):
@@ -46,7 +65,9 @@ def create_app(config_name='default'):
     db.init_app(app)
     migrate.init_app(app, db)
     ma.init_app(app)
-    swagger.init_app(app)
+    api.init_app(app)
+    # from discussion.blueprints.users import bp as user_bp
+    # api.register_blueprint(user_bp)
 
     configure_blueprints(app)
     register_error_handlers(app)

@@ -11,7 +11,6 @@ from discussion.models.invitation import Invitation
 from discussion.models.participate import Participate
 from discussion.models.post import Post
 from discussion.models.follow import Follow
-from discussion.models.tokenblacklist import TokenBlackList
 
 
 class User(db.Model):
@@ -19,8 +18,8 @@ class User(db.Model):
     __tablebame__ = 'users'
 
     __table_args__ = (
-        Index('name_index', 'lastname', 'name'),
-        UniqueConstraint('name', 'lastname', name='unique_person')
+        Index('name_index', 'last_name', 'first_name'),
+        UniqueConstraint('first_name', 'last_name', name='unique_person')
     )
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,12 +29,11 @@ class User(db.Model):
     last_seen = db.Column(db.DateTime, default=datetime.utcnow())
     is_active = db.Column(db.Boolean, default=True)
 
-    last_token = db.Column(db.String(500), default=None)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     
-    name = db.Column(db.String(64), nullable=False)
-    lastname = db.Column(db.String(64), nullable=False)
+    first_name = db.Column(db.String(64), nullable=False)
+    last_name = db.Column(db.String(64), nullable=False)
     
     password_hash = db.Column(db.String(128))
     
@@ -111,7 +109,6 @@ class User(db.Model):
         return self
 
     def delete(self):
-        TokenBlackList.depricate_token(self.last_token)
         db.session.delete(self)
         db.session.commit()
         return self
@@ -137,8 +134,7 @@ class User(db.Model):
         try:
             decode(self.last_token)
         except ExpiredSignatureError:
-            TokenBlackList.depricate_token(self.last_token)
-            self.last_token = None
+            #TODO check redis
             self.save()
             return True
         else:

@@ -29,12 +29,12 @@ class UserViewsTest(unittest.TestCase):
         response = self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
         self.assertEqual(response.status_code, 200)
         # self.assertEqual(response.json, {
-        #     'name': 'dana',
+        #     'first_name': 'dana',
         #     'username': 'dana',
         #     'invitations_sent': [],
         #     'email': 'dana@dana.com',
         #     'id': 1,
-        #     'lastname': 'danaplastiki',
+        #     'last_name': 'danaplastiki',
         #     'created_discussions': [],
         #     'invitations_recived': [],
         #     'followed_discussions': [],

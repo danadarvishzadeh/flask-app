@@ -23,14 +23,14 @@ def permission_required(resource, required_permissions=None, one_of=None, forbid
             if required_permissions is not None:
                 for permission_class in required_permissions:
                     permission = str_to_class(permission_class)()
-                    if not permission.has_access(resource, **kwargs):
+                    if not permission(resource, **kwargs).has_access():
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
             
             #raise error if none of the one_of permissions is satisfied
             if one_of is not None:
                 for permission_class in one_of:
                     permission = str_to_class(permission_class)()
-                    if permission.has_access(resource, **kwargs):
+                    if permission(resource, **kwargs).has_access():
                         return f(*args, **kwargs)
                 raise JsonPermissionDenied(f"Premission {permission_class} required.")
             
@@ -38,7 +38,7 @@ def permission_required(resource, required_permissions=None, one_of=None, forbid
             if forbidden_permissions is not None:
                 for permission_class in forbidden_permissions:
                     permission = str_to_class(permission_class)()
-                    if permission.has_access(resource, **kwargs):
+                    if permission(resource, **kwargs).has_access():
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
 
             return f(*args, **kwargs)

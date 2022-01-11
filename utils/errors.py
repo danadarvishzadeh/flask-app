@@ -7,7 +7,6 @@ __all__ = [
     'InvalidToken',
     'JsonIntegrityError',
     'JsonPermissionDenied',
-    'JsonValidationError',
     'ResourceDoesNotExists',
     'ActionIsNotPossible',
     'InvalidAttemp'
@@ -44,14 +43,6 @@ class JsonPermissionDenied(Forbidden):
     def __init__(self, message):
         super().__init__()
         self.message = message
-
-
-class JsonValidationError(HTTPException):
-    code = 400
-
-    def __init__(self, e):
-        super().__init__()
-        self.message = e.messages
 
 
 class ResourceDoesNotExists(HTTPException):
