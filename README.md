@@ -14,20 +14,20 @@ Changes until now:
 11. Changing paginators to accept filters
 12. UTC dates
 13. Changing root directory of the application
+14. Open-api and Swager
+15. view refactoring
+16. overal refactor
 
 Ongoing changes:
 ==================
 
-- Open-api and Swager
-- implementing Caching and Redis
 - Editing loggers and log files
-- SQl and Postgresql
-- view refactoring
 - models base class
-- overal refactor
+- sever side authorization (redis)
+- implementing Caching and Redis
+- SQl and Postgresql
 - OpenID Connect
 - Oaouth2
-- sever side authorization (redis)
 
 
 Questions:
