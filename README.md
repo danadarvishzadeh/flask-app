@@ -19,13 +19,13 @@ Changes until now:
 16. Overal refactor
 17. Models base class
 18. Unify responses
+19. External dependencies error
 
 
 Ongoing changes:
 ==================
 
 - Checking navicat for mongo
-- External dependencies error
 - Editing loggers and log files
 - sever side authorization (redis)
 - OpenID Connect

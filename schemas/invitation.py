@@ -1,9 +1,5 @@
-from flask_marshmallow import Schema, fields
+from flask_marshmallow import Schema
 from marshmallow.fields import Nested, DateTime, Integer, Str
-
-# from discussion.app.ma import Schema
-from discussion.models.invitation import Invitation
-from discussion.models.participate import Participate
 
 
 class CreateInvitationSchema(Schema):

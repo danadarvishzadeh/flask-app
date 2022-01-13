@@ -1,14 +1,9 @@
 
-from flask_marshmallow import Schema, fields
+from flask_marshmallow import Schema
 from marshmallow.fields import Nested, DateTime, Integer, Str, Email
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load, pre_load
 from werkzeug.security import generate_password_hash
-
-# from discussion.app import ma
-from discussion.models.follow import Follow
-from discussion.models.participate import Participate
-from discussion.models.user import User
 
 
 

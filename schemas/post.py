@@ -1,9 +1,7 @@
-from flask_marshmallow import Schema, fields
+from flask_marshmallow import Schema
 from marshmallow import validate
 from marshmallow.decorators import post_dump, post_load
-from marshmallow.fields import *
-
-from discussion.models.post import Post
+from marshmallow.fields import Nested, DateTime, Integer, Str
 
 
 class CreatePostSchema(Schema):

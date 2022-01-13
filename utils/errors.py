@@ -1,6 +1,6 @@
 
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import Forbidden, HTTPException
+from werkzeug.exceptions import Forbidden, HTTPException, NotFound
 
 __all__ = [
     'InvalidCredentials',
@@ -45,7 +45,7 @@ class JsonPermissionDenied(Forbidden):
         self.message = message
 
 
-class ResourceDoesNotExists(HTTPException):
+class ResourceDoesNotExists(NotFound):
     code = 404
 
     def __init__(self):
