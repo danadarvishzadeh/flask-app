@@ -9,7 +9,7 @@ log_config = {
     'disable_existing_loggers': False,
     'formatters': {
         'default': {
-            'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s]----%(filename)s---%(module)s-%(funcName)s-%(lineno)d: %(message)s'
+            'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s] - [%(filename)s/%(module)s/%(funcName)s/%(lineno)d] - [%(message)s]'
         },
         'request': {
             '()': 'discussion.utils.logging.RequestFormatter',
@@ -95,9 +95,7 @@ class Config:
     OPENAPI_URL_PREFIX = '/doc'
     OPENAPI_REDOC_PATH = '/redoc'
     OPENAPI_SWAGGER_UI_PATH = '/swagger'
-    # The following is equivalent to OPENAPI_SWAGGER_UI_VERSION = '3.19.5'
-    # OPENAPI_SWAGGER_UI_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/'
-    OPENAPI_SWAGGER_UI_VERSION = '3.19.5'
+    OPENAPI_SWAGGER_UI_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/'
 
 
     #Pagination

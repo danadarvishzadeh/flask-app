@@ -40,6 +40,7 @@ def configure_errorhandlers(app):
 
     #Regular errors that can be raised from within blueprints and app
     def handler(e):
+        logger.exception('')
         response = jsonify({
             "code": e.code,
             "status": e.name,

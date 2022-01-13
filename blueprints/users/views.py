@@ -26,7 +26,7 @@ class UserView(MethodView):
     @bp.response(200, UserSchema)
     def post(self, registration_data):
         try:
-            user = User(registration_data).save()
+            user = User(**registration_data).save()
             logger.info(f'user {user.username} created')
             return user
         except IntegrityError as e:

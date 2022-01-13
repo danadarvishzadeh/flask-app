@@ -10,6 +10,7 @@ __all__ = [
 
 
 from flask_sqlalchemy import Model
+from discussion.extentions import db
 
 
 class BaseModel(Model):

@@ -20,13 +20,13 @@ Changes until now:
 17. Models base class
 18. Unify responses
 19. External dependencies error
+20. Editing loggers and log files
 
 
 Ongoing changes:
 ==================
 
 - Checking navicat for mongo
-- Editing loggers and log files
 - sever side authorization (redis)
 - OpenID Connect
 - Oaouth2
