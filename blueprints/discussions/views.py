@@ -1,7 +1,7 @@
 import traceback
 
 from discussion.app import db
-from discussion.blueprints.discussions import bp, logger
+from discussion.blueprints.discussions import bp
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema
@@ -15,7 +15,10 @@ from flask.views import MethodView
 from flask import g, jsonify, request
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
+from logging import getLogger
+from flask import current_app
 
+logger = getLogger(__name__)
 
 
 @bp.route('/', methods=['POST'])
@@ -32,8 +35,7 @@ class DiscussionView(MethodView):
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
 
 
@@ -58,8 +60,7 @@ class DiscussionDetailView(MethodView):
         except IntegrityError:
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
     
     @token_required

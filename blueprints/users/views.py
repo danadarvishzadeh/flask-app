@@ -1,7 +1,7 @@
 import traceback
 
 from discussion.app import db
-from discussion.blueprints.users import bp, logger
+from discussion.blueprints.users import bp
 from discussion.models.user import User
 from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.schemas.user import (CreateUserSchema, EditUserSchema,
@@ -15,7 +15,9 @@ from discussion.utils.permissions.decorators import permission_required
 from flask import g, jsonify, request
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
+import logging
 
+logger = logging.getLogger(__name__)
 
 @bp.route('', methods=["POST", "PUT", "DELETE"])
 class UserView(MethodView):
@@ -24,16 +26,15 @@ class UserView(MethodView):
     @bp.response(200, UserSchema)
     def post(self, registration_data):
         try:
-            logger.info('here')
-            return User(registration_data).save()
+            user = User(registration_data).save()
+            logger.info(f'user {user.username} created')
+            return user
         except IntegrityError as e:
-            logger.warning(f"Attempt to register user. params: {e.params[:-1]} origin: {e.orig}")
+            logger.warning(f"register user with params: {e.params[:-1]} origin: {e.orig}")
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            print(traceback)
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
 
     @token_required
@@ -42,18 +43,19 @@ class UserView(MethodView):
     def put(self, update_data):
         try:
             g.user.update(update_data)
+            logger.info(f'user {g.user.username} chenged')
         except IntegrityError as e:
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
 
     @token_required
     @bp.response(204)
     def delete(self):
         g.user.delete()
+        logger.info(f'user {g.user.username} deleted')
 
 
 @bp.route('/<int:user_id>', methods=['GET'])    
@@ -64,7 +66,7 @@ class UserDetailView(MethodView):
         user = User.query.get(user_id)
         if user:
             return user
-        logger.warning(f"Trying to access non-existing user with id {user_id}")
+        logger.warning(f"access non existing user_id {user_id}")
         raise ResourceDoesNotExists()
 
 
@@ -76,6 +78,7 @@ class LoginView(MethodView):
     def post(self, creadentials):
         if authenticate(creadentials):
             token = login()
+            logger.info(f'user {g.user.username} logged in')
             return {'token':token}
         raise InvalidCredentials(message='Username or Password you provided are invalid.')
 
@@ -89,9 +92,9 @@ class LogOutView(MethodView):
         token = request.headers.get('Authorization')
         try:
             logout(token)
+            logger.info(f'user {g.user.username} logged out')
         except InvalidToken:
             raise InvalidToken()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()

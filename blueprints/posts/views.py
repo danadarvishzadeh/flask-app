@@ -1,7 +1,7 @@
 import traceback
 
 from discussion.app import db
-from discussion.blueprints.posts import bp, logger
+from discussion.blueprints.posts import bp
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.post import (CreatePostSchema, EditPostSchema,
@@ -25,7 +25,6 @@ class PostDetailView(MethodView):
         post = Post.query.get(post_id)
         if post:
             return post
-        logger.warning(f"Trying to access non-existing post with id {post_id}")
         raise ResourceDoesNotExists()
     
     @token_required
@@ -41,8 +40,7 @@ class PostDetailView(MethodView):
         except AttributeError:
             raise ResourceDoesNotExists()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
 
     @token_required    
@@ -68,6 +66,5 @@ class PostView(MethodView):
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()

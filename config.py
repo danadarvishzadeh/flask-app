@@ -78,12 +78,34 @@ config = {
     'default': DevelopementConfig
 }
 
+class ErrorFilter:
+    def __init__(self, name=''):
+        self.name = name
+
+    def filter(self, record):
+        return record.level == 'error'
+
+#formatter class key is used for custome formatters
 LOG_CONFIG = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+            'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s] %(message)s'
+        },
+        'advance': {
+            'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s]----%(filename)s---%(module)s-%(funcName)s-%(lineno)d: %(message)s'
+        },
+        'simple': {
+            'format': '[%(name)s] - [%(asctime)s]  %(message)s'
+        },
+        'request': {
+            '()': 'discussion.utils.logging.RequestFormatter',
+            'format': '[%(name)s] - [%(asctime)s] - [%(method)s] - [%(url)s] - [%(remote_addr)s] - [%(user_agent)s] - [%(authorization)s]',
+        },
+        'response': {
+            '()': 'discussion.utils.logging.ResponseFormatter',
+            'format': '[%(name)s] - [%(asctime)s] - [%(status)s]',
         },
     },
     'handlers': {
@@ -92,53 +114,44 @@ LOG_CONFIG = {
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
         },
-    #     'debug': {
-    #         'level': 'DEBUG',
-    #         'formatter': 'standard',
-    #         'class': 'logging.handlers.RotatingFileHandler',
-    #         'filename': './discussion/logs/debug.log',
-    #         'maxBytes': 1000000,
-    #         'backupCount': 3,
-    #     },
-    #     'error': {
-    #         'level': 'ERROR',
-    #         'formatter': 'standard',
-    #         'class': 'logging.handlers.RotatingFileHandler',
-    #         'filename': './discussion/logs/error.log',
-    #         'maxBytes': 1000000,
-    #         'backupCount': 3,
-    #     },
+        'main_log_handler': {
+            'level': 'INFO',
+            'formatter': 'advance',
+            'class': 'logging.FileHandler',
+            'filename': 'log.txt',
+        },
+        'request_handler': {
+            'level': 'INFO',
+            'formatter': 'request',
+            'class': 'logging.FileHandler',
+            'filename': 'log.txt'
+        },
+        'response_handler': {
+            'level': 'INFO',
+            'formatter': 'response',
+            'class': 'logging.FileHandler',
+            'filename': 'log.txt'
+        },
     },
-    # 'loggers': {
-    #     '': {
-    #         'handlers': ['console'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    #     'discussions': {
-    #         'handlers': ['debug', 'error'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    #     'posts': {
-    #         'handlers': ['debug', 'error'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    #     'users': {
-    #         'handlers': ['debug', 'error'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    #     'follow': {
-    #         'handlers': ['debug', 'error'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    #     'invite': {
-    #         'handlers': ['debug', 'error'],
-    #         'level': 'DEBUG',
-    #         'propagate': True
-    #     },
-    # },
+    'loggers': {
+        'werkzeug': {
+            'level': 'NOTSET',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'request_logger': {
+            'level': 'INFO',
+            'handlers': ['request_handler',],
+            'propagate': False,
+        },
+        'response_logger': {
+            'level': 'INFO',
+            'handlers': ['response_handler',],
+            'propagate': False,
+        },
+    },
+    'root': {
+        'level': 'NOTSET',
+        'handlers': ['main_log_handler']
+    }
 }

@@ -15,20 +15,25 @@ Changes until now:
 12. UTC dates
 13. Changing root directory of the application
 14. Open-api and Swager
-15. view refactoring
-16. overal refactor
+15. View refactoring
+16. Overal refactor
+17. Models base class
+18. Unify responses
+
 
 Ongoing changes:
 ==================
 
+- Checking navicat for mongo
+- External dependencies error
 - Editing loggers and log files
-- models base class
 - sever side authorization (redis)
-- implementing Caching and Redis
-- SQl and Postgresql
 - OpenID Connect
 - Oaouth2
+- implementing Caching and Redis
+- SQl and Postgresql
 - MongoDB
+
 
 Loggers:
 ==================

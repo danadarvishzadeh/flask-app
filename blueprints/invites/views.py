@@ -1,7 +1,7 @@
 import traceback
 from sqlalchemy import or_, and_
 from discussion.app import db
-from discussion.blueprints.invites import bp, logger
+from discussion.blueprints.invites import bp
 from discussion.models.discussion import Discussion
 from discussion.models.invitation import Invitation
 from discussion.schemas.invitation import (CreateInvitationSchema,
@@ -21,7 +21,7 @@ from sqlalchemy.exc import IntegrityError
 class InvitationView(MethodView):
 
     @token_required
-    @permission_required(Discussion, one_of=["IsOwner", "IsPartner"])
+    @permission_required(Discussion, store_resource=False, one_of=["IsOwner", "IsPartner"])
     @bp.response(200, InvitationSchema)
     def get(self, discussion_id):
         return Invitation.query.filter(
@@ -41,8 +41,7 @@ class InvitationView(MethodView):
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
     
     @token_required
@@ -56,6 +55,5 @@ class InvitationView(MethodView):
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()

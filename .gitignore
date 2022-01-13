@@ -2,7 +2,8 @@
 *venv*
 .vscode*
 #test*
-*logs*
+logs.*
+log.*
 notes*
 slides*
 instance*

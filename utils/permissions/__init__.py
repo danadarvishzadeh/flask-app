@@ -7,15 +7,16 @@ from flask import g
 
 class BasePermission(ABC):
 
-    def __init__(self, resource, **kwargs):
-        resource = resource.query.get(kwargs[self.get_resource_id_name(resource)])
+    def __init__(self, model, store_resource=True):
+        self.resource = model.query.get(kwargs[self.get_resource_id_name(model)])
         if not resource:
             raise ResourceDoesNotExists()
-        g.resource = resource
+        if store_resource:
+            g.resource = resource
 
-    def get_resource_id_name(resource):
-        return resource.__name__.lower() + '_id'
+    def get_resource_id_name(model):
+        return model.__name__.lower() + '_id'
 
     @abstractmethod
-    def has_access(self, resource, **kwargs):
+    def has_access(self):
         pass

@@ -1,7 +1,7 @@
 import traceback
 
 from discussion.app import db
-from discussion.blueprints.follows import bp, logger
+from discussion.blueprints.follows import bp
 from discussion.models.discussion import Discussion
 from discussion.models.follow import Follow
 from discussion.schemas.response import ErrorSchema, OkResponse
@@ -24,12 +24,12 @@ class FollowView(MethodView):
     def post(self, discussion_id):
         try:
             Follow({'owner_id': g.user.id, 'discussion_id': discussion_id}).save()
+            logger.info(f'{g.user.username} followed discussion_id {discussion_id}')
         except IntegrityError:
             db.session.rollback()
             raise JsonIntegrityError()
         except ResourceDoesNotExists:
             raise ResourceDoesNotExists()
         except:
-            trace_info = traceback.format_exc()
-            logger.error(f"uncaught exception: {trace_info}")
+            logger.exception('')
             raise InvalidAttemp()
