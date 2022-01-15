@@ -1,5 +1,5 @@
 import traceback
-
+from jwt.exceptions import InvalidTokenError
 from discussion.app import db
 from discussion.blueprints.users import bp
 from discussion.models.user import User
@@ -91,10 +91,11 @@ class LogOutView(MethodView):
     def get(self):
         token = request.headers.get('Authorization')
         try:
+            logger.info(f'{token}')
             logout(token)
             logger.info(f'user {g.user.username} logged out')
-        except InvalidToken:
-            raise InvalidToken()
+        except InvalidTokenError:
+            raise InvalidToken('Invalid Token Provided.')
         except:
             logger.exception('')
             raise InvalidAttemp()

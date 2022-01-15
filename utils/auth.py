@@ -19,8 +19,8 @@ def encode_auth_token(user_id):
         algorithm='HS256').decode()
     return token
 
-def decode_auth_token(auth_token):
-    payload = jwt.decode(auth_token, current_app.config.get('SECRET_KEY'))
+def decode_auth_token(token):
+    payload = jwt.decode(token, current_app.config.get('SECRET_KEY'))
     user = User.query.get(payload['sub'])
     return user
 
@@ -63,8 +63,10 @@ def login():
     return encode_auth_token(g.user.id)
 
 def logout(token):
-    splited_token = token.split()
+    splited_token = token.split(' ')
     if len(splited_token) == 2:
+        decode_auth_token(splited_token[1])
         g.user.update_last_seen()
+        return
         #TODO depricate token
-    raise InvalidToken()
+    raise jwt.exceptions.InvalidTokenError()
