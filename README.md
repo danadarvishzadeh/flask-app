@@ -26,11 +26,10 @@ Changes until now:
 Ongoing changes:
 ==================
 
-- Checking navicat for mongo
 - sever side authorization (redis)
+- implementing Caching and Redis
 - OpenID Connect
 - Oaouth2
-- implementing Caching and Redis
 - SQl and Postgresql
 - MongoDB
 
