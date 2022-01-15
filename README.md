@@ -21,17 +21,17 @@ Changes until now:
 18. Unify responses
 19. External dependencies error
 20. Editing loggers and log files
+21. OAuth2
 
 
 Ongoing changes:
 ==================
 
+- OpenID Connect
 - sever side authorization (redis)
 - implementing Caching and Redis
-- OpenID Connect
-- Oaouth2
-- SQl and Postgresql
 - MongoDB
+- SQl and Postgresql
 
 
 Loggers:
