@@ -21,8 +21,9 @@ class BaseModel(Model):
         return self
     
     def update(self, data):
-        self.query.update(dict())
+        self.query.update(data)
         db.session.commit()
     
     def delete(self):
-        db.session.delete()
+        db.session.delete(self)
+        db.session.commit()
