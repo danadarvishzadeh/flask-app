@@ -32,6 +32,7 @@ class DiscussionView(MethodView):
             creation_data.update({'owner_id': g.user.id})
             return Discussion(**creation_data).save()
         except IntegrityError as e:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:
@@ -47,7 +48,7 @@ class DiscussionDetailView(MethodView):
         discussion = Discussion.query.get(discussion_id)
         if discussion:
             return discussion
-        logger.warning(f"Trying to access non-existing discussion with id {discussion_id}")
+        logger.warning(f'Resource does not exists.')
         raise ResourceDoesNotExists()
 
     @token_required
@@ -58,6 +59,8 @@ class DiscussionDetailView(MethodView):
         try:
             g.resource.update(update_data)
         except IntegrityError:
+            logger.warning(f'Integrity error: {e}')
+            db.session.rollback()
             raise JsonIntegrityError()
         except:
             logger.exception('')

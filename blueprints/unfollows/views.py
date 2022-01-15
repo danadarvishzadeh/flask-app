@@ -8,7 +8,6 @@ from discussion.utils.errors import InvalidAttemp, ResourceDoesNotExists
 from discussion.utils.permissions.decorators import permission_required
 from flask import g, jsonify
 from flask.views import MethodView
-from sqlalchemy.exc import IntegrityError
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,6 +23,7 @@ class UnfollowView(MethodView):
             Follow.query.filter('discussion_id'==discussion_id, 'owner_id'==g.user.id).first().delete()
             logger.info(f'{g.user.username} unfollowed discussion_id {discussion_id}')
         except AttributeError:
+            logger.warning(f'Resource does not exists.')
             raise ResourceDoesNotExists()
         except:
             logger.exception('')

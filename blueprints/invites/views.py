@@ -15,7 +15,9 @@ from discussion.utils.permissions.decorators import permission_required
 from flask import g, jsonify
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
+import logging
 
+logger = logging.getLogger(__name__)
 
 @bp.route('/<int:discussion_id>', methods=["GET", "POST", "PUT"])
 class InvitationView(MethodView):
@@ -27,7 +29,7 @@ class InvitationView(MethodView):
         return Invitation.query.filter(
                     and_(Invitation.discussion_id==discussion_id,
                         or_(Invitation.partner_id==g.user.id,
-                            Invitation.owner_id==g.user.id)))
+                            Invitation.owner_id==g.user.id))).first()
         
     @token_required
     @permission_required(Discussion, required_permissions=["IsOwner"])
@@ -38,6 +40,7 @@ class InvitationView(MethodView):
             creation_data.update({'discussion_id': discussion_id, 'owner_id': g.user.id})
             return Invitation(**creation_data).save()
         except IntegrityError:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:
@@ -52,6 +55,7 @@ class InvitationView(MethodView):
         try:
             Invitation.query.filter('discussion_id'==discussion_id, 'partner_id'==g.user.id).update(response_data)
         except IntegrityError:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:

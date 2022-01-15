@@ -15,7 +15,9 @@ from flask import g, jsonify, request
 from flask.views import MethodView
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
+import logging
 
+logger = logging.getLogger(__name__)
 
 @bp.route('/<int:post_id>', methods=["GET", "PUT", "DELETE"])
 class PostDetailView(MethodView):
@@ -25,6 +27,7 @@ class PostDetailView(MethodView):
         post = Post.query.get(post_id)
         if post:
             return post
+        logger.warning(f'Resource does not exists.')
         raise ResourceDoesNotExists()
     
     @token_required
@@ -35,9 +38,11 @@ class PostDetailView(MethodView):
         try:
             g.resource.update(update_data)
         except IntegrityError as e:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except AttributeError:
+            logger.warning(f'Resource does not exists.')
             raise ResourceDoesNotExists()
         except:
             logger.exception('')
@@ -63,6 +68,7 @@ class PostView(MethodView):
             creation_data.upadte({'discussion_id': discussion_id, 'owner_id': g.user.id})
             return Post(**creation_data).save()
         except IntegrityError:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:

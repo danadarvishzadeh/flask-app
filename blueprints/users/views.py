@@ -30,7 +30,7 @@ class UserView(MethodView):
             logger.info(f'user {user.username} created')
             return user
         except IntegrityError as e:
-            logger.warning(f"register user with params: {e.params[:-1]} origin: {e.orig}")
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:
@@ -45,6 +45,7 @@ class UserView(MethodView):
             g.user.update(update_data)
             logger.info(f'user {g.user.username} chenged')
         except IntegrityError as e:
+            logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
         except:
@@ -80,6 +81,7 @@ class LoginView(MethodView):
             token = login()
             logger.info(f'user {g.user.username} logged in')
             return {'token':token}
+        logger.warning(f'Invalid credentials: {creadentials}')
         raise InvalidCredentials(message='Username or Password you provided are invalid.')
 
 
@@ -95,6 +97,7 @@ class LogOutView(MethodView):
             logout(token)
             logger.info(f'user {g.user.username} logged out')
         except InvalidTokenError:
+            logger.warning(f'Invalid token: {token}')
             raise InvalidToken('Invalid Token Provided.')
         except:
             logger.exception('')

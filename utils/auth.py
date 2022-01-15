@@ -35,12 +35,16 @@ def token_required(f):
             g.user = user
         
         except IndexError:
+            logger.warning(f'Invalid credentials: {creadentials}')
             raise InvalidCredentials(message='You did not provided a token.')
         except AttributeError as e:
+            logger.warning(f'Invalid credentials: {creadentials}')
             raise InvalidCredentials(message='You did not provided a token.')
         except jwt.InvalidTokenError:
+            logger.warning(f'Invalid token: {token}')
             raise InvalidToken('You have submitted an invalid token.')
         except jwt.ExpiredSignatureError:
+            logger.warning(f'Invalid token: {token}')
             raise InvalidToken('You have submitted an expired token.')
         
         else:
