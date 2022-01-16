@@ -1,6 +1,6 @@
 import traceback
 from jwt.exceptions import InvalidTokenError
-from discussion.app import db
+from discussion.extentions import db
 from discussion.blueprints.users import bp
 from discussion.models.user import User
 from discussion.schemas.response import ErrorSchema, OkResponse
@@ -12,7 +12,7 @@ from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                      InvalidToken, JsonIntegrityError,
                                      ResourceDoesNotExists)
 from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify, request
+from flask import g, jsonify, request, url_for
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging
@@ -26,6 +26,7 @@ class UserView(MethodView):
     @bp.response(200, UserSchema)
     def post(self, registration_data):
         try:
+            # logger.error(url_for('uers.UserView'))
             user = User(**registration_data).save()
             logger.info(f'user {user.username} created')
             return user

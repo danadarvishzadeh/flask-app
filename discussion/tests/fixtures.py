@@ -1,26 +1,26 @@
 user_fixture = {
-    'user_dana_valid': {
-        'username': 'dana',
+    'dana_valid': {
+        'username': 'dana341',
         'email': 'dana@dana.com',
         'first_name': 'dana',
         'last_name': 'danaplastiki',
         'password': '123456789'
     },
-    'user_mamad_valid': {
+    'mamad_valid': {
         'username': 'mamad',
         'email': 'mamad@dana.com',
         'first_name': 'mamad',
         'last_name': 'mamadplastiki',
         'password': '123456789'
     },
-    'user_dana_invalid_edit': {
+    'dana_invalid_edit': {
         'first_name': 'mamad',
         'last_name': 'mamadplastiki',
     },
-    'user_dana_valid_edit': {
+    'dana_valid_edit': {
         'last_name': 'mamadplastiki',
     },
-    'user_dana_invalid': {
+    'dana_invalid': {
         'username': 1,
         'email': 'dana.dana.com',
         'first_name': 'dana',
@@ -75,3 +75,13 @@ invitation_fixture = {
         'body': 'It would be nice if you join me.'
     }
 }
+
+params = {
+            'response_type': 'code',
+            'scope': 'openid',
+            # 'client_id': self.client.client_id,
+            'redirect_uri': 'http://localhost:5000/redirect_uri',
+            'nonce': '',
+            'code_challenge': '',
+            'code_challenge_method': ''
+        }

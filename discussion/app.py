@@ -90,6 +90,8 @@ def create_app(config_name='default'):
     
     configure_app(app, config_name)
 
+    print(app.url_map)
+
     return app
 
 

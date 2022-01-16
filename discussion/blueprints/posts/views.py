@@ -13,7 +13,6 @@ from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
 from discussion.utils.permissions.decorators import permission_required
 from flask import g, jsonify, request
 from flask.views import MethodView
-from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
 import logging
 

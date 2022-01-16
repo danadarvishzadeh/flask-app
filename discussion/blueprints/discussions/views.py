@@ -13,7 +13,6 @@ from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
 from discussion.utils.permissions.decorators import permission_required
 from flask.views import MethodView
 from flask import g, jsonify, request
-from marshmallow.exceptions import ValidationError
 from sqlalchemy.exc import IntegrityError
 from logging import getLogger
 from flask import current_app
