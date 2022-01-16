@@ -5,7 +5,9 @@ import jwt
 from discussion.utils.errors import InvalidCredentials, InvalidToken
 from discussion.models.user import User
 from flask import current_app, g, request
+import logging
 
+logger = logging.getLogger(__name__)
 
 def encode_auth_token(user_id):
     payload = {
@@ -35,10 +37,10 @@ def token_required(f):
             g.user = user
         
         except IndexError:
-            logger.warning(f'Invalid credentials: {creadentials}')
+            logger.warning(f'Invalid credentials: no token.')
             raise InvalidCredentials(message='You did not provided a token.')
         except AttributeError as e:
-            logger.warning(f'Invalid credentials: {creadentials}')
+            logger.warning(f'Invalid credentials: no token.')
             raise InvalidCredentials(message='You did not provided a token.')
         except jwt.InvalidTokenError:
             logger.warning(f'Invalid token: {token}')
@@ -72,5 +74,4 @@ def logout(token):
         decode_auth_token(splited_token[1])
         g.user.update_last_seen()
         return
-        #TODO depricate token
     raise jwt.exceptions.InvalidTokenError()

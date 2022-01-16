@@ -21,11 +21,11 @@ logger = logging.getLogger(__name__)
 class FollowView(MethodView):
 
     @token_required
-    @permission_required(Follow, forbidden_permissions=["IsOwner", "InPartners"])
+    @permission_required(Discussion, forbidden_permissions=["IsOwner", "InPartners"])
     @bp.response(204)
     def post(self, discussion_id):
         try:
-            Follow({'owner_id': g.user.id, 'discussion_id': discussion_id}).save()
+            Follow(owner_id=g.user.id, discussion_id=discussion_id).save()
             logger.info(f'{g.user.username} followed discussion_id {discussion_id}')
         except IntegrityError as e:
             logger.warning(f'Integrity error: {e}')
@@ -34,6 +34,6 @@ class FollowView(MethodView):
         except ResourceDoesNotExists:
             logger.warning(f'Resource does not exists.')
             raise ResourceDoesNotExists()
-        except:
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()

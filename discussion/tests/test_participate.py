@@ -19,10 +19,10 @@ from discussion.models.user import User
 #         self.reqctx.push()
 #         db.drop_all()
 #         db.create_all()
-#         self.client.post(url_for('api.create_users'), json=user_fixture['user_dana_valid'])
-#         self.client.post(url_for('api.create_users'), json=user_fixture['user_mamad_valid'])
-#         self.dana_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['user_dana_valid']).json['token']
-#         self.mamad_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['user_mamad_valid']).json['token']
+#         self.client.post(url_for('api.create_users'), json=user_fixture['dana_valid'])
+#         self.client.post(url_for('api.create_users'), json=user_fixture['mamad_valid'])
+#         self.dana_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['dana_valid']).json['token']
+#         self.mamad_token = 'token ' + self.client.post(url_for('auth.login_user'), json=user_fixture['mamad_valid']).json['token']
 #         self.client.post(url_for('api.create_discussions', ),
 #                             json=discussion_fixture['dana_first_discussion_valid'],
 #                             headers=[('Authorization', self.dana_token),])

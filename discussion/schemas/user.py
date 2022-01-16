@@ -24,13 +24,20 @@ class CreateUserSchema(Schema):
 
 
 class EditUserSchema(Schema):
+
+    class Meta:
+        __lower_fields__ = (
+            'first_name',
+            'last_name'
+        )
     first_name = Str(validate=[validate.Length(min=2, max=24)])
     last_name = Str(validate=[validate.Length(min=4, max=24)])
 
     @post_load
-    def lower_case(self, data, **kwargs):
-        data['first_name'] = data['first_name'].lower()
-        data['last_name'] = data['last_name'].lower()
+    def lowercasing(self, data, **kwargs):
+        for field in self.Meta.__lower_fields__:
+            if field in data:
+                data[field] = data[field].lower()
         return data
 
 

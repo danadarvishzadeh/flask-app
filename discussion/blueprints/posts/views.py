@@ -18,6 +18,28 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
+@bp.route('/<int:discussion_id>', methods=["POST"])
+class PostView(MethodView):
+
+    @token_required
+    @permission_required(Discussion, required_permissions=["IsOwner"])
+    @bp.arguments(CreatePostSchema)
+    @bp.response(200, PostSchema)
+    def post(self, creation_data, discussion_id):
+        try:
+            creation_data.update({'discussion_id': discussion_id, 'owner_id': g.user.id})
+            return Post(**creation_data).save()
+        except IntegrityError as e:
+            logger.warning(f'Integrity error: {e}')
+            db.session.rollback()
+            raise JsonIntegrityError()
+        except:
+            print(traceback.format_exc())
+            logger.exception('')
+            raise InvalidAttemp()
+
+
 @bp.route('/<int:post_id>', methods=["GET", "PUT", "DELETE"])
 class PostDetailView(MethodView):
 
@@ -52,24 +74,3 @@ class PostDetailView(MethodView):
     @bp.response(204)
     def delete(self, post_id):
         g.resource.delete()
-
-
-
-@bp.route('/<int:discussion_id>', methods=["POST"])
-class PostView(MethodView):
-
-    @token_required
-    @permission_required(Post, required_permissions=["IsOwner"])
-    @bp.arguments(CreatePostSchema)
-    @bp.response(200, PostSchema)
-    def post(self, creation_data, discussion_id):
-        try:
-            creation_data.upadte({'discussion_id': discussion_id, 'owner_id': g.user.id})
-            return Post(**creation_data).save()
-        except IntegrityError:
-            logger.warning(f'Integrity error: {e}')
-            db.session.rollback()
-            raise JsonIntegrityError()
-        except:
-            logger.exception('')
-            raise InvalidAttemp()

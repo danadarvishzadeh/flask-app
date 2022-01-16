@@ -57,31 +57,37 @@ def configure_errorhandlers(app):
     #Application-wide errors that are raised by flask application instance
     @app.errorhandler(404)
     def forbidden_page(e):
-        return jsonify({
+        response = jsonify({
             "code": e.code,
             "status": e.name,
             "message": 'The page you are requesting does not exists.',
             "errors": {}
         })
+        response.status = 404
+        return response
     
     @app.errorhandler(405)
     def forbidden_page(e):
-        return jsonify({
+        response = jsonify({
             "code": e.code,
             "status": e.name,
             "message": 'You have used wrong method.',
             "errors": {}
         })
+        response.status = 405
+        return response
     
     @app.errorhandler(500)
     def forbidden_page(e):
         logger.exception('')
-        return jsonify({
+        response = jsonify({
             "code": e.code,
             "status": e.name,
             "message": 'We can not respond to your request due to some server problems.',
             "errors": {}
         })
+        response.status = 500
+        return response
 
 
 def create_app(config_name='default'):
@@ -89,8 +95,6 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     
     configure_app(app, config_name)
-
-    print(app.url_map)
 
     return app
 

@@ -16,13 +16,13 @@ logger = logging.getLogger(__name__)
 class UnfollowView(MethodView):
 
     @token_required
-    @permission_required(Follow, required_permissions=["IsOwner"])
     @bp.response(204)
     def delete(self, discussion_id):
         try:
-            Follow.query.filter('discussion_id'==discussion_id, 'owner_id'==g.user.id).first().delete()
+            Follow.query.filter_by(discussion_id=discussion_id, owner_id=g.user.id).first().delete()
             logger.info(f'{g.user.username} unfollowed discussion_id {discussion_id}')
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             logger.warning(f'Resource does not exists.')
             raise ResourceDoesNotExists()
         except:

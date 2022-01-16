@@ -7,7 +7,7 @@ user_fixture = {
         'password': '123456789'
     },
     'mamad_valid': {
-        'username': 'mamad',
+        'username': 'mamad341',
         'email': 'mamad@dana.com',
         'first_name': 'mamad',
         'last_name': 'mamadplastiki',
@@ -72,6 +72,7 @@ post_fixture = {
 
 invitation_fixture = {
     'invite': {
+        'partner_id': '2',
         'body': 'It would be nice if you join me.'
     }
 }

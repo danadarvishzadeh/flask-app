@@ -18,11 +18,11 @@ class InvitationViewsTest(unittest.TestCase):
         self.reqctx.push()
         db.drop_all()
         db.create_all()
-        self.client.post(url_for('users.create_users'), json=user_fixture['user_dana_valid'])
-        self.client.post(url_for('users.create_users'), json=user_fixture['user_mamad_valid'])
-        self.dana_token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_dana_valid']).json['token']
-        self.mamad_token = 'token ' + self.client.post(url_for('users.login_user'), json=user_fixture['user_mamad_valid']).json['token']
-        response = self.client.post(url_for('discussions.create_discussions', ),
+        self.client.post(url_for('users.UserView'), json=user_fixture['dana_valid'])
+        self.client.post(url_for('users.UserView'), json=user_fixture['mamad_valid'])
+        self.dana_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['dana_valid']).json['token']
+        self.mamad_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['mamad_valid']).json['token']
+        response = self.client.post(url_for('discussions.DiscussionView', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
     
@@ -33,25 +33,25 @@ class InvitationViewsTest(unittest.TestCase):
         self.appctx.pop()
     
     def test_create_follows_valid(self):
-        response = self.client.post(url_for('follow.create_follows', discussion_id=1),
+        response = self.client.post(url_for('follows.FollowView', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 204)
     
     def test_create_follows_invalid(self):
-        response = self.client.post(url_for('follow.create_follows', discussion_id=1),
+        response = self.client.post(url_for('follows.FollowView', discussion_id=1),
                         headers=[('Authorization', self.dana_token),])
         self.assertEqual(response.status_code, 403)
     
     def test_delete_follow(self):
-        self.client.post(url_for('follow.create_follows', discussion_id=1),
+        self.client.post(url_for('follows.FollowView', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
-        response = self.client.delete(url_for('follow.delete_follows', discussion_id=1),
+        response = self.client.delete(url_for('unfollows.UnfollowView', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
-        self.assertEqual(response.status_code, 200)
-    
+        self.assertEqual(response.status_code, 204)
+
     def test_create_follow_repeatative(self):
-        self.client.post(url_for('follow.create_follows', discussion_id=1),
+        self.client.post(url_for('follows.FollowView', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
-        response = self.client.post(url_for('follow.create_follows', discussion_id=1),
+        response = self.client.post(url_for('follows.FollowView', discussion_id=1),
                         headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 400)

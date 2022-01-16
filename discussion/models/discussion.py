@@ -28,7 +28,7 @@ class Discussion(db.Model):
     posts = db.relationship('Post', backref='parent_discussion', lazy=True)
     
     followed_by = db.relationship('Follow', backref='discussion', lazy=True)
-    partners = db.relationship('Participate', backref='discussion')
+    participants = db.relationship('Participate', backref='discussion')
     invitations = db.relationship('Invitation', backref='discussion', lazy=True)
 
     @property

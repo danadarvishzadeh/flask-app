@@ -39,7 +39,7 @@ class InvitationView(MethodView):
         try:
             creation_data.update({'discussion_id': discussion_id, 'owner_id': g.user.id})
             return Invitation(**creation_data).save()
-        except IntegrityError:
+        except IntegrityError as e:
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
@@ -53,7 +53,7 @@ class InvitationView(MethodView):
     @bp.response(204)
     def put(self, response_data, discussion_id):
         try:
-            Invitation.query.filter('discussion_id'==discussion_id, 'partner_id'==g.user.id).update(response_data)
+            Invitation.query.filter_by(discussion_id=discussion_id, partner_id=g.user.id).first().update(response_data)
         except IntegrityError:
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()

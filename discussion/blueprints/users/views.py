@@ -75,7 +75,7 @@ class UserDetailView(MethodView):
 @bp.route('/login', methods=['POST'])
 class LoginView(MethodView):
 
-    @bp.arguments(UserLoginSchema)
+    @bp.arguments(UserLoginSchema, unknown='EXCLUDE')
     @bp.response(200, LoginResponse)
     def post(self, creadentials):
         if authenticate(creadentials):
@@ -94,7 +94,6 @@ class LogOutView(MethodView):
     def get(self):
         token = request.headers.get('Authorization')
         try:
-            logger.info(f'{token}')
             logout(token)
             logger.info(f'user {g.user.username} logged out')
         except InvalidTokenError:

@@ -10,7 +10,7 @@ from discussion.utils.errors import JsonPermissionDenied
 
 def str_to_class(classname, **kwargs):
     module = __import__('discussion.utils.permissions.permissions', fromlist=['permissions'])
-    return getattr(module, classname)(kwargs)
+    return getattr(module, classname)(**kwargs)
 
 
 
@@ -23,7 +23,7 @@ def permission_required(resource, store_resource=True, required_permissions=None
             if required_permissions is not None:
                 for permission_class in required_permissions:
                     
-                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource)
+                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource, **kwargs)
                     
                     if not permission.has_access():
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
@@ -32,7 +32,7 @@ def permission_required(resource, store_resource=True, required_permissions=None
             if one_of is not None:
                 for permission_class in one_of:
                     
-                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource)
+                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource, **kwargs)
                     
                     if permission.has_access():
                         return f(*args, **kwargs)
@@ -42,7 +42,7 @@ def permission_required(resource, store_resource=True, required_permissions=None
             if forbidden_permissions is not None:
                 for permission_class in forbidden_permissions:
                     
-                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource)
+                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource, **kwargs)
                     
                     if permission.has_access():
                         raise JsonPermissionDenied(f"Premission {permission_class} required.")
