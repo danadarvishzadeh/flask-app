@@ -1,6 +1,6 @@
 import logging
 from logging.config import dictConfig
-
+import os
 from flask import Flask, jsonify
 
 from discussion.extentions import api, db, marshmallow, migrate
@@ -67,7 +67,7 @@ def configure_errorhandlers(app):
         return response
     
     @app.errorhandler(405)
-    def forbidden_page(e):
+    def wrong_method(e):
         response = jsonify({
             "code": e.code,
             "status": e.name,
@@ -78,7 +78,7 @@ def configure_errorhandlers(app):
         return response
     
     @app.errorhandler(500)
-    def forbidden_page(e):
+    def internal_error(e):
         logger.exception('')
         response = jsonify({
             "code": e.code,
@@ -90,8 +90,8 @@ def configure_errorhandlers(app):
         return response
 
 
-def create_app(config_name='default'):
-
+def create_app():
+    config_name = os.environ.get('FLASK_ENV', 'default')
     app = Flask(__name__)
     
     configure_app(app, config_name)

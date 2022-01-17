@@ -103,6 +103,13 @@ class Config:
     DISCUSSION_POSTS_PER_PAGE = 5
     DISCUSSION_INVITATIONS_PER_PAGE = 10
     
+    #Database
+    DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME', 'dana')
+    DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD', 32343234)
+    DBNAME = 'discussionapp'
+    PORT = 5432
+    HOST = "localhost"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{HOST}:{PORT}/{DBNAME}"
 
     #Logging config
     LOG_CONFIG = log_config
@@ -110,24 +117,18 @@ class Config:
 
 class DevelopementConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'dev_database.db')
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+    #     'sqlite:///' + os.path.join(basedir, 'dev_database.db')
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'test_database.db')
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+    #     'sqlite:///' + os.path.join(basedir, 'test_database.db')
 
 
 class ProcudtionConfig(Config):
-    DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME', None)
-    DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD', None)
-    DBNAME = 'DiscussionApp'
-    PORT = 12345
-    HOST = "123.123.123.123"
-    SQLALCHEMY_DATABASE_URI = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{HOST}:{PORT}/{DBNAME}"
-    
+    pass
 
 config = {
     'development': DevelopementConfig,

@@ -1,8 +1,8 @@
-"""f
+"""empty message
 
-Revision ID: 8abab7fc2293
+Revision ID: 3568586d8b17
 Revises: 
-Create Date: 2022-01-11 13:03:54.155589
+Create Date: 2022-01-17 15:19:26.389762
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8abab7fc2293'
+revision = '3568586d8b17'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -54,11 +54,12 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
-    sa.Column('owner_id', sa.Integer(), nullable=False),
-    sa.Column('discussion_id', sa.Integer(), nullable=False),
+    sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('discussion_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['discussion_id'], ['discussions.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id', 'owner_id', 'discussion_id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('discussion_id', 'owner_id', name='unique_follow')
     )
     op.create_table('invitations',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -67,14 +68,14 @@ def upgrade():
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('body', sa.Text(), nullable=False),
     sa.Column('status', sa.String(length=10), nullable=True),
-    sa.Column('owner_id', sa.Integer(), nullable=True),
-    sa.Column('partner_id', sa.Integer(), nullable=True),
+    sa.Column('owner_id', sa.Integer(), nullable=False),
+    sa.Column('partner_id', sa.Integer(), nullable=False),
     sa.Column('discussion_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['discussion_id'], ['discussions.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['partner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('owner_id', 'partner_id', name='unique_invitation')
+    sa.UniqueConstraint('owner_id', 'partner_id', 'discussion_id', name='unique_invitation')
     )
     op.create_index(op.f('ix_invitations_owner_id'), 'invitations', ['owner_id'], unique=False)
     op.create_index(op.f('ix_invitations_partner_id'), 'invitations', ['partner_id'], unique=False)
