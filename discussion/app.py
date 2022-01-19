@@ -90,8 +90,8 @@ def configure_errorhandlers(app):
         return response
 
 
-def create_app():
-    config_name = os.environ.get('FLASK_ENV', 'default')
+def create_app(config_name='default'):
+    config_name = os.environ.get('FLASK_ENV', config_name)
     app = Flask(__name__)
     
     configure_app(app, config_name)

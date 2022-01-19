@@ -42,12 +42,12 @@ def token_required(f):
         except AttributeError as e:
             logger.warning(f'Invalid credentials: no token.')
             raise InvalidCredentials(message='You did not provided a token.')
-        except jwt.InvalidTokenError:
-            logger.warning(f'Invalid token: {token}')
-            raise InvalidToken('You have submitted an invalid token.')
         except jwt.ExpiredSignatureError:
             logger.warning(f'Invalid token: {token}')
             raise InvalidToken('You have submitted an expired token.')
+        except jwt.InvalidTokenError:
+            logger.warning(f'Invalid token: {token}')
+            raise InvalidToken('You have submitted an invalid token.')
         
         else:
             return f(*args, **kwargs)
