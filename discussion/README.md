@@ -22,14 +22,14 @@ Changes until now:
 19. External dependencies error
 20. Editing loggers and log files
 21. OAuth2
+22. OpenID Connect
 
 
 Ongoing changes:
 ==================
 
-- OpenID Connect
-- sever side authorization (redis)
-- implementing Caching and Redis
+- Authorization using redis
+- Caching
 - MongoDB
 - SQl and Postgresql
 

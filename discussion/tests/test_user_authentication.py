@@ -16,10 +16,10 @@ class TestUserAuthentication(unittest.TestCase):
         self.appctx.push()
         self.reqctx = app.test_request_context()
         self.reqctx.push()
-        self.client.post(url_for('users.UserView'), json=user_fixture['dana_valid'])
-        self.client.post(url_for('users.UserView'), json=user_fixture['mamad_valid'])
         db.drop_all()
         db.create_all()
+        self.client.post(url_for('users.UserView'), json=user_fixture['dana_valid'])
+        self.client.post(url_for('users.UserView'), json=user_fixture['mamad_valid'])
         
     def tearDown(self):
         db.session.close()

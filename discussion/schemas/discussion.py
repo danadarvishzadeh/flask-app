@@ -1,25 +1,23 @@
 
 from flask_marshmallow import Schema
-from marshmallow import validate
-from marshmallow.decorators import post_dump, post_load
 from marshmallow.fields import Nested, Str, DateTime, Integer
 
 
-
-class CreateDiscussionSchema(Schema):
+class BaseDiscussionSchema(Schema):
     title = Str()
     description = Str()
 
 
-class EditDiscussionSchema(Schema):
-    title = Str()
-    description = Str()
+class CreateDiscussionSchema(BaseDiscussionSchema):
+    pass
 
 
-class DiscussionSchema(Schema):
+class EditDiscussionSchema(BaseDiscussionSchema):
+    pass
+
+
+class DiscussionSchema(BaseDiscussionSchema):
     id = Integer()
-    title = Str()
-    description = Str()
     created_at = DateTime()
     participants = Nested('UserSchema', only=('id', 'username', 'email', 'first_name', ), many=True)
     followed_by = Nested('UserSchema', only=('id', 'username', 'email', 'first_name', ), many=True)

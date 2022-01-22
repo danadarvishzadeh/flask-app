@@ -21,7 +21,7 @@ class PostViewsTest(unittest.TestCase):
         self.client.post(url_for('users.UserView'), json=user_fixture['mamad_valid'])
         self.dana_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['dana_valid']).json['token']
         self.mamad_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['mamad_valid']).json['token']
-        response = self.client.post(url_for('discussions.DiscussionView', ),
+        self.client.post(url_for('discussions.DiscussionView', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])
     

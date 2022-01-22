@@ -3,7 +3,7 @@ from jwt.exceptions import InvalidTokenError
 from discussion.extentions import db
 from discussion.blueprints.users import bp
 from discussion.models.user import User
-from discussion.schemas.response import ErrorSchema, OkResponse
+from flask import g, request
 from discussion.schemas.user import (CreateUserSchema, EditUserSchema,
                                      LoginResponse, UserLoginSchema,
                                      UserSchema)
@@ -11,8 +11,6 @@ from discussion.utils.auth import authenticate, login, logout, token_required
 from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                      InvalidToken, JsonIntegrityError,
                                      ResourceDoesNotExists)
-from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify, request, url_for
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging

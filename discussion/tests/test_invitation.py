@@ -2,6 +2,7 @@ import json
 import unittest
 
 from discussion.app import create_app, db
+from discussion.models.invitation import Invitation
 from discussion.tests.fixtures import *
 from flask import url_for
 from discussion.models.user import User
@@ -52,7 +53,7 @@ class InvitationViewsTest(unittest.TestCase):
                                 json=invitation_fixture['invite'],
                                 headers=[('Authorization', self.dana_token),])  
         response = self.client.put(url_for('invites.InvitationView', discussion_id=1),
-                                json={'response': 'Accepted'},
+                                json={'status': 'Accepted'},
                                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 204)
     
@@ -61,6 +62,6 @@ class InvitationViewsTest(unittest.TestCase):
                                 json=invitation_fixture['invite'],
                                 headers=[('Authorization', self.dana_token),])
         response = self.client.put(url_for('invites.InvitationView', discussion_id=1),
-                                json={'response': 'Rejected'},
+                                json={'status': 'Rejected'},
                                 headers=[('Authorization', self.mamad_token),])
         self.assertEqual(response.status_code, 204)

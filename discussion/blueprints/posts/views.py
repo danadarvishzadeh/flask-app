@@ -6,12 +6,11 @@ from discussion.models.discussion import Discussion
 from discussion.models.post import Post
 from discussion.schemas.post import (CreatePostSchema, EditPostSchema,
                                      PostSchema)
-from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
 from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                      ResourceDoesNotExists)
 from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify, request
+from flask import g
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging

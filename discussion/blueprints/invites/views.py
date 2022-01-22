@@ -1,4 +1,3 @@
-import traceback
 from sqlalchemy import or_, and_
 from discussion.app import db
 from discussion.blueprints.invites import bp
@@ -7,12 +6,10 @@ from discussion.models.invitation import Invitation
 from discussion.schemas.invitation import (CreateInvitationSchema,
                                            InvitaionResponseSchema,
                                            InvitationSchema)
-from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
-from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
-                                     ResourceDoesNotExists)
+from discussion.utils.errors import InvalidAttemp, JsonIntegrityError
 from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify
+from flask import g
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging
@@ -54,7 +51,7 @@ class InvitationView(MethodView):
     def put(self, response_data, discussion_id):
         try:
             Invitation.query.filter_by(discussion_id=discussion_id, partner_id=g.user.id).first().update(response_data)
-        except IntegrityError:
+        except IntegrityError as e:
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()

@@ -2,11 +2,9 @@ import traceback
 
 from discussion.blueprints.unfollows import bp
 from discussion.models.follow import Follow
-from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
 from discussion.utils.errors import InvalidAttemp, ResourceDoesNotExists
-from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify
+from flask import g
 from flask.views import MethodView
 import logging
 

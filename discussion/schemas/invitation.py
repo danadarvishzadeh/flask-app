@@ -18,7 +18,7 @@ class InvitationSchema(Schema):
 
 
 class InvitaionResponseSchema(Schema):
-    response = Str()
+    status = Str()
 
 class ParticipateSchema(Schema):
     id = Integer()

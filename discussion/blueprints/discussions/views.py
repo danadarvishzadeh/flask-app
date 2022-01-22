@@ -1,21 +1,15 @@
-import traceback
 
 from discussion.app import db
 from discussion.blueprints.discussions import bp
 from discussion.models.discussion import Discussion
-from discussion.models.post import Post
 from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema
-from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
-from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
-                                     JsonIntegrityError,
-                                     ResourceDoesNotExists)
+from discussion.utils.errors import InvalidAttemp, JsonIntegrityError, ResourceDoesNotExists
 from discussion.utils.permissions.decorators import permission_required
 from flask.views import MethodView
-from flask import g, jsonify, request
+from flask import g
 from sqlalchemy.exc import IntegrityError
 from logging import getLogger
-from flask import current_app
 
 logger = getLogger(__name__)
 

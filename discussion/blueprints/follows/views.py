@@ -4,13 +4,10 @@ from discussion.app import db
 from discussion.blueprints.follows import bp
 from discussion.models.discussion import Discussion
 from discussion.models.follow import Follow
-from discussion.schemas.response import ErrorSchema, OkResponse
 from discussion.utils.auth import token_required
-from discussion.utils.errors import (ActionIsNotPossible, InvalidAttemp,
-                                     JsonIntegrityError,
-                                     ResourceDoesNotExists)
+from discussion.utils.errors import InvalidAttemp, JsonIntegrityError, ResourceDoesNotExists
 from discussion.utils.permissions.decorators import permission_required
-from flask import g, jsonify
+from flask import g
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging
