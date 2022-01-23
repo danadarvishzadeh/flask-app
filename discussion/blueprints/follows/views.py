@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 @bp.route('/<int:discussion_id>', methods=["POST"])
 class FollowView(MethodView):
 
-    @token_required
+    @token_required()
     @permission_required(Discussion, forbidden_permissions=["IsOwner", "InPartners"])
     @bp.response(204)
     def post(self, discussion_id):

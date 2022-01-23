@@ -2,14 +2,11 @@ from datetime import datetime
 
 from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash, generate_password_hash
-from jwt import decode
-from jwt.exceptions import ExpiredSignatureError
-
+from flask import g
 from discussion.app import db
 from discussion.models.discussion import Discussion
 from discussion.models.invitation import Invitation
 from discussion.models.participate import Participate
-from discussion.models.post import Post
 from discussion.models.follow import Follow
 
 
@@ -55,6 +52,9 @@ class User(db.Model):
     partnered_participations = db.relationship('Participate',
             backref='partner',
             primaryjoin=id==Participate.partner_id)
+    
+    owned_access_tokens = db.relationship('AccessToken', backref='owner', lazy=True)
+    owned_refresh_tokens = db.relationship('RefreshToken', backref='owner', lazy=True)
     
     @property
     def password(self):

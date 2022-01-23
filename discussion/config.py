@@ -1,5 +1,5 @@
 import os
-
+from datetime import timedelta
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -61,6 +61,11 @@ log_config = {
             'handlers': ['response_handler',],
             'propagate': False,
         },
+        'sqlalchemy.engine': {
+            'level': 'INFO',
+            'handlers': ['main_log_handler'],
+            'propagate': False,
+        }
     },
     'root': {
         'level': 'NOTSET',
@@ -70,6 +75,8 @@ log_config = {
 
 
 class Config:
+
+    #Secret key
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'jifaor24t5g249gjeomf'
     
     #Blueprints
@@ -87,6 +94,9 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     
+    #Token EXP
+    ACCESS_TOKEN_EXP = timedelta(seconds=600)
+    REFRESH_TOKEN_EXP = timedelta(seconds=6000)
 
     #Swagger documentation
     API_TITLE = "Discussion API"

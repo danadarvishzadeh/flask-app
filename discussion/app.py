@@ -11,6 +11,9 @@ logger = logging.getLogger(__name__)
 
 def configure_logging(app):
     
+    #Lower sqlalchemy logging level to see sql statements
+    # logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
     #Loading general logging configurations
     dictConfig(app.config.get('LOG_CONFIG'))
 

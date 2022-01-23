@@ -3,10 +3,8 @@ from discussion.app import create_app
 from discussion.extentions import db
 from discussion.tests.fixtures import user_fixture, discussion_fixture
 from flask import url_for
-import logging
 
 
-logger = logging.getLogger(__name__)
 class TestUserAuthentication(unittest.TestCase):
 
     def setUp(self):
@@ -44,9 +42,11 @@ class TestUserAuthentication(unittest.TestCase):
                                         'password': user_fixture['dana_valid']['password'],
                                     }).json
         response = self.client.post(url_for('users.RefreshTokenView'),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     })
+        print(response)
         self.assertEqual(response.status_code, 200)
         self.assertIn('access_token', response.json)
         self.assertIn('refresh_token', response.json)
@@ -59,15 +59,18 @@ class TestUserAuthentication(unittest.TestCase):
                                     }).json
         self.client.post(url_for('discussions.DiscussionView'),
                                     json=discussion_fixture['dana_first_discussion_valid'],
-                                    headers=[('Authorization', tokens['access_token'])])
-        response = self.client.get(url_for('invites.InvitationView'),
-                                    discussion_id=1,
-                                    headers=[('Authorization', tokens['access_token'])])
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+        
         self.assertEqual(response.status_code, 200)
-        response = self.client.get(url_for('invites.InvitationView'),
-                                    discussion_id=1,
-                                    headers=[('Authorization', 'wrong token.')])
-        self.assertEqual(response.status_code, 403)
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer wrong token")])
+        self.assertEqual(response.status_code, 401)
+    
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer")])
+        self.assertEqual(response.status_code, 401)
     
     def test_using_old_refresh_token(self):
         tokens = self.client.post(url_for('users.LoginView'),
@@ -75,27 +78,31 @@ class TestUserAuthentication(unittest.TestCase):
                                         'username': user_fixture['dana_valid']['username'],
                                         'password': user_fixture['dana_valid']['password'],
                                     }).json
+        self.client.post(url_for('discussions.DiscussionView'),
+                                    json=discussion_fixture['dana_first_discussion_valid'],
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+        
         new_tokens = self.client.post(url_for('users.RefreshTokenView'),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
-                                    })
+                                    }).json
         response = self.client.post(url_for('users.RefreshTokenView'),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     })
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
-        response = self.client.get(url_for('invites.InvitationView'),
-                                    discussion_id=1,
-                                    headers=[('Authorization', tokens['access_token'])])
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
-        response = self.client.get(url_for('invites.InvitationView'),
-                                    discussion_id=1,
-                                    headers=[('Authorization', new_tokens['access_token'])])
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer {new_tokens['access_token']}")])
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
     
     def test_revoke_access_token(self):
         tokens = self.client.post(url_for('users.LoginView'),
@@ -103,19 +110,33 @@ class TestUserAuthentication(unittest.TestCase):
                                         'username': user_fixture['dana_valid']['username'],
                                         'password': user_fixture['dana_valid']['password'],
                                     }).json
+        self.client.post(url_for('discussions.DiscussionView'),
+                                    json=discussion_fixture['dana_first_discussion_valid'],
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
         self.client.get(url_for('users.LogoutView'),
-                                    headers=[('Authorization', new_tokens['access_token'])])
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
         response = self.client.post(url_for('users.RefreshTokenView'),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     })
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
-        response = self.client.get(url_for('invites.InvitationView'),
-                                    discussion_id=1,
-                                    headers=[('Authorization', tokens['access_token'])])
+        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
+
+    # def test_reset_password(self):
+    #     tokens = self.client.post(url_for('users.LoginView'),
+    #                                 json={
+    #                                     'username': user_fixture['dana_valid']['username'],
+    #                                     'password': user_fixture['dana_valid']['password'],
+    #                                 }).json
+    #     response = self.client.get(url_for('users.ResetPasswordView'),
+    #                                 headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+    #     self.assertEqual(response.status_code, 200)
+
 
 # authenticate
 # send access token and possibly refresh token

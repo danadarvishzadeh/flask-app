@@ -17,7 +17,7 @@ logger = getLogger(__name__)
 @bp.route('/', methods=['POST'])
 class DiscussionView(MethodView):
 
-    @token_required
+    @token_required()
     @bp.arguments(CreateDiscussionSchema)
     @bp.response(200, DiscussionSchema)
     def post(self, creation_data):
@@ -44,7 +44,7 @@ class DiscussionDetailView(MethodView):
         logger.warning(f'Resource does not exists.')
         raise ResourceDoesNotExists()
 
-    @token_required
+    @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.arguments(EditDiscussionSchema)
     @bp.response(204)
@@ -59,7 +59,7 @@ class DiscussionDetailView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
     
-    @token_required
+    @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.response(204)
     def delete(self, discussion_id):

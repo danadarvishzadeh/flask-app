@@ -1,13 +1,11 @@
-import traceback
-from jwt.exceptions import InvalidTokenError
 from discussion.extentions import db
 from discussion.blueprints.users import bp
 from discussion.models.user import User
 from flask import g, request
 from discussion.schemas.user import (CreateUserSchema, EditUserSchema,
                                      LoginResponse, UserLoginSchema,
-                                     UserSchema)
-from discussion.utils.auth import authenticate, login, logout, token_required
+                                     UserSchema, RefreshTokenSchema)
+from discussion.utils.auth import authenticate, login, logout, token_required, refresh_user_token
 from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                      InvalidToken, JsonIntegrityError,
                                      ResourceDoesNotExists)
@@ -36,7 +34,7 @@ class UserView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-    @token_required
+    @token_required()
     @bp.arguments(EditUserSchema)
     @bp.response(204)
     def put(self, update_data):
@@ -51,7 +49,7 @@ class UserView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-    @token_required
+    @token_required()
     @bp.response(204)
     def delete(self):
         g.user.delete()
@@ -77,26 +75,48 @@ class LoginView(MethodView):
     @bp.response(200, LoginResponse)
     def post(self, creadentials):
         if authenticate(creadentials):
-            token = login()
+            access_token, refresh_token = login()
             logger.info(f'user {g.user.username} logged in')
-            return {'token':token}
+            return {
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+            }
         logger.warning(f'Invalid credentials: {creadentials}')
         raise InvalidCredentials(message='Username or Password you provided are invalid.')
 
 
 @bp.route('/logout', methods=["GET"])
-class LogOutView(MethodView):
+class LogoutView(MethodView):
 
-    @token_required
+    @token_required()
     @bp.response(204)
     def get(self):
-        token = request.headers.get('Authorization')
         try:
-            logout(token)
+            logout()
             logger.info(f'user {g.user.username} logged out')
-        except InvalidTokenError:
-            logger.warning(f'Invalid token: {token}')
+        except InvalidToken:
             raise InvalidToken('Invalid Token Provided.')
         except:
+            logger.exception('')
+            raise InvalidAttemp()
+
+
+@bp.route('/refresh', methods=["POST"])
+class RefreshTokenView(MethodView):
+
+    @token_required(refresh=True)
+    @bp.arguments(RefreshTokenSchema)
+    @bp.response(200, LoginResponse)
+    def post(self, refresh_token):
+        try:
+            access_token, refresh_token  = refresh_user_token()
+            logger.info(f'user {g.user.username} refreshed token')
+            return {
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+            }
+        except InvalidToken:
+            raise InvalidToken('Invalid Token Provided.')
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()

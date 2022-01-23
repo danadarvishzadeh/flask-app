@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 @bp.route('/<int:discussion_id>', methods=["GET", "POST", "PUT"])
 class InvitationView(MethodView):
 
-    @token_required
+    @token_required()
     @permission_required(Discussion, store_resource=False, one_of=["IsOwner", "IsPartner"])
     @bp.response(200, InvitationSchema)
     def get(self, discussion_id):
@@ -28,7 +28,7 @@ class InvitationView(MethodView):
                         or_(Invitation.partner_id==g.user.id,
                             Invitation.owner_id==g.user.id))).first()
         
-    @token_required
+    @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.arguments(CreateInvitationSchema)
     @bp.response(200, InvitationSchema)
@@ -44,7 +44,7 @@ class InvitationView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
     
-    @token_required
+    @token_required()
     @permission_required(Discussion, required_permissions=["IsInvited"])
     @bp.arguments(InvitaionResponseSchema)
     @bp.response(204)

@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 @bp.route('/<int:discussion_id>', methods=["POST"])
 class PostView(MethodView):
 
-    @token_required
+    @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])
     @bp.arguments(CreatePostSchema)
     @bp.response(200, PostSchema)
@@ -34,7 +34,6 @@ class PostView(MethodView):
             db.session.rollback()
             raise JsonIntegrityError()
         except:
-            print(traceback.format_exc())
             logger.exception('')
             raise InvalidAttemp()
 
@@ -50,7 +49,7 @@ class PostDetailView(MethodView):
         logger.warning(f'Resource does not exists.')
         raise ResourceDoesNotExists()
     
-    @token_required
+    @token_required()
     @permission_required(Post, required_permissions=["IsOwner"])
     @bp.arguments(EditPostSchema)
     @bp.response(204)
@@ -68,7 +67,7 @@ class PostDetailView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-    @token_required    
+    @token_required()    
     @permission_required(Post, required_permissions=["IsOwner"])
     @bp.response(204)
     def delete(self, post_id):

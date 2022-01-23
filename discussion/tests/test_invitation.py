@@ -21,8 +21,8 @@ class InvitationViewsTest(unittest.TestCase):
         db.create_all()
         self.client.post(url_for('users.UserView'), json=user_fixture['dana_valid'])
         self.client.post(url_for('users.UserView'), json=user_fixture['mamad_valid'])
-        self.dana_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['dana_valid']).json['token']
-        self.mamad_token = 'token ' + self.client.post(url_for('users.LoginView'), json=user_fixture['mamad_valid']).json['token']
+        self.dana_token = 'Bearer ' + self.client.post(url_for('users.LoginView'), json=user_fixture['dana_valid']).json['access_token']
+        self.mamad_token = 'Bearer ' + self.client.post(url_for('users.LoginView'), json=user_fixture['mamad_valid']).json['access_token']
         self.client.post(url_for('discussions.DiscussionView', ),
                 json=discussion_fixture['dana_first_discussion_valid'],
                 headers=[('Authorization', self.dana_token),])

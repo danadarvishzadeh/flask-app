@@ -66,4 +66,9 @@ class UserLoginSchema(Schema):
 
 
 class LoginResponse(Schema):
-    token = Str()
+    access_token = Str()
+    refresh_token = Str()
+
+
+class RefreshTokenSchema(Schema):
+    refresh_token = Str()

@@ -1,58 +1,17 @@
-from datetime import datetime, timedelta
+import logging
+from datetime import datetime
 from functools import wraps
 
-import jwt
-from discussion.utils.errors import InvalidCredentials, InvalidToken
 from discussion.models.user import User
-from flask import current_app, g, request
-import logging
+from discussion.utils.errors import InvalidAttemp, InvalidToken
+from discussion.utils.util import (create_token_pair, depricate_all_tokens,
+                                   extract_access_token, extract_refresh_token,
+                                   load_user_for_refreshing,
+                                   load_user_from_access_token)
+from flask import g, request
 
 logger = logging.getLogger(__name__)
 
-def encode_auth_token(user_id):
-    payload = {
-        'exp': datetime.utcnow() + timedelta(days=1, seconds=0),
-        'iat': datetime.utcnow(),
-        'sub': user_id
-    }
-    token = jwt.encode(
-        payload,
-        current_app.config.get('SECRET_KEY'),
-        algorithm='HS256').decode()
-    return token
-
-def decode_auth_token(token):
-    payload = jwt.decode(token, current_app.config.get('SECRET_KEY'))
-    user = User.query.get(payload['sub'])
-    return user
-
-def token_required(f):
-    
-    @wraps(f)
-    def decorator(*args, **kwargs):
-        
-        try:
-            token = request.headers.get('Authorization').split()[1]
-            user = decode_auth_token(token)
-            g.user = user
-        
-        except IndexError:
-            logger.warning(f'Invalid credentials: no token.')
-            raise InvalidCredentials(message='You did not provided a token.')
-        except AttributeError as e:
-            logger.warning(f'Invalid credentials: no token.')
-            raise InvalidCredentials(message='You did not provided a token.')
-        except jwt.ExpiredSignatureError:
-            logger.warning(f'Invalid token: {token}')
-            raise InvalidToken('You have submitted an expired token.')
-        except jwt.InvalidTokenError:
-            logger.warning(f'Invalid token: {token}')
-            raise InvalidToken('You have submitted an invalid token.')
-        
-        else:
-            return f(*args, **kwargs)
-    
-    return decorator
 
 def authenticate(creadentials):
     if 'username' in creadentials and 'password' in creadentials:
@@ -65,13 +24,44 @@ def authenticate(creadentials):
     return False
 
 def login():
+    depricate_all_tokens(owner_id=g.user.id)
     g.user.update(data={'last_login': datetime.utcnow()})
-    return encode_auth_token(g.user.id)
+    return create_token_pair()
 
-def logout(token):
-    splited_token = token.split(' ')
-    if len(splited_token) == 2:
-        decode_auth_token(splited_token[1])
+def logout():
+    try:
+        access_token = extract_access_token(request.headers)
+        load_user_from_access_token(access_token)
+        depricate_all_tokens(access_token=access_token)
         g.user.update_last_seen()
-        return
-    raise jwt.exceptions.InvalidTokenError()
+    except (InvalidToken, AttributeError, IndexError):
+        logger.warning(f"logout attemp with invalid token: {request.headers.get('Authorization')}")
+
+
+def refresh_user_token():
+    g.access_token.update({'is_active': False})
+    g.access_token.refresh_token[0].update({'is_active': False})
+    return create_token_pair()
+
+
+def token_required(refresh=False):
+    def wrapper_function(f):  
+        @wraps(f)
+        def decorator(*args, **kwargs):        
+            try:
+                access_token = extract_access_token(request.headers)
+                if not refresh:
+                    load_user_from_access_token(access_token)
+                else:
+                    refresh_token = extract_refresh_token(request.get_json())
+                    load_user_for_refreshing(access_token, refresh_token)
+            except (InvalidToken, AttributeError, IndexError):
+                logger.warning(f"login attemp with invalid token: {request.headers.get('Authorization')}")
+                raise InvalidToken('invalid token.')
+            except Exception as e:
+                logger.exception('')
+                raise InvalidAttemp()
+            else:
+                return f(*args, **kwargs)
+        return decorator
+    return wrapper_function

@@ -20,8 +20,8 @@ class DiscussionViewsTest(unittest.TestCase):
         db.create_all()
         self.client.post(url_for('users.UserView'),
                         json=user_fixture['dana_valid'])
-        self.dana_token = 'token ' + self.client.post(
-            url_for('users.LoginView'), json=user_fixture['dana_valid']).json['token']
+        self.dana_token = 'Bearer ' + self.client.post(
+            url_for('users.LoginView'), json=user_fixture['dana_valid']).json['access_token']
 
     def tearDown(self):
         db.session.close()

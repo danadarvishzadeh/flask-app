@@ -1,6 +1,5 @@
 from functools import wraps
 
-import jwt
 from flask import g, request, jsonify
 from discussion.utils.errors import JsonPermissionDenied
 

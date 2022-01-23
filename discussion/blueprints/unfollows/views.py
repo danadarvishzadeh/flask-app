@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 @bp.route('/<int:discussion_id>', methods=['DELETE'])
 class UnfollowView(MethodView):
 
-    @token_required
+    @token_required()
     @bp.response(204)
     def delete(self, discussion_id):
         try:
