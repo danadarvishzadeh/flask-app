@@ -43,7 +43,7 @@ def extract_access_token(headers):
     try:
         access_token = headers.get('Authorization')
         access_token = access_token_sanitizer(access_token)
-        access_token = AccessToken.query.filter_by(token=access_token).first()
+        access_token = AccessToken.query.find(access_token)
         return access_token
     except:
         raise InvalidToken('')
@@ -51,15 +51,9 @@ def extract_access_token(headers):
 def extract_refresh_token(body):
     try:
         refresh_token = body.get('refresh_token')
-        return RefreshToken.query.filter_by(token=refresh_token).first()
+        return RefreshToken.find(refresh_token)
     except:
         raise InvalidToken('')
-
-def load_user_from_access_token(access_token):
-    if access_token.has_expired:
-        access_token.update({'is_active': False})
-        raise InvalidToken
-    g.user = access_token.owner
 
 def different_owners(access_token, refresh_token):
     return refresh_token.owner_id != access_token.owner_id
@@ -84,3 +78,9 @@ def load_user_for_refreshing(access_token, refresh_token):
         raise InvalidToken('')
     g.user = access_token.owner
     g.access_token = access_token
+
+def load_user_from_access_token(access_token):
+    if access_token.has_expired:
+        access_token.update({'is_active': False})
+        raise InvalidToken
+    g.user = access_token.owner

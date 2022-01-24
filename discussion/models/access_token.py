@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Index
 
 from discussion.app import db
+from discussion.utils.errors import InvalidToken
 
 
 class AccessToken(db.Model):
@@ -24,13 +25,13 @@ class AccessToken(db.Model):
 
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    refresh_token = db.relationship('RefreshToken', backref='access_token', lazy='selectin', cascade='all, delete')
+    refresh_token = db.relationship('RefreshToken', backref='access_token', lazy='selectin', uselist=False)
 
     @staticmethod
     def find(token):
         token = AccessToken.query.filter_by(token=token).first()
         if not token:
-            raise ValueError
+            raise InvalidToken()
         return token
 
     @property
