@@ -1,5 +1,3 @@
-import traceback
-
 from discussion.app import db
 from discussion.blueprints.posts import bp
 from discussion.models.discussion import Discussion
@@ -14,12 +12,24 @@ from flask import g
 from flask.views import MethodView
 from sqlalchemy.exc import IntegrityError
 import logging
+from discussion.extentions import cache
+
 
 logger = logging.getLogger(__name__)
 
 
 @bp.route('/<int:discussion_id>', methods=["POST"])
 class PostView(MethodView):
+
+
+    @bp.response(200, PostSchema(many=True))
+    @bp.paginate()
+    def get(self, pagination_parameters):
+        posts = Post.query.all()
+        pagination_parameters.item_count = len(posts)
+        return posts[
+            pagination_parameters.first_item:pagination_parameters.last_item+1
+        ]
 
     @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])
@@ -41,6 +51,7 @@ class PostView(MethodView):
 @bp.route('/<int:post_id>', methods=["GET", "PUT", "DELETE"])
 class PostDetailView(MethodView):
 
+    @cache.cached(timeout=50)
     @bp.response(200, PostSchema)
     def get(self, post_id):
         post = Post.query.get(post_id)

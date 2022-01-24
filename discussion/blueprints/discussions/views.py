@@ -10,12 +10,22 @@ from flask.views import MethodView
 from flask import g
 from sqlalchemy.exc import IntegrityError
 from logging import getLogger
+from discussion.extentions import cache
 
 logger = getLogger(__name__)
 
 
-@bp.route('/', methods=['POST'])
+@bp.route('/', methods=['POST', 'GET'])
 class DiscussionView(MethodView):
+
+    @bp.response(200, DiscussionSchema(many=True))
+    @bp.paginate()
+    def get(self, pagination_parameters):
+        discussions = Discussion.query.all()
+        pagination_parameters.item_count = len(discussions)
+        return discussions[
+            pagination_parameters.first_item:pagination_parameters.last_item+1
+        ]
 
     @token_required()
     @bp.arguments(CreateDiscussionSchema)
@@ -28,7 +38,7 @@ class DiscussionView(MethodView):
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
-        except:
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
 
@@ -36,6 +46,7 @@ class DiscussionView(MethodView):
 @bp.route('/<int:discussion_id>', methods=['GET', 'PUT', 'DELETE'])
 class DiscussionDetailView(MethodView):
 
+    @cache.cached(timeout=50)
     @bp.response(200, DiscussionSchema)
     def get(self, discussion_id):
         discussion = Discussion.query.get(discussion_id)
@@ -51,11 +62,11 @@ class DiscussionDetailView(MethodView):
     def put(self, update_data, discussion_id):
         try:
             g.resource.update(update_data)
-        except IntegrityError:
+        except IntegrityError as e:
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
-        except:
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
     

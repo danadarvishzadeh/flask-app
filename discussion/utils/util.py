@@ -13,8 +13,8 @@ def rand_str():
 
 def create_token_pair():
     ac, rf = rand_str(), rand_str()
-    ac_ex, rf_ex = current_app.config['ACCESS_TOKEN_EXP'], current_app.config['REFRESH_TOKEN_EXP']
-    redis.connection.pipeline().set(ac, g.user.id, ac_ex).set(rf, g.user.id, rf_ex).execute()
+    access_expire, refresh_expire = current_app.config['ACCESS_TOKEN_EXP'], current_app.config['REFRESH_TOKEN_EXP']
+    redis.connection.pipeline().set(ac, g.user.id, access_expire).set(rf, g.user.id, refresh_expire).execute()
     g.user.update({'last_token': ac})
     return ac, rf
 
