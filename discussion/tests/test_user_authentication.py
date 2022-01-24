@@ -46,7 +46,6 @@ class TestUserAuthentication(unittest.TestCase):
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     })
-        print(response)
         self.assertEqual(response.status_code, 200)
         self.assertIn('access_token', response.json)
         self.assertIn('refresh_token', response.json)

@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 
 from sqlalchemy import Index, UniqueConstraint
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -33,6 +34,7 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     
     password_hash = db.Column(db.String(128))
+    last_token = db.Column(db.String(32), default='')
     
     owned_discussions = db.relationship('Discussion', backref='owner', lazy=True)
     owned_posts = db.relationship('Post', backref='owner', lazy=True)
@@ -52,9 +54,7 @@ class User(db.Model):
     partnered_participations = db.relationship('Participate',
             backref='partner',
             primaryjoin=id==Participate.partner_id)
-    
-    owned_access_tokens = db.relationship('AccessToken', backref='owner', lazy=True)
-    owned_refresh_tokens = db.relationship('RefreshToken', backref='owner', lazy=True)
+
     
     @property
     def password(self):
@@ -110,5 +110,7 @@ class User(db.Model):
         follow.delete()
     
     def update_last_seen(self):
-        self.last_seen = datetime.utcnow()
-        self.save()
+        self.update({'last_seen': datetime.utcnow()})
+    
+    def update_last_login(self):
+        self.update({'last_login': datetime.utcnow()})

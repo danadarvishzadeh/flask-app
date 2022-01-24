@@ -2,7 +2,7 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_smorest import Api
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_redis import Redis
 
 #ORM
 db = SQLAlchemy()
@@ -18,3 +18,6 @@ marshmallow = Marshmallow()
 
 #Auto document extention
 api = Api()
+
+#Redis
+redis = Redis()

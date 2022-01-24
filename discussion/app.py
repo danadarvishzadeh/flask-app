@@ -3,7 +3,7 @@ from logging.config import dictConfig
 import os
 from flask import Flask, jsonify
 
-from discussion.extentions import api, db, marshmallow, migrate
+from discussion.extentions import api, db, marshmallow, migrate, redis
 
 from .config import config
 
@@ -124,3 +124,5 @@ def configure_extentions(app):
     marshmallow.init_app(app)
     
     api.init_app(app)
+
+    redis.init_app(app)

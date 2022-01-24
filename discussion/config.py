@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -95,8 +94,8 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     
     #Token EXP
-    ACCESS_TOKEN_EXP = timedelta(seconds=600)
-    REFRESH_TOKEN_EXP = timedelta(seconds=6000)
+    ACCESS_TOKEN_EXP = 600
+    REFRESH_TOKEN_EXP = 6000
 
     #Swagger documentation
     API_TITLE = "Discussion API"
@@ -123,6 +122,13 @@ class Config:
 
     #Logging config
     LOG_CONFIG = log_config
+
+    #Redis
+    REDIS_HOST = 'localhost'
+    REDIS_PORT = 6379
+    REDIS_DB = 0
+    REDIS_DECODE_RESPONSES = True
+
 
 
 class DevelopementConfig(Config):

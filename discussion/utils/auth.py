@@ -4,8 +4,9 @@ from functools import wraps
 
 from discussion.models.user import User
 from discussion.utils.errors import InvalidAttemp, InvalidToken
-from discussion.utils.util import (create_token_pair, depricate_all_tokens,
-                                   extract_access_token, extract_refresh_token,
+from discussion.utils.util import (check_tokens_with_redis, clear_token,
+                                   create_token_pair, extract_access_token,
+                                   extract_refresh_token,
                                    load_user_for_refreshing,
                                    load_user_from_access_token)
 from flask import g, request
@@ -24,23 +25,21 @@ def authenticate(creadentials):
     return False
 
 def login():
-    depricate_all_tokens(owner_id=g.user.id)
-    g.user.update(data={'last_login': datetime.utcnow()})
+    clear_token()
+    g.user.update_last_login()
     return create_token_pair()
 
 def logout():
     try:
-        access_token = extract_access_token(request.headers)
-        load_user_from_access_token(access_token)
-        depricate_all_tokens(access_token=access_token)
+        load_user_from_access_token()
+        clear_token()
         g.user.update_last_seen()
     except (InvalidToken, AttributeError, IndexError):
         logger.warning(f"logout attemp with invalid token: {request.headers.get('Authorization')}")
 
 
 def refresh_user_token():
-    g.access_token.update({'is_active': False})
-    g.access_token.refresh_token[0].update({'is_active': False})
+    clear_token()
     return create_token_pair()
 
 
@@ -49,12 +48,13 @@ def token_required(refresh=False):
         @wraps(f)
         def decorator(*args, **kwargs):        
             try:
-                access_token = extract_access_token(request.headers)
+                access_token = extract_access_token(request.headers) or ''
+                refresh_token = extract_refresh_token(request.get_json()) or ''
+                check_tokens_with_redis(access_token, refresh_token)
                 if not refresh:
-                    load_user_from_access_token(access_token)
+                    load_user_from_access_token()
                 else:
-                    refresh_token = extract_refresh_token(request.get_json())
-                    load_user_for_refreshing(access_token, refresh_token)
+                    load_user_for_refreshing()
             except (InvalidToken, AttributeError, IndexError):
                 logger.warning(f"login attemp with invalid token: {request.headers.get('Authorization')}")
                 raise InvalidToken('invalid token.')
