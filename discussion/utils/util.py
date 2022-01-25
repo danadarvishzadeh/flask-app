@@ -1,10 +1,9 @@
-from sqlite3 import connect
 from uuid import uuid4
 
 from discussion.utils.session import Session
 from discussion.models.user import User
 from flask import current_app, g, request
-from discussion.utils.errors import InvalidToken, SessionLimitReached, SessionMismatch
+from discussion.utils.errors import InvalidToken, SessionMismatch
 from discussion.extentions import redis
 import logging
 
@@ -13,6 +12,13 @@ logger = logging.getLogger(__name__)
 
 def rand_str():
     return uuid4().hex
+
+def create_token_pair():
+    ac, rf = rand_str(), rand_str()
+    access_expire, refresh_expire = current_app.config['ACCESS_TOKEN_EXP'], current_app.config['REFRESH_TOKEN_EXP']
+    redis.connection.pipeline().set(ac, g.user.id, access_expire).set(rf, g.user.id, refresh_expire).execute()
+    g.user.update({'last_token': ac})
+    return ac, rf
 
 def access_token_sanitizer(access_token):
     data = access_token.split()

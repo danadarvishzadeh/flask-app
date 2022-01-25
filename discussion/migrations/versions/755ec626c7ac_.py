@@ -1,16 +1,16 @@
 """empty message
 
-Revision ID: 3568586d8b17
+Revision ID: 755ec626c7ac
 Revises: 
-Create Date: 2022-01-17 15:19:26.389762
+Create Date: 2022-01-24 09:27:57.935495
 
 """
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '3568586d8b17'
+revision = '755ec626c7ac'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,6 +30,7 @@ def upgrade():
     sa.Column('first_name', sa.String(length=64), nullable=False),
     sa.Column('last_name', sa.String(length=64), nullable=False),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
+    sa.Column('last_token', sa.String(length=32), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('first_name', 'last_name', name='unique_person'),
@@ -67,7 +68,7 @@ def upgrade():
     sa.Column('modified_at', sa.DateTime(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('body', sa.Text(), nullable=False),
-    sa.Column('status', sa.String(length=10), nullable=True),
+    sa.Column('status', postgresql.ENUM('Sent', 'Accepted', 'Rejected', name='status'), server_default='Sent', nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('partner_id', sa.Integer(), nullable=False),
     sa.Column('discussion_id', sa.Integer(), nullable=False),

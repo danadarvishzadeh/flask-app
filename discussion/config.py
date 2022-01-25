@@ -61,11 +61,11 @@ log_config = {
             'handlers': ['response_handler',],
             'propagate': False,
         },
-        'sqlalchemy.engine': {
-            'level': 'INFO',
-            'handlers': ['main_log_handler'],
-            'propagate': False,
-        }
+        # 'sqlalchemy.engine': {
+        #     'level': 'INFO',
+        #     'handlers': ['main_log_handler'],
+        #     'propagate': False,
+        # }
     },
     'root': {
         'level': 'NOTSET',
@@ -130,6 +130,14 @@ class Config:
     REDIS_PORT = 6379
     REDIS_DB = 0
     REDIS_DECODE_RESPONSES = True
+
+    #Caching
+    CACHE_TYPE = "RedisCache"
+    CACHE_DEFAULT_TIMEOUT = 300
+    CACHE_REDIS_HOST = 'localhost'
+    CACHE_REDIS_PORT = 6379
+    CACHE_REDIS_DB = 1
+
 
 
 
