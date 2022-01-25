@@ -33,6 +33,7 @@ class User(db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     
+    confirmed = db.Column(db.Boolean, default=False)
     password_hash = db.Column(db.String(128))
     last_token = db.Column(db.String(32), default='')
     

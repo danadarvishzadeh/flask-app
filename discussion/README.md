@@ -23,13 +23,18 @@ Changes until now:
 20. Editing loggers and log files
 21. OAuth2
 22. OpenID Connect
+23. Authorization using redis
+24. Caching
+25. Pagination
 
 
 Ongoing changes:
 ==================
 
-- Authorization using redis
-- Caching
+- remove refresh token
+- Multiple sessions
+- paranoid token
+- Email and reset password
 - MongoDB
 - SQl and Postgresql
 
@@ -44,7 +49,6 @@ Redis Schema:
 
 Installation:
 ==================
-------------------
 
 To get started, clone the project using:
 
@@ -66,7 +70,8 @@ Activate virtual environment using:
 
 Then you can install the project requirements using:
 
-```pip install -r requirements.txt
+```
+pip install -r requirements.txt
 ```
 
 After that, set `FLASK_APP` and `FLASK_ENV` environment variables using:
@@ -75,10 +80,36 @@ export FLASK_APP=discussion.app
 export FLASK_ENV=development
 ```
 
-But be aware that this setting will be reset each time you close your shell session.
+You need to start `redis-server` and `postgresql` using:
+```
+sudo systemctl start postgresql.service
+sudo systemctl start redis-server.service
+```
 
-And finally, you can run the app using:
+You also need to create a postgresql database for the application and run migrations.
+
+Database name is specified and can be changed in the config file.\
+Creation of the database:
+
+```
+example@example:~$ psql postgres
+postgres=# CREATE DATABASE [database name]
+```
+
+Run migrations using:
+```
+flask db upgrade
+```
+
+
+And then, you can run the app using:
 
 ```
 flask run
+```
+
+To see swagger documentation of the API, go to [/doc/swagger](http://localhost:5000/doc/swagger
+) . You can visit the following address on your computer:
+```
+http://localhost:5000/doc/swagger
 ```

@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from flask_smorest import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_redis import Redis
+from flask_caching import Cache
 
 #ORM
 db = SQLAlchemy()
@@ -21,3 +22,6 @@ api = Api()
 
 #Redis
 redis = Redis()
+
+#Caching
+cache = Cache()
