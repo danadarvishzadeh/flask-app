@@ -43,7 +43,7 @@ Redis Schema:
 ### access token  -> key: value
 ### refresh token -> key: value
 ### user_id       -> list [session_id]
-### session_id            -> [access_token, refresh_token, session_id, User-Agent, last-login]
+### session_id            -> [session_id, User-Agent, last-login]
 
 
 Installation:
