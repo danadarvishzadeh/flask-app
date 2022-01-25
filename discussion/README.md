@@ -31,7 +31,6 @@ Changes until now:
 Ongoing changes:
 ==================
 
-- remove refresh token
 - Multiple sessions
 - paranoid token
 - Email and reset password
