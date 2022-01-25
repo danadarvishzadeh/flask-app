@@ -31,7 +31,6 @@ Changes until now:
 Ongoing changes:
 ==================
 
-- remove refresh token
 - Multiple sessions
 - paranoid token
 - Email and reset password
@@ -45,7 +44,6 @@ Redis Schema:
 ### access token  -> key: value
 ### refresh token -> key: value
 ### user_id       -> list [session_id]
-### session_id    -> [session_id, refresh_token User-Agent, last-login]
 
 
 Installation:
