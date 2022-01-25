@@ -67,3 +67,9 @@ class InvalidAttemp(HTTPException):
     def __init__(self):
         super().__init__()
         self.message = 'Server responded with an error.'
+
+class SessionLimitReached(Exception):
+    pass
+
+class SessionMismatch(Exception):
+    pass

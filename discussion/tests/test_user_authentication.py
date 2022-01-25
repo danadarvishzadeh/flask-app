@@ -97,11 +97,6 @@ class TestUserAuthentication(unittest.TestCase):
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")])
 
         self.assertEqual(response.status_code, 401)
-
-        response = self.client.get(url_for('invites.InvitationView', discussion_id=1),
-                                    headers=[('Authorization', f"Bearer {new_tokens['access_token']}")])
-
-        self.assertEqual(response.status_code, 401)
     
     def test_revoke_access_token(self):
         tokens = self.client.post(url_for('users.LoginView'),
@@ -109,11 +104,10 @@ class TestUserAuthentication(unittest.TestCase):
                                         'username': user_fixture['dana_valid']['username'],
                                         'password': user_fixture['dana_valid']['password'],
                                     }).json
-        self.client.post(url_for('discussions.DiscussionView'),
-                                    json=discussion_fixture['dana_first_discussion_valid'],
-                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+
         self.client.get(url_for('users.LogoutView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+        
         response = self.client.post(url_for('users.RefreshTokenView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={

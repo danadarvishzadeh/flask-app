@@ -33,13 +33,14 @@ Ongoing changes:
 - MongoDB
 - SQl and Postgresql
 
+
 Redis Schema:
 ==================
 
 ### access token  -> key: value
 ### refresh token -> key: value
-### user_id       -> list [ip]
-### ip            -> map[access_token, refresh_token, User-Agent, last-login]
+### user_id       -> list [session_id]
+### session_id    -> [session_id, refresh_token User-Agent, last-login]
 
 
 Installation:

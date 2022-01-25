@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -11,11 +12,11 @@ log_config = {
             'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s] - [%(filename)s/%(module)s/%(funcName)s/%(lineno)d] - [%(message)s]'
         },
         'request': {
-            '()': 'discussion.utils.logging.RequestFormatter',
+            '()': 'discussion.utils.formatters.RequestFormatter',
             'format': '[%(name)s] - [%(asctime)s] - [%(method)s] - [%(url)s] - [%(remote_addr)s] - [%(user_agent)s] - [%(authorization)s]',
         },
         'response': {
-            '()': 'discussion.utils.logging.ResponseFormatter',
+            '()': 'discussion.utils.formatters.ResponseFormatter',
             'format': '[%(name)s] - [%(asctime)s] - [%(status)s]',
         },
     },
@@ -92,10 +93,11 @@ class Config:
     #SQLAlchemy
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    MAX_SESSIONS = 2
     
     #Token EXP
-    ACCESS_TOKEN_EXP = 600
-    REFRESH_TOKEN_EXP = 6000
+    ACCESS_TOKEN_EXP = timedelta(seconds=600)
+    REFRESH_TOKEN_EXP = timedelta(days=365)
 
     #Swagger documentation
     API_TITLE = "Discussion API"
@@ -107,10 +109,10 @@ class Config:
     OPENAPI_SWAGGER_UI_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.19.5/'
 
 
-    #Pagination
-    DISCUSSION_DISCUSSIONS_PER_PAGE = 3
-    DISCUSSION_POSTS_PER_PAGE = 5
-    DISCUSSION_INVITATIONS_PER_PAGE = 10
+    # #Pagination
+    # DISCUSSION_DISCUSSIONS_PER_PAGE = 3
+    # DISCUSSION_POSTS_PER_PAGE = 5
+    # DISCUSSION_INVITATIONS_PER_PAGE = 10
     
     #Database
     DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME', 'dana')

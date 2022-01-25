@@ -9,6 +9,8 @@ from .config import config
 
 logger = logging.getLogger(__name__)
 
+
+
 def configure_logging(app):
     
     #Lower sqlalchemy logging level to see sql statements

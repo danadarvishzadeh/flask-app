@@ -1,17 +1,21 @@
-from discussion.extentions import db
+import logging
+
 from discussion.blueprints.users import bp
+from discussion.extentions import db
 from discussion.models.user import User
-from flask import g, request
 from discussion.schemas.user import (CreateUserSchema, EditUserSchema,
-                                     LoginResponse, UserLoginSchema,
-                                     UserSchema, RefreshTokenSchema)
-from discussion.utils.auth import authenticate, login, logout, token_required, refresh_user_token
+                                     LoginResponse, RefreshTokenSchema,
+                                     UserLoginSchema, UserSchema)
+from discussion.utils.auth import (authenticate, device_logout,
+                                   extend_token_expire_time, login, central_logout,
+                                   refresh_user_token, token_required)
 from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                      InvalidToken, JsonIntegrityError,
                                      ResourceDoesNotExists)
+from flask import g
 from flask.views import MethodView
+from redis.exceptions import RedisError
 from sqlalchemy.exc import IntegrityError
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -75,12 +79,19 @@ class LoginView(MethodView):
     @bp.response(200, LoginResponse)
     def post(self, creadentials):
         if authenticate(creadentials):
-            access_token, refresh_token = login()
-            logger.info(f'user {g.user.username} logged in')
-            return {
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-            }
+            try:
+                access_token, refresh_token = login()
+                logger.info(f'user {g.user.username} logged in')
+                return {
+                    'access_token': access_token,
+                    'refresh_token': refresh_token,
+                }
+            except RedisError as e:
+                logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+                raise InvalidAttemp()
+            except Exception as e:
+                logger.exception('')
+                raise InvalidAttemp()
         logger.warning(f'Invalid credentials: {creadentials}')
         raise InvalidCredentials(message='Username or Password you provided are invalid.')
 
@@ -92,11 +103,32 @@ class LogoutView(MethodView):
     @bp.response(204)
     def get(self):
         try:
-            logout()
+            central_logout()
             logger.info(f'user {g.user.username} logged out')
-        except InvalidToken:
+        except InvalidToken as e:
             raise InvalidToken('Invalid Token Provided.')
-        except:
+        except RedisError as e:
+            logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+            raise InvalidAttemp()
+        except Exception as e:
+            logger.exception('')
+            raise InvalidAttemp()
+
+@bp.route('/logout/device', methods=['GET'])
+class DeleteSessionView(MethodView):
+
+    @token_required()
+    @bp.response(204)
+    def get(self):
+        try:
+            device_logout()
+            logger.info(f'user {g.user.username} logged out from {g.device}')
+        except InvalidToken as e:
+            raise InvalidToken('Invalid Token Provided.')
+        except RedisError as e:
+            logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+            raise InvalidAttemp()
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
 
@@ -117,6 +149,25 @@ class RefreshTokenView(MethodView):
             }
         except InvalidToken:
             raise InvalidToken('Invalid Token Provided.')
+        except RedisError as e:
+            logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+            raise InvalidAttemp()
+        except Exception as e:
+            logger.exception('')
+            raise InvalidAttemp()
+
+
+@bp.route('/extend', methods=['GET'])
+class ExtendTokensExpire(MethodView):
+
+    @token_required
+    @bp.response(204)
+    def get(self):
+        try:
+            extend_token_expire_time()
+        except RedisError as e:
+                logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+                raise InvalidAttemp()
         except Exception as e:
             logger.exception('')
             raise InvalidAttemp()

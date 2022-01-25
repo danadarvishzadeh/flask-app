@@ -1,15 +1,13 @@
 import logging
-from datetime import datetime
 from functools import wraps
-
+from discussion.extentions import redis
 from discussion.models.user import User
-from discussion.utils.errors import InvalidAttemp, InvalidToken
-from discussion.utils.util import (check_tokens_with_redis, clear_token,
-                                   create_token_pair, extract_access_token,
+from discussion.utils.errors import InvalidAttemp, InvalidToken, SessionMismatch, SessionLimitReached
+from discussion.utils.util import (create_token_pair, extract_access_token,
                                    extract_refresh_token,
-                                   load_user_for_refreshing,
-                                   load_user_from_access_token)
-from flask import g, request
+                                   load_user_from_access_token,
+                                   load_user_from_refresh_token, Session)
+from flask import g, request, current_app
 
 logger = logging.getLogger(__name__)
 
@@ -21,25 +19,48 @@ def authenticate(creadentials):
         user = User.query.filter(User.username==username, User.is_active==True).first()
         if user and user.password_check(password):
             g.user = user
+            g.session = Session()
             return True
     return False
 
 def login():
-    clear_token()
     g.user.update_last_login()
+    if g.session.sessions_limit_exceeded():
+        raise SessionLimitReached()
     return create_token_pair()
 
-def logout():
-    try:
-        load_user_from_access_token()
-        clear_token()
-        g.user.update_last_seen()
-    except (InvalidToken, AttributeError, IndexError):
-        logger.warning(f"logout attemp with invalid token: {request.headers.get('Authorization')}")
+def central_logout():
+    pipe = redis.connection.pipeline()
 
+    for a, r in g.session.get_all_tokens():
+        pipe = pipe.delete(a).delete(r)
+    
+    pipe = pipe.delete(g.user.id)
+    pipe = pipe.delete(g.access_token)
+    pipe.execute()
+    g.user.update_last_seen()
+
+def extend_token_expire_time():
+    pipe = redis.connection.pipeline()
+    
+    access_token_expire = current_app.config['ACCESS_TOKEN_EXP']
+    refresh_token_expire = current_app.config['REFRESH_TOKEN_EXP']
+
+    pipe = pipe.expire(g.access_token, access_token_expire)
+    pipe = pipe.expire(g.session.refresh_token, refresh_token_expire)
+    pipe.execute()
+
+def device_logout():
+    pipe = redis.connection.pipeline()
+
+    pipe = pipe.delete(g.session.refresh_token)
+    g.session.remove_this_session()
+    pipe = pipe.delete(g.user.id)
+    pipe = pipe.lpush([str(s) for s in g.session.all_sessions])
+    pipe.execute()
+    g.user.update_last_seen()
 
 def refresh_user_token():
-    clear_token()
     return create_token_pair()
 
 
@@ -48,15 +69,17 @@ def token_required(refresh=False):
         @wraps(f)
         def decorator(*args, **kwargs):        
             try:
-                access_token = extract_access_token(request.headers) or ''
-                refresh_token = extract_refresh_token(request.get_json()) or ''
-                check_tokens_with_redis(access_token, refresh_token)
                 if not refresh:
+                    extract_access_token(request.headers)
                     load_user_from_access_token()
                 else:
-                    load_user_for_refreshing()
+                    extract_refresh_token(request.get_json())
+                    load_user_from_refresh_token()
             except (InvalidToken, AttributeError, IndexError):
                 logger.warning(f"login attemp with invalid token: {request.headers.get('Authorization')}")
+                raise InvalidToken('invalid token.')
+            except SessionMismatch as e:
+                logger.warning(f"login attemp with token mismatch: {request.headers.get('Authorization')}")
                 raise InvalidToken('invalid token.')
             except Exception as e:
                 logger.exception('')
