@@ -1,8 +1,14 @@
 from logging import Formatter
-from flask import has_request_context, request
+from flask import request
 
-class RequestFormatter(Formatter):
+class ResponseFormatter(Formatter):
     def format(self, record):
+
+        # Response parameters
+        record.status = record.response.status_code
+        record.content_type = record.response.content_type
+        
+        #Request parameters
         record.url = request.url
         record.scheme = request.scheme
         record.method = request.method
@@ -13,11 +19,4 @@ class RequestFormatter(Formatter):
         record.query_string = request.query_string
         record.user_agent = request.user_agent
         record.authorization = request.authorization
-        return super().format(record)
-
-
-class ResponseFormatter(Formatter):
-    def format(self, record):
-        record.status = record.response.status_code
-        record.content_type = record.response.content_type
         return super().format(record)

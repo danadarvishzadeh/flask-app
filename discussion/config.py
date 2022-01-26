@@ -11,13 +11,13 @@ log_config = {
         'default': {
             'format': '[%(name)s] - [%(asctime)s] - [%(levelname)s] - [%(filename)s/%(module)s/%(funcName)s/%(lineno)d] - [%(message)s]'
         },
-        'request': {
-            '()': 'discussion.utils.formatters.RequestFormatter',
-            'format': '[%(name)s] - [%(asctime)s] - [%(method)s] - [%(url)s] - [%(remote_addr)s] - [%(user_agent)s] - [%(authorization)s]',
-        },
+        # 'request': {
+        #     '()': 'discussion.utils.formatters.RequestFormatter',
+        #     'format': '[%(name)s] - [%(asctime)s] - [%(method)s] - [%(url)s] - [%(remote_addr)s] - [%(user_agent)s] - [%(authorization)s]',
+        # },
         'response': {
             '()': 'discussion.utils.formatters.ResponseFormatter',
-            'format': '[%(name)s] - [%(asctime)s] - [%(status)s]',
+            'format': '[%(name)s] - [%(asctime)s] - [%(method)s] - [%(url)s] - [%(remote_addr)s] - [%(user_agent)s] - [%(authorization)s]- [%(status)s]',
         },
     },
     'handlers': {
@@ -32,13 +32,7 @@ log_config = {
             'class': 'logging.FileHandler',
             'filename': 'log.txt',
         },
-        'request_handler': {
-            'level': 'INFO',
-            'formatter': 'request',
-            'class': 'logging.FileHandler',
-            'filename': 'log.txt'
-        },
-        'response_handler': {
+        'api_handler': {
             'level': 'INFO',
             'formatter': 'response',
             'class': 'logging.FileHandler',
@@ -51,14 +45,9 @@ log_config = {
             'handlers': ['console'],
             'propagate': False,
         },
-        'request_logger': {
+        'api_logger': {
             'level': 'INFO',
-            'handlers': ['request_handler',],
-            'propagate': False,
-        },
-        'response_logger': {
-            'level': 'INFO',
-            'handlers': ['response_handler',],
+            'handlers': ['api_handler'],
             'propagate': False,
         },
         # 'sqlalchemy.engine': {

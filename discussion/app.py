@@ -1,7 +1,7 @@
 import logging
 from logging.config import dictConfig
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from discussion.extentions import api, db, marshmallow, migrate, redis, cache
 
@@ -19,18 +19,10 @@ def configure_logging(app):
     #Loading general logging configurations
     dictConfig(app.config.get('LOG_CONFIG'))
 
-    request_logger = logging.getLogger('request_logger')
-    response_logger = logging.getLogger('response_logger')
-
-    #Registering before request logger
-    @app.before_request
-    def before_request_logging():
-        request_logger.info('')
-
-    #Registering after request logger
+    
     @app.after_request
-    def after_request_logging(response):
-        response_logger.info('', extra={'response': response})
+    def ff(response):
+        logging.getLogger('api_logger').info('', extra={'response': response})
         return response
 
 

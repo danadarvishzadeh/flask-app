@@ -91,3 +91,6 @@ class TestUserViews(unittest.TestCase):
         u = User(password='cat')
         u2 = User(password='cat')
         self.assertTrue(u.password_hash != u2.password_hash)
+    
+    def test_get_user(self):
+        response = self.client.get(url_for('users.UserDetailView', user_id=1))
