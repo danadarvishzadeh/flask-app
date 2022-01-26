@@ -1,5 +1,5 @@
 from flask_marshmallow import Schema
-from marshmallow.fields import Nested, Integer, Str, Email
+from marshmallow.fields import Nested, Integer, Str, Email, IP
 from marshmallow import validate
 from marshmallow.decorators import post_load
 
@@ -54,6 +54,10 @@ class UserProfileSchema(BaseUserSchema):
     partnered_invitations = Nested('InvitationSchema', many=True)
 
 
+class UserPrivateProfile(UserProfileSchema):
+    # Some additional fields
+    pass
+
 class UserSchema(BaseUserSchema):
     id = Integer()
     email = Email()
@@ -72,3 +76,10 @@ class LoginResponse(Schema):
 
 class RefreshTokenSchema(Schema):
     refresh_token = Str()
+
+
+class SessionSchema(Schema):
+    user_id = Integer()
+    # ip = IP()
+    ip = Str()
+    client = Str()

@@ -26,13 +26,13 @@ Changes until now:
 23. Authorization using redis
 24. Caching
 25. Pagination
+26. Multiple sessions
+27. paranoid token
 
 
 Ongoing changes:
 ==================
 
-- Multiple sessions
-- paranoid token
 - Email and reset password
 - MongoDB
 - SQl and Postgresql
@@ -88,11 +88,12 @@ sudo systemctl start redis-server.service
 You also need to create a postgresql database for the application and run migrations.
 
 Database name is specified and can be changed in the config file.\
-Creation of the database:
+To create a database, run:
 
 ```
 example@example:~$ psql postgres
 postgres=# CREATE DATABASE [database name]
+postgres=# \q
 ```
 
 Run migrations using:

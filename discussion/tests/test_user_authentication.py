@@ -1,4 +1,5 @@
 import unittest
+from urllib import response
 from discussion.app import create_app
 from discussion.extentions import db
 from discussion.tests.fixtures import user_fixture, discussion_fixture
@@ -119,6 +120,32 @@ class TestUserAuthentication(unittest.TestCase):
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")])
 
         self.assertEqual(response.status_code, 401)
+
+    def test_get_all_sessions(self):
+        tokens = self.client.post(url_for('users.LoginView'),
+                                    json={
+                                        'username': user_fixture['dana_valid']['username'],
+                                        'password': user_fixture['dana_valid']['password'],
+                                    }).json
+        response = self.client.get(url_for('users.SessionView'),
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")])
+        print(response.json)
+        self.assertEqual(response.status_code, 200)
+
+    def test_session_limit_exceeded(self):
+        self.client.post(url_for('users.LoginView'),
+                                    json={
+                                        'username': user_fixture['dana_valid']['username'],
+                                        'password': user_fixture['dana_valid']['password'],
+                                    },
+                                    headers=[('User-Agent', 'a')])
+        response = self.client.post(url_for('users.LoginView'),
+                                    json={
+                                        'username': user_fixture['dana_valid']['username'],
+                                        'password': user_fixture['dana_valid']['password'],
+                                    },
+                                    headers=[('User-Agent', 'b')])
+        self.assertEqual(response.status_code, 400)
 
     # def test_reset_password(self):
     #     tokens = self.client.post(url_for('users.LoginView'),

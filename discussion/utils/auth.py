@@ -41,23 +41,10 @@ def central_logout():
     g.user.update_last_seen()
 
 def extend_token_expire_time():
-    pipe = redis.connection.pipeline()
-    
-    access_token_expire = current_app.config['ACCESS_TOKEN_EXP']
-    refresh_token_expire = current_app.config['REFRESH_TOKEN_EXP']
-
-    pipe = pipe.expire(g.access_token, access_token_expire)
-    pipe = pipe.expire(g.session.refresh_token, refresh_token_expire)
-    pipe.execute()
+    g.session.renew_token()
 
 def device_logout():
-    pipe = redis.connection.pipeline()
-
-    pipe = pipe.delete(g.session.refresh_token)
-    g.session.remove_this_session()
-    pipe = pipe.delete(g.user.id)
-    pipe = pipe.lpush([str(s) for s in g.session.all_sessions])
-    pipe.execute()
+    g.session.delete_session()
     g.user.update_last_seen()
 
 def refresh_user_token():

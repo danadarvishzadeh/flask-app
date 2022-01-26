@@ -5,13 +5,12 @@ from discussion.extentions import db
 from discussion.models.user import User
 from discussion.schemas.user import (CreateUserSchema, EditUserSchema,
                                      LoginResponse, RefreshTokenSchema,
-                                     UserLoginSchema, UserSchema)
-from discussion.utils.auth import (authenticate, device_logout,
-                                   extend_token_expire_time, login, central_logout,
+                                     UserLoginSchema, UserSchema, SessionSchema, UserPrivateProfile)
+from discussion.utils.auth import (authenticate, device_logout, login, central_logout,
                                    refresh_user_token, token_required)
 from discussion.utils.errors import (InvalidAttemp, InvalidCredentials,
                                      InvalidToken, JsonIntegrityError,
-                                     ResourceDoesNotExists)
+                                     ResourceDoesNotExists, SessionLimitReached, ActionIsNotPossible)
 from flask import g
 from flask.views import MethodView
 from redis.exceptions import RedisError
@@ -21,6 +20,15 @@ logger = logging.getLogger(__name__)
 
 @bp.route('', methods=["POST", "PUT", "DELETE"])
 class UserView(MethodView):
+
+    @token_required()
+    @bp.response(200, UserPrivateProfile)
+    def get(self):
+        try:
+            return g.user
+        except Exception as e:
+            logger.exception('')
+            raise InvalidAttemp()
 
     @bp.arguments(CreateUserSchema)
     @bp.response(200, UserSchema)
@@ -34,7 +42,7 @@ class UserView(MethodView):
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
-        except:
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
 
@@ -49,7 +57,7 @@ class UserView(MethodView):
             logger.warning(f'Integrity error: {e}')
             db.session.rollback()
             raise JsonIntegrityError()
-        except:
+        except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
 
@@ -89,6 +97,9 @@ class LoginView(MethodView):
             except RedisError as e:
                 logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
                 raise InvalidAttemp()
+            except SessionLimitReached as e:
+                logger.exception(f"user session limit reached. user :{g.user.id}")
+                raise ActionIsNotPossible('session limit reached.')
             except Exception as e:
                 logger.exception('')
                 raise InvalidAttemp()
@@ -114,32 +125,25 @@ class LogoutView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-@bp.route('/logout/device', methods=['GET'])
-class DeleteSessionView(MethodView):
+@bp.route('/sessions', methods=['GET', 'PUT', 'PATCH', 'DELETE'])
+class SessionView(MethodView):
 
     @token_required()
-    @bp.response(204)
+    @bp.response(200, SessionSchema(many=True))
     def get(self):
         try:
-            device_logout()
-            logger.info(f'user {g.user.username} logged out from {g.device}')
-        except InvalidToken as e:
-            raise InvalidToken('Invalid Token Provided.')
+            return g.session.all_sessions
         except RedisError as e:
-            logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
-            raise InvalidAttemp()
+                logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+                raise InvalidAttemp()
         except Exception as e:
             logger.exception('')
             raise InvalidAttemp()
 
-
-@bp.route('/refresh', methods=["POST"])
-class RefreshTokenView(MethodView):
-
     @token_required(refresh=True)
     @bp.arguments(RefreshTokenSchema)
     @bp.response(200, LoginResponse)
-    def post(self, refresh_token):
+    def put(self, refresh_token):
         try:
             access_token, refresh_token  = refresh_user_token()
             logger.info(f'user {g.user.username} refreshed token')
@@ -156,18 +160,29 @@ class RefreshTokenView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-
-@bp.route('/extend', methods=['GET'])
-class ExtendTokensExpire(MethodView):
-
-    @token_required
+    @token_required()
     @bp.response(204)
-    def get(self):
+    def patch(self):
         try:
-            extend_token_expire_time()
+            g.session.renew_token()
         except RedisError as e:
                 logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
                 raise InvalidAttemp()
+        except Exception as e:
+            logger.exception('')
+            raise InvalidAttemp()
+
+    @token_required()
+    @bp.response(204)
+    def delete(self):
+        try:
+            device_logout()
+            logger.info(f'user {g.user.username} logged out from {g.device}')
+        except InvalidToken as e:
+            raise InvalidToken('Invalid Token Provided.')
+        except RedisError as e:
+            logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
+            raise InvalidAttemp()
         except Exception as e:
             logger.exception('')
             raise InvalidAttemp()

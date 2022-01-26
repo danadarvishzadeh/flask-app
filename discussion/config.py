@@ -93,7 +93,7 @@ class Config:
     #SQLAlchemy
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    MAX_SESSIONS = 2
+    MAX_SESSIONS = 5
     
     #Token EXP
     ACCESS_TOKEN_EXP = timedelta(seconds=600)
@@ -149,6 +149,15 @@ class DevelopementConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+
+    MAX_SESSIONS = 1
+
+    DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME', 'dana')
+    DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD', 32343234)
+    DBNAME = 'test_discussionapp'
+    PORT = 5432
+    HOST = "localhost"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{HOST}:{PORT}/{DBNAME}"
     # SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
     #     'sqlite:///' + os.path.join(basedir, 'test_database.db')
 
