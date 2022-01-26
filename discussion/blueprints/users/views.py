@@ -125,7 +125,7 @@ class LogoutView(MethodView):
             logger.exception('')
             raise InvalidAttemp()
 
-@bp.route('/sessions', methods=['GET', 'PUT', 'PATCH', 'DELETE'])
+@bp.route('/sessions', methods=['GET', 'PUT', 'DELETE'])
 class SessionView(MethodView):
 
     @token_required()
@@ -156,18 +156,6 @@ class SessionView(MethodView):
         except RedisError as e:
             logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
             raise InvalidAttemp()
-        except Exception as e:
-            logger.exception('')
-            raise InvalidAttemp()
-
-    @token_required()
-    @bp.response(204)
-    def patch(self):
-        try:
-            g.session.renew_token()
-        except RedisError as e:
-                logger.exception(f"error adding new tokens to redis. user :{g.user.id}")
-                raise InvalidAttemp()
         except Exception as e:
             logger.exception('')
             raise InvalidAttemp()

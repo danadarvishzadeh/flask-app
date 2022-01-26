@@ -1,7 +1,7 @@
 import logging
 from logging.config import dictConfig
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, g
 
 from discussion.extentions import api, db, marshmallow, migrate, redis, cache
 
@@ -21,8 +21,13 @@ def configure_logging(app):
 
     
     @app.after_request
-    def ff(response):
+    def after_request_function(response):
         logging.getLogger('api_logger').info('', extra={'response': response})
+        if hasattr(g, 'user') and hasattr(g, 'session'):
+            try:
+                g.session.renew_token()
+            except Exception as e:
+                pass
         return response
 
 

@@ -141,6 +141,8 @@ class TestingConfig(Config):
 
     MAX_SESSIONS = 1
 
+    REDIS_DB = 1
+
     DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME', 'dana')
     DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD', 32343234)
     DBNAME = 'test_discussionapp'

@@ -1,7 +1,7 @@
 import unittest
 from urllib import response
 from discussion.app import create_app
-from discussion.extentions import db
+from discussion.extentions import db, redis
 from discussion.tests.fixtures import user_fixture, discussion_fixture
 from flask import url_for
 
@@ -23,6 +23,7 @@ class TestUserAuthentication(unittest.TestCase):
     def tearDown(self):
         db.session.close()
         db.drop_all()
+        redis.connection.flushdb()
         self.appctx.pop()
         self.reqctx.pop()
 
@@ -42,7 +43,7 @@ class TestUserAuthentication(unittest.TestCase):
                                         'username': user_fixture['dana_valid']['username'],
                                         'password': user_fixture['dana_valid']['password'],
                                     }).json
-        response = self.client.post(url_for('users.RefreshTokenView'),
+        response = self.client.put(url_for('users.SessionView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
@@ -82,12 +83,12 @@ class TestUserAuthentication(unittest.TestCase):
                                     json=discussion_fixture['dana_first_discussion_valid'],
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")])
         
-        new_tokens = self.client.post(url_for('users.RefreshTokenView'),
+        new_tokens = self.client.put(url_for('users.SessionView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     }).json
-        response = self.client.post(url_for('users.RefreshTokenView'),
+        response = self.client.put(url_for('users.SessionView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
@@ -109,7 +110,7 @@ class TestUserAuthentication(unittest.TestCase):
         self.client.get(url_for('users.LogoutView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")])
         
-        response = self.client.post(url_for('users.RefreshTokenView'),
+        response = self.client.put(url_for('users.SessionView'),
                                     headers=[('Authorization', f"Bearer {tokens['access_token']}")],
                                     json={
                                         'refresh_token': tokens['refresh_token'],

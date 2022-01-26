@@ -63,13 +63,14 @@ class Session:
         pipe.execute()
     
     def renew_token(self):
+        self.load_current_session()
         pipe = redis.connection.pipeline()
 
         access_token_expire = current_app.config['ACCESS_TOKEN_EXP']
         refresh_token_expire = current_app.config['REFRESH_TOKEN_EXP']
 
-        pipe = pipe.expire(g.access_token, access_token_expire)
-        pipe = pipe.expire(g.session.refresh_token, refresh_token_expire)
+        pipe = pipe.expire(self.access_token, access_token_expire)
+        pipe = pipe.expire(self.refresh_token, refresh_token_expire)
         pipe.execute()
 
     def get_all_tokens(self):
