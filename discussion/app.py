@@ -1,9 +1,11 @@
 import logging
-from logging.config import dictConfig
 import os
-from flask import Flask, jsonify, g
+from logging.config import dictConfig
 
-from discussion.extentions import api, db, marshmallow, migrate, redis, cache
+from flask import Flask, g, jsonify, request
+from user_agents import parse
+
+from discussion.extentions import api, cache, db, marshmallow, migrate, redis
 
 from .config import config
 
@@ -18,17 +20,6 @@ def configure_logging(app):
 
     #Loading general logging configurations
     dictConfig(app.config.get('LOG_CONFIG'))
-
-    
-    @app.after_request
-    def after_request_function(response):
-        logging.getLogger('api_logger').info('', extra={'response': response})
-        if hasattr(g, 'user') and hasattr(g, 'session'):
-            try:
-                g.session.renew_token()
-            except Exception as e:
-                pass
-        return response
 
 
 def configure_blueprints(app):
@@ -97,6 +88,25 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     
     configure_app(app, config_name)
+
+    @app.before_request
+    def before_request_function():
+        try:
+            parsed_user_agent = parse(request.headers['User-Agent'])
+            request.user_agent.device = parsed_user_agent.device
+        except Exception as e:
+            pass
+
+    @app.after_request
+    def after_request_function(response):
+        logging.getLogger('api_logger').info('', extra={'response': response})
+        if hasattr(g, 'user') and hasattr(g, 'session'):
+            try:
+                g.session.renew_token()
+            except Exception as e:
+                pass
+        return response
+
 
     return app
 
