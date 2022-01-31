@@ -25,14 +25,14 @@ Changes until now:
 22. OpenID Connect
 23. Authorization using redis
 24. Caching
-25. Pagination
-26. Multiple sessions
-27. paranoid token
+25. Multiple sessions
+26. paranoid token
 
 
 Ongoing changes:
 ==================
 
+- Pagination
 - Email and reset password
 - MongoDB
 - SQl and Postgresql
