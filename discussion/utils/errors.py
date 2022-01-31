@@ -73,3 +73,6 @@ class SessionLimitReached(Exception):
 
 class SessionMismatch(Exception):
     pass
+
+class InvalidSession(Exception):
+    pass

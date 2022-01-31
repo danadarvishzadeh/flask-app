@@ -29,10 +29,11 @@ class TestUserAuthentication(unittest.TestCase):
 
     def test_authentication_endpoint(self):
         response = self.client.post(url_for('users.LoginView'),
-                                    json={
-                                        'username': user_fixture['dana_valid']['username'],
-                                        'password': user_fixture['dana_valid']['password'],
-                                    })
+                            json={
+                                'username': user_fixture['dana_valid']['username'],
+                                'password': user_fixture['dana_valid']['password'],
+                            },
+                            headers=[('User-Agent', 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36')])
         self.assertEqual(response.status_code, 200)
         self.assertIn('access_token', response.json)
         self.assertIn('refresh_token', response.json)
@@ -42,9 +43,11 @@ class TestUserAuthentication(unittest.TestCase):
                                     json={
                                         'username': user_fixture['dana_valid']['username'],
                                         'password': user_fixture['dana_valid']['password'],
-                                    }).json
+                                    },
+                                    headers=[('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0')]).json
         response = self.client.put(url_for('users.SessionView'),
-                                    headers=[('Authorization', f"Bearer {tokens['access_token']}")],
+                                    headers=[('Authorization', f"Bearer {tokens['access_token']}"),
+                                    ('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0')],
                                     json={
                                         'refresh_token': tokens['refresh_token'],
                                     })
