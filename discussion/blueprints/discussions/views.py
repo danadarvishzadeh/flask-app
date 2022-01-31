@@ -2,7 +2,7 @@
 from discussion.app import db
 from discussion.blueprints.discussions import bp
 from discussion.models.discussion import Discussion
-from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema
+from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema, PaginationSchema
 from discussion.utils.auth import token_required
 from discussion.utils.errors import InvalidAttemp, JsonIntegrityError, ResourceDoesNotExists
 from discussion.utils.permissions.decorators import permission_required
@@ -18,8 +18,8 @@ logger = getLogger(__name__)
 @bp.route('/', methods=['POST', 'GET'])
 class DiscussionView(MethodView):
 
+    @bp.arguments(PaginationSchema, location="query")
     @bp.response(200, DiscussionSchema(many=True))
-    @bp.paginate()
     def get(self, pagination_parameters):
         discussions = Discussion.query.all()
         pagination_parameters.item_count = len(discussions)

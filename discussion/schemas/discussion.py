@@ -24,3 +24,7 @@ class DiscussionSchema(BaseDiscussionSchema):
     owner = Nested('UserSchema', only=('id', 'username', 'email', 'first_name', ))
     posts = Nested('PostSchema', only=('id', 'body'), many=True)
     invitations = Nested('InvitationSchema', only=('id', 'body', 'partner', 'status'), many=True)
+
+
+class PaginationSchema(Schema):
+    page = Str()
