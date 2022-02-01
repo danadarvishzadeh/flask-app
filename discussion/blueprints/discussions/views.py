@@ -2,11 +2,13 @@
 from discussion.app import db
 from discussion.blueprints.discussions import bp
 from discussion.models.discussion import Discussion
-from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema, PaginationSchema
+from discussion.schemas.discussion import CreateDiscussionSchema, DiscussionSchema, EditDiscussionSchema, PaginatedDiscussionSchema
 from discussion.utils.auth import token_required
 from discussion.utils.errors import InvalidAttemp, JsonIntegrityError, ResourceDoesNotExists
 from discussion.utils.permissions.decorators import permission_required
 from flask.views import MethodView
+from discussion.schemas import PaginationSchema
+from discussion.utils.paginators.discussion import DiscussionPaginator
 from flask import g
 from sqlalchemy.exc import IntegrityError
 from logging import getLogger
@@ -19,13 +21,12 @@ logger = getLogger(__name__)
 class DiscussionView(MethodView):
 
     @bp.arguments(PaginationSchema, location="query")
-    @bp.response(200, DiscussionSchema(many=True))
+    @bp.response(200, PaginatedDiscussionSchema)
     def get(self, pagination_parameters):
-        discussions = Discussion.query.all()
-        pagination_parameters.item_count = len(discussions)
-        return discussions[
-            pagination_parameters.first_item:pagination_parameters.last_item+1
-        ]
+        page = pagination_parameters.get('page')
+        if not page:
+            page = 1
+        return DiscussionPaginator().return_page(page, 'discussions.DiscussionView')
 
     @token_required()
     @bp.arguments(CreateDiscussionSchema)

@@ -2,11 +2,13 @@ from discussion.app import db
 from discussion.blueprints.posts import bp
 from discussion.models.discussion import Discussion
 from discussion.models.post import Post
+from discussion.schemas import PaginationSchema
 from discussion.schemas.post import (CreatePostSchema, EditPostSchema,
                                      PostSchema)
 from discussion.utils.auth import token_required
 from discussion.utils.errors import (InvalidAttemp, JsonIntegrityError,
                                      ResourceDoesNotExists)
+from discussion.utils.paginators.post import PostPaginator
 from discussion.utils.permissions.decorators import permission_required
 from flask import g
 from flask.views import MethodView
@@ -22,14 +24,18 @@ logger = logging.getLogger(__name__)
 class PostView(MethodView):
 
 
+    @bp.arguments(PaginationSchema, location="query")
     @bp.response(200, PostSchema(many=True))
-    @bp.paginate()
     def get(self, pagination_parameters):
-        posts = Post.query.all()
-        pagination_parameters.item_count = len(posts)
-        return posts[
-            pagination_parameters.first_item:pagination_parameters.last_item+1
-        ]
+        # posts = Post.query.all()
+        # pagination_parameters.item_count = len(posts)
+        # return posts[
+        #     pagination_parameters.first_item:pagination_parameters.last_item+1
+        # ]
+        page = pagination_parameters.get('page')
+        if not page:
+            page = 1
+        return PostPaginator().return_page(page, 'posts.PostView')
 
     @token_required()
     @permission_required(Discussion, required_permissions=["IsOwner"])

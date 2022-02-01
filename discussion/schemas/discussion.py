@@ -26,5 +26,8 @@ class DiscussionSchema(BaseDiscussionSchema):
     invitations = Nested('InvitationSchema', only=('id', 'body', 'partner', 'status'), many=True)
 
 
-class PaginationSchema(Schema):
-    page = Str()
+class PaginatedDiscussionSchema(BaseDiscussionSchema):
+    discussions = Nested('DiscussionSchema', many=True)
+    prev = Str()
+    next = Str()
+    count = Integer()

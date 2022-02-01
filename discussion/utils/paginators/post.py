@@ -1,10 +1,10 @@
-# from discussion.models.post import Post
-# from discussion.schemas.post import post_schema
-# from discussion.utils.paginators.base_paginator import PaginatorBase
+from discussion.models.post import Post
+from discussion.schemas.post import PostSchema
+from discussion.utils.paginators import BasePaginator
 
 
-# class PostPaginator(PaginatorBase):
+class PostPaginator(BasePaginator):
 
-#     model = Post
-#     schema = post_schema
+    model = Post
+    schema = PostSchema
 
