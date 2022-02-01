@@ -18,6 +18,15 @@ def permission_required(resource, store_resource=True, required_permissions=None
         @wraps(f)
         def decorator(*args, **kwargs):
 
+            #raise error if one of the forbidden permissions is met
+            if forbidden_permissions is not None:
+                for permission_class in forbidden_permissions:
+                    
+                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource, **kwargs)
+                    
+                    if permission.has_access():
+                        raise JsonPermissionDenied(f"Premission {permission_class} required.")
+            
             #raise error if one of the requirement permissions is not satisfied
             if required_permissions is not None:
                 for permission_class in required_permissions:
@@ -36,15 +45,6 @@ def permission_required(resource, store_resource=True, required_permissions=None
                     if permission.has_access():
                         return f(*args, **kwargs)
                 raise JsonPermissionDenied(f"Premission {permission_class} required.")
-            
-            #raise error if one of the forbidden permissions is met
-            if forbidden_permissions is not None:
-                for permission_class in forbidden_permissions:
-                    
-                    permission = str_to_class(permission_class, resource=resource, store_resource=store_resource, **kwargs)
-                    
-                    if permission.has_access():
-                        raise JsonPermissionDenied(f"Premission {permission_class} required.")
 
             return f(*args, **kwargs)
         return decorator

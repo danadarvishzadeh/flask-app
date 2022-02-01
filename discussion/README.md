@@ -33,6 +33,7 @@ Ongoing changes:
 ==================
 
 - Pagination
+- Add request profiler middleware
 - Email and reset password
 - MongoDB
 - SQl and Postgresql
