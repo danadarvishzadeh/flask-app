@@ -71,18 +71,16 @@ class DiscussionViewsTest(unittest.TestCase):
     #     self.assertEqual(response.status_code, 200)
     #     self.assertIn('discussions', response.json)
 
-    def test_get_existing_single_discussion(self):
+    def test_get_discussions(self):
+        response = self.client.get(
+            url_for('discussions.DiscussionDetailView', discussion_id=1))
+        self.assertEqual(response.status_code, 404)
         self.client.post(url_for('discussions.DiscussionView'),
                         json=discussion_fixture['dana_first_discussion_valid'],
                         headers=[('Authorization', self.dana_token), ])
         response = self.client.get(
             url_for('discussions.DiscussionDetailView', discussion_id=1))
         self.assertEqual(response.status_code, 200)
-
-    def test_get_non_existing_single_discussion(self):
-        response = self.client.get(
-            url_for('discussions.DiscussionDetailView', discussion_id=1))
-        self.assertEqual(response.status_code, 404)
 
     def test_edit_discussion_with_invalid_data(self):
         self.client.post(url_for('discussions.DiscussionView'),

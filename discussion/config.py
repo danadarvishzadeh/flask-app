@@ -139,7 +139,7 @@ class DevelopementConfig(Config):
 class TestingConfig(Config):
     TESTING = True
 
-    MAX_SESSIONS = 1
+    MAX_SESSIONS = 2
 
     REDIS_DB = 1
 
