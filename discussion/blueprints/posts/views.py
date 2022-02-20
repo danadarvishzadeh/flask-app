@@ -27,11 +27,6 @@ class PostView(MethodView):
     @bp.arguments(PaginationSchema, location="query")
     @bp.response(200, PostSchema(many=True))
     def get(self, pagination_parameters):
-        # posts = Post.query.all()
-        # pagination_parameters.item_count = len(posts)
-        # return posts[
-        #     pagination_parameters.first_item:pagination_parameters.last_item+1
-        # ]
         page = pagination_parameters.get('page')
         if not page:
             page = 1
